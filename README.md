@@ -1,7 +1,7 @@
-# Joint NCCR & SIB Summer School 2020 in
-# Computational RNA Biology
+# Joint SciLifeLab-SIB Summer School for
+# Advanced topics in Single Cell Omics
 
-23 - 28 August 2020 - Schwarzenberg (near Lucerne), Switzerland
+29.08.2021 - 03.09.2021 - Rånäs Castle near Stockholm
 
 <br/>
 
@@ -17,7 +17,7 @@ This course is aimed at early-stage researchers (PhD students, postdocs) in the 
 
 ***
 
-23.08.2020 - 28.08.2020
+29.08.2021 - 03.09.2021
 
 <br/>
 
@@ -25,8 +25,7 @@ This course is aimed at early-stage researchers (PhD students, postdocs) in the 
 
 ***
 
-Hotel & Bildungszentrum Matt, Schwarzenberg
-
+Rånäs Castle near Stockholm
 Arrival: Sunday before 18h
 
 Departure: Friday around 14h30
@@ -57,9 +56,9 @@ At the end of this school, the participants should be able to:
 - present the mini-project and more globally disseminate their experience to the members of their group.
 
 **Pre-requisites - background knowledge**
-- Previous experience with RNA-seq analysis
-- Familiar with command line and UNIX language (link to a UNIX tutorial)
-- Basic usage of R / Ability to use packages and modules and write analysis scripts in R
+- Previous intermediate experience with single cell RNA-seq analysis
+- Familiar with command line and UNIX language
+- Intermediate/advanced usage of R / Python
 
 **Pre-requisites - material & software**
 - The participants must bring a laptop with install permissions (admin). A list of software to be installed in advance will be communicated on due time.
@@ -72,38 +71,30 @@ At the end of this school, the participants should be able to:
 ***
 
 **Coordination:**
-- Norbert Polacek, UniBE, NCCR RNA & Disease Training & Education Delegate
-- Dominik Theler, NCCR RNA & Disease Scientific Officer.
-- Grégoire Rossier, SIB Training & PhD Training Network coordinator
+- Jessica Lindvall, NBIS Training Coordinator, 🇸🇪 Sweden
+- Grégoire Rossier, SIB Training & PhD Training Network coordinator, 🇨🇭 Switzerland
 
 **Scientific Committee:**
-- Ana Marques, UNIL, NCCR RNA & Disease program delegate.
-- Rory Johnson, UniBE, Head GoldLab (Genomics of Long noncoding RNA and Disease), NCCR RNA & Disease program delegate.
-- Mihaela Zavolan, UNIBas/SIB, head or member of several WPs in the program.
-
-**Lecturers:**
-- Sarah Djebali, Institute of Health and Medical Research (INSERM), 🇫🇷 France
-- Kathi Zarnack, Computational RNA Biology group, BLMS, 🇩🇪 Germany
-- Melina Klostermann, Computational RNA Biology group, BLMS, 🇩🇪 Germany
+- Åsa Björklund, National Bioinformatics Infrastructure (NBIS), 🇸🇪 Sweden
 - Paulo Czarnewski, National Bioinformatics Infrastructure (NBIS), 🇸🇪 Sweden
-- Erik Fasterius, National Bioinformatics Infrastructure (NBIS), 🇸🇪 Sweden
-- Sebastian Leidel, RNA Biochemistry group, UniBern, 🇨🇭 Switzerland
+- Charlotte Sonnenson, Friedrich Miescher Institute, SIB/Basel, 🇨🇭 Switzerland
 - Geert van Geest, Interfaculty Bioinformatics Unit, SIB/UniBern, 🇨🇭 Switzerland
-- Giancarlo Russo, Functional Genomics Center, ETHZ/UniZH, 🇨🇭 Switzerland
+
+**Invited Lecturers:**
+- Alma Andersson, KTH Royal Institute of Technology, Stockholm, 🇸🇪 Sweden
+- Volker Bergen, Institute of Computational Biology, Munich, 🇩🇪 Germany
+- Ricard Argelaguet, European Bioinformatics Institute, EMBL-EBI/Cambridge, 🇬🇧 United Kingdom
+- Panagiotis Papasaikas, Friedrich Miescher Institute, SIB/Basel, 🇨🇭 Switzerland
+
 
 **Contributing institutions:**
 
 <img border="0" src="logos/nbis_logo.png" height="50">    
-<img border="0" src="logos/inserm_logo.png" height="50">    
-<img border="0" src="logos/unibern_logo.png" height="50">    
-<img border="0" src="logos/bmls_logo.png" height="50">    
-<img border="0" src="logos/ethz_logo.png" height="50">
+<img border="0" src="logos/unibern_logo.png" height="50">
 
 <br/>
 
 **Additional information**
-
-Slack channel: https://join.slack.com/t/nccr-sib-rna/shared_invite/zt-fxti8aom-7oxC2~r6CPWHgv1Eb2_g3A
 
 For more information, please contact <a href="mailto:gregoire.rossier@sib.swiss">Grégoire Rossier</a>.
 
