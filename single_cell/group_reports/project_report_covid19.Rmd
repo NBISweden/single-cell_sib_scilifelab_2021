@@ -1,0 +1,1316 @@
+---
+output:
+  html_document: default
+  pdf_document: default
+---
+***
+
+<br/>
+
+# Research Analysis Tasks
+
+The following milestones and tasks are what you will need to perform in order
+to complete the project-based learning outcomes for this course. Go through
+them in order and refer to the glossary for more detailed information on each
+individual step.
+
+## Milestone 1
+
+### Download the data
+The data for this project is available at the course GitHub repository, which
+can be downloaded like so:
+
+1. Run `git clone https://github.com/sib-swiss/SchoolRNA2020.git`
+2. A new directory will be created named `SchoolRNA2020`; the data is residing
+   in the `single_cell/data/` directory
+
+You can either read the data from there (check the glossary for details) or
+copy the data to some other location, if you prefer. You can run the above
+command either on the command line interface or from within RStudio (more
+details in the glossary).
+
+
+### Load and merge datasets
+- Consult the Glossary or additional sources for help
+- Which file format do we have the data in?
+
+H5.
+
+Reading data:
+
+```{r}
+cov.17 <- Seurat::Read10X_h5(
+  filename = "data/covid_data_GSE149689/nCoV_PBMC_17.h5",
+  use.names = T)
+cov.15 <- Seurat::Read10X_h5(
+  filename = "data/covid_data_GSE149689/nCoV_PBMC_15.h5",
+  use.names = T)
+ctl.14 <- Seurat::Read10X_h5(
+  filename = "data/covid_data_GSE149689/Normal_PBMC_14.h5",
+  use.names = T)
+ctl.13 <- Seurat::Read10X_h5(
+  filename = "data/covid_data_GSE149689/Normal_PBMC_13.h5",
+  use.names = T)
+```
+
+- Why do we need to create a Seurat object?
+
+Because it's a useful object containing methods for single cell data analysis. 
+
+Creating Seurat objects for each sample:
+
+```{r}
+library("Seurat", lib.loc="~/sibsinglecell/lib/R/library")
+
+cov17.seurat <- CreateSeuratObject(
+  counts = cov.17,
+  assay = "RNA",
+  project = "covid_17")
+cov15.seurat <- CreateSeuratObject(
+  counts = cov.15,
+  assay = "RNA",
+  project = "covid_15")
+ctl14.seurat <- CreateSeuratObject(
+  counts = ctl.14,
+  assay = "RNA",
+  project = "control_14")
+ctl13.seurat <- CreateSeuratObject(
+  counts = ctl.13,
+  assay = "RNA",
+  project = "control_13")
+```
+
+Combining datasets:
+
+```{r}
+CombinedSeuratObject <- merge(
+  x = cov15.seurat,
+  y = c( cov17.seurat ,
+         ctl13.seurat,
+         ctl14.seurat),
+  add.cell.ids = c('covid_15','covid_17','control_13','control_14'))
+```
+
+The following is to create a column with the group (control or covid):
+
+```{r}
+CombinedSeuratObject$group <-sub("_.*","",CombinedSeuratObject$orig.ident)
+
+```
+
+
+
+- Where in the Seurat object is your counts stored? 
+
+```{r}
+#CombinedSeuratObject$nCount_RNA
+```
+
+
+- Describe in form of text the rational for this step in your markdown report.
+
+In this step we read the count data and create a Seurat object, a simple R object for scRNAseq data. We then combine all datasets, creating a metadata column that specificies sample group (control or covid).
+
+        
+### Compute QC
+- Consult the Glossary or additional sources for help
+- Which QC metrics should you calculate?
+
+###### Total number of features:
+
+A standard approach is to filter cells with low amount of reads as well as genes that are present in at least a certain amount of cells. Here we will only consider cells with at least 200 detected genes and genes need to be expressed in at least 3 cells. Please note that those values are highly dependent on the library preparation method used. Extremely high number of detected genes could indicate doublets. However, depending on the cell type composition in your sample, you may have cells with higher number of genes (and also higher counts) from one cell type.
+
+
+```{r}
+VlnPlot(CombinedSeuratObject,
+        group.by= "orig.ident",
+        features = c("nFeature_RNA","nCount_RNA"),
+        pt.size = 0.1,
+        ncol = 4) + NoLegend()
+```
+
+On the left figure each dot is a cell and we see the number of genes expressed in each cell. On the right plot, the number of reads obtained from each cell (UMI have been merged already).
+All samples seem to have a similar distribution in #genes and #counts, except sample covid_15 which shows a few cells with high #counts, that could indicate doublets (we don't really know).
+
+###### Gene QC
+
+In single cell, the most detected genes usually belong to housekeeping gene families, such as mitochondrial (MT-), ribossomal (RPL and RPS) and other structural proteins (i.e., ACTB, TMSB4X, B2M, EEF1A1).
+
+```{r}
+#Compute the relative expression of each gene per cell
+rel_expression <- Matrix::t( Matrix::t(CombinedSeuratObject@assays$RNA@counts) / Matrix::colSums(CombinedSeuratObject@assays$RNA@counts)) * 100
+most_expressed <- sort(Matrix::rowSums( rel_expression ),T) / ncol(CombinedSeuratObject)
+
+#Plot the relative expression of each gene per cell
+par(mfrow=c(1,3),mar=c(4,6,1,1))
+boxplot( as.matrix(Matrix::t(rel_expression[names(most_expressed[30:1]),])),cex=.1, las=1, xlab="% total count per cell",col=scales::hue_pal()(90)[30:1],horizontal=TRUE,ylim=c(0,8))
+boxplot( as.matrix(Matrix::t(rel_expression[names(most_expressed[60:31]),])),cex=.1, las=1, xlab="% total count per cell",col=scales::hue_pal()(90)[60:31],horizontal=TRUE,ylim=c(0,8))
+boxplot( as.matrix(Matrix::t(rel_expression[names(most_expressed[90:61]),])),cex=.1, las=1, xlab="% total count per cell",col=scales::hue_pal()(90)[90:61],horizontal=TRUE,ylim=c(0,8))
+par(mfrow=c(1,1))
+
+```
+
+This plot shows the highest expressed genes in the combined samples. We see the usually high expressed mt and RP genes, and probably house keeping genes like Malat1 (lncRNA highly expressed in PBMC cells).
+
+###### Mitocondrial genes
+
+Having the data in a suitable format, we can start calculating some quality metrics. We can for example calculate the percentage of mitocondrial and ribosomal genes per cell and add to the metadata. This will be helpfull to visualize them across different metadata parameteres (i.e. datasetID and chemistry version). There are several ways of doing this. Here is an example of how to manually calculate the proportion of mitochondrial reads and add to the metadata table.
+
+Citing from “Simple Single Cell” workflows (Lun, McCarthy & Marioni, 2017): “High proportions are indicative of poor-quality cells (Islam et al. 2014; Ilicic et al. 2016), possibly because of loss of cytoplasmic RNA from perforated cells. The reasoning is that mitochondria are larger than individual transcript molecules and less likely to escape through tears in the cell membrane.”
+
+(PS: non-linear relationship)
+
+```{r}
+# create seurat object of MT- genes:
+CombinedSeuratObject <- PercentageFeatureSet(
+  object = CombinedSeuratObject,
+  pattern = "^MT-",
+  assay = "RNA",
+  col.name = "percent_mito")
+# Feature plot of mt genes
+VlnPlot(CombinedSeuratObject,
+        group.by= "orig.ident",
+        features = c("nFeature_RNA","nCount_RNA","percent_mito"),
+        pt.size = 0.1,
+        ncol = 4) + NoLegend()
+```
+In the right plot we see the percentage of mt-genes per cell. Sample covid_15, we see large number of cells where high proportion of genes are mt. 
+We will need filter out cells that have more that 25% mt genes.
+
+###### Ribosomal genes
+In the same manner we will calculate the proportion gene expression that comes from ribosomal proteins. Ribosomal genes are the also among the top expressed genes in any cell and, on the contrary to mitochondrial genes, are inversely proportional to the mitochondrial content: the higher the mitochondrial content, the lower is the detection of ribosomal genes (PS: non-linear relationship).
+
+```{r}
+# create seurat object of RP- genes:
+CombinedSeuratObject <- PercentageFeatureSet(
+  object = CombinedSeuratObject,
+  pattern = "^RP[SL]",
+  assay = "RNA",
+  col.name = "percent_ribo")
+# Feature plot of rp genes
+VlnPlot(CombinedSeuratObject,
+        group.by= "orig.ident",
+        features = c("nFeature_RNA","nCount_RNA","percent_ribo"),
+        pt.size = 0.1,
+        ncol = 4) + NoLegend()
+```
+
+We see the anticorrelation of cells with high mt genes having  low % ribo genes. Sample covid_15 seems the one with poorest quality.
+
+######  % Gene biotype and chromossome location
+
+In RNA-sequencing, genes can be categorized into different groups depending on their RNA biotype. For example, “coding”, “non-coding”, “VDJ region genes” are “small interefering RNA” common gene biotypes. Besides, having information about chromossomal location might be usefull to identify bacth effects driven by sex chromossomes.
+
+Depending on the desired type of analysis, some gene categories can be filtered out if not of interest. For single cell specifically, cell libraries are usually constructed using poly-A enrichment and therefore enriching for “protein-coding proteins”, which usually contitutes around 80-90% of all available genes.
+
+How to run it:
+
+```{r}
+library(biomaRt)
+# get names of species:
+#biomaRt::listDatasets(mart)[,"dataset"]
+# get versin names, to use latest
+#biomaRt::listEnsemblArchives()
+
+# Retrieve human gene annotation from ENSEMBL
+mart = biomaRt::useMart(
+  biomart = "ensembl",
+  dataset = "hsapiens_gene_ensembl",
+  host = "aug2020.archive.ensembl.org")
+
+# Retrieve the selected attributes mouse gene annotation
+annot <- biomaRt::getBM(
+  attributes = c(
+    "external_gene_name",
+    "gene_biotype",
+    "chromosome_name"),
+  mart = mart)
+
+# Match the gene names with their respective gene biotype
+item <- annot[match(rownames(CombinedSeuratObject@assays$RNA@counts) , annot[,1]),"gene_biotype"]
+item[is.na(item)] <- "unknown"
+
+# Calculate the percentage of each gene biotype
+perc <- rowsum(as.matrix(CombinedSeuratObject@assays$RNA@counts) , group=item)
+perc <- (t(perc)/Matrix::colSums(CombinedSeuratObject@assays$RNA@counts))
+o <- order(apply(perc,2,median),decreasing = F)
+perc <- perc[,o]
+
+# Plot percentage of each gene biotype
+boxplot( perc*100,outline=F,las=2,main="% reads per cell",col=scales::hue_pal()(100),horizontal=T)
+
+# Add table to the object
+gene_biotype_table <- setNames(as.data.frame((perc*100)[,names(sort(table(item),decreasing = T))]),paste0("percent_",names(sort(table(item),decreasing = T))))
+
+CombinedSeuratObject@meta.data <- CombinedSeuratObject@meta.data[,!(colnames(CombinedSeuratObject@meta.data) %in% colnames(gene_biotype_table))]
+
+CombinedSeuratObject@meta.data <- cbind(
+  CombinedSeuratObject@meta.data,
+  gene_biotype_table)
+
+```
+
+Same is done with chromosome_name
+
+```{r}
+# Match the gene names with their respective chromosome location
+item <- annot[match(rownames(CombinedSeuratObject@assays$RNA@counts) , annot[,1]),"chromosome_name"]
+item[is.na(item)] <- "unknown"
+item[! item %in% as.character(c(1:23,"X","Y","MT")) ] <- "other"
+
+# Calculate the percentage of each gene biotype
+perc <- rowsum(as.matrix(CombinedSeuratObject@assays$RNA@counts) , group=item)
+perc <- (t(perc)/Matrix::colSums(CombinedSeuratObject@assays$RNA@counts))
+o <- order(apply(perc,2,median),decreasing = F)
+perc <- perc[,o]
+
+# Plot percentage of each gene biotype
+boxplot( perc*100,outline=F,las=2,main="% reads per cell",col=scales::hue_pal()(100),horizontal=T)
+
+# Add table to the object
+gene_biotype_table <- setNames(as.data.frame((perc*100)[,names(sort(table(item),decreasing = T))]),paste0("percent_",names(sort(table(item),decreasing = T))))
+
+CombinedSeuratObject@meta.data <- CombinedSeuratObject@meta.data[,!(colnames(CombinedSeuratObject@meta.data) %in% colnames(gene_biotype_table))]
+
+CombinedSeuratObject@meta.data <- cbind(
+  CombinedSeuratObject@meta.data,
+  gene_biotype_table)
+
+```
+If you want to focus the analysis on only protein-coding genes, for example, you can do it like so:
+```{r}
+dim(CombinedSeuratObject)
+sel <- annot[match(rownames(CombinedSeuratObject) ,
+                   annot[,1]),2] == "protein_coding"
+genes_use <- rownames(CombinedSeuratObject)[sel]
+genes_use <- as.character(na.omit(genes_use))
+CombinedSeuratObject <- CombinedSeuratObject[genes_use,]
+dim(CombinedSeuratObject)
+
+```
+
+######  Cell cycle scoring
+
+We here perform cell cycle scoring. To score a gene list, the algorithm calculates the difference of mean expression of the given list and the mean expression of reference genes. To build the reference, the function randomly chooses a bunch of genes matching the distribution of the expression of the given list. Cell cycle scoring with Seurat adds three slots in data, a score for S phase, a score for G2M phase and the predicted cell cycle phase. The Seurat package provides a list of human G2M and S phase genes in cc.genes.
+
+How to run it:
+
+```{r}
+CombinedSeuratObject <- CellCycleScoring(
+  object = CombinedSeuratObject,
+  g2m.features = cc.genes$g2m.genes,
+  s.features = cc.genes$s.genes)
+
+CombinedSeuratObject$G1.Score <- 1 - CombinedSeuratObject$S.Score - CombinedSeuratObject$G2M.Score
+
+VlnPlot(CombinedSeuratObject,
+        group.by= "orig.ident",
+        features = c("S.Score","G1.Score","G2M.Score"),
+        pt.size = 0.1,
+        ncol = 4) + NoLegend()
+```
+
+From the plots, we can see that cell cycle is not different between samples, so it won't have an impact in the analysis. 
+
+- What does each QC metric mean?
+
+Features and Gene QC: A sample with low # genes or los # counts could indicate a problem with sequence depth or poor sample quality. We need to filter out cells with low number of features for further analysis, and features that are not expressed in a certain number of samples (e.g. min in 3 samples). 
+
+Mitocondrial genes: cells with high proportion of mt-genes are indicative of poor quality and should be removed. High expression of mitochondrial genes could be indicative of several processes. Cells that are stressed/damaged/lysed will lose their cytoplasmic components, whereas the mitochdria is still intact during the damage, therefore most of the genes from such cells will be mitochondrial genes. If these cells are used for differential analysis, we will falsely obtain genes involved in cell damage/apoptosis processes. Therefore, they need to be filtered out.
+
+Cell cycle: we need to assess if cells are dividing, as this could affect differential expression analysis. 
+
+- Describe in form of text the rationale for this step in your markdown report.
+
+In this ste, we performed  QC control of the data to remove low quality cells or features that could confound downstream analysis. 
+
+
+### Define appropriate filtering thresholds
+- Consult the Glossary or additional sources for help
+- Which QC metric needs filtering in your data?
+
+Mitocondrial content. Cells with low features. Features present in too few cells.  
+
+
+- Which filtering parameters and respective thresholds suit your data?
+
+Filtering out genes that are expressed in less than 3 samples, as well as cells with less than 200 genes expressed.
+```{r}
+CombinedSeuratObject <- CombinedSeuratObject[rowSums(as.matrix(CombinedSeuratObject@assays$RNA@counts)>0)>=3 ,
+                                             colSums(as.matrix(CombinedSeuratObject@assays$RNA@counts)>0)>=200]
+```
+
+- Describe in form of text the rationale for this step in your markdown report
+
+We removed cells with high mt-gene content; cells with less than 200 genes expressed, and genes that are expressed in less than 3 samples. 
+
+
+<br/>
+
+
+## Milestone 2
+
+### Normalization and scaling
+- Consult the Glossary or additional sources for help
+- Why do we need to normalize the data? What exactly are we normalizing?
+
+To make it comparable. To remove the effect of sequencing depth, and gene length. 
+
+###### Normalization
+```{r}
+#remove genes with zero variance
+CombinedSeuratObject <- CombinedSeuratObject[ Matrix::rowSums(CombinedSeuratObject) > 0, ]
+
+#remove genes with zero variance
+CombinedSeuratObject <- NormalizeData(
+  object = CombinedSeuratObject,
+  scale.factor = 10000,
+  normalization.method = "LogNormalize")
+```
+
+###### feature selection
+```{r}
+CombinedSeuratObject <- FindVariableFeatures(
+  object = CombinedSeuratObject,
+  nfeatures = 3000,
+  selection.method = "vst",
+  verbose = FALSE,
+  assay = "RNA")
+
+#Variable gene plot:
+
+top20 <- head(VariableFeatures(CombinedSeuratObject), 20)
+LabelPoints(plot = VariableFeaturePlot(CombinedSeuratObject), points = top20, repel = TRUE)
+```
+
+
+- Where in the Seurat object is your normalized data stored?
+
+```{r}
+#CombinedSeuratObject@assays$RNA@data
+```
+
+- Which data covariates could potentially influence the interpretation of the results?
+
+Mitocondrial genes, number of features, etc.
+
+
+- Following the question above, are there any covariates that need to be regressed out?
+
+Percent_mito (mt-genes), S.score (cell cycle), nFeature_RNA, nCount_RNA.
+
+###### Scaling and centering
+
+```{r}
+# Linear scaling and centering (faster than poisson)
+CombinedSeuratObject <- ScaleData(
+  object = CombinedSeuratObject,
+  vars.to.regress = c("nCount_RNA","nFeature_RNA","percent_mito","S.Score"),
+  model.use = "linear",
+  do.scale = T,
+  do.center = T)
+```
+
+- Are all genes equally important for your analysis? Justify.
+
+No. We are interested in genes that are highly variable between samples, because they are most interesting biologically.
+
+- Where in the Seurat object is your scaled data stored?
+
+```{r}
+# CombinedSeuratObject@assays$RNA@scale.data
+```
+
+- Describe in form of text the rational for this step in your markdown report
+
+We select features that are most informative (most variable); we normalize data (for sequencing depth differences), and we scale the data, regressing out covariates that could confound downstream analysis.
+
+### Data Visualization
+- Consult the Glossary or additional sources for help
+- Which method would you use to capture most significant information out of the data?
+
+PCA
+
+```{r}
+#run pca
+CombinedSeuratObject <- RunPCA(object = CombinedSeuratObject,
+                       assay = "RNA",
+                       npcs = 100,
+                       verbose = FALSE )
+```
+
+- Following the question above, which parameters would you choose? Why?
+
+The number of principal components. 
+
+- Which method would you choose for visualization of the differences between your cells?
+
+UMAP and tSNE (with the first 50 PC). 
+
+```{r}
+# tSNE
+CombinedSeuratObject <- RunTSNE(object = CombinedSeuratObject,
+                        reduction = "pca",
+                        perplexity=30,
+                        max_iter=1000,
+                        theta=0.5,
+                        eta=200,
+                        exaggeration_factor=12,
+                        dims.use = 1:50,
+                        verbose = T,
+                        num_threads=0)
+
+# uMAP
+CombinedSeuratObject <- RunUMAP(object = CombinedSeuratObject,
+                        reduction = "pca",
+                        dims = 1:50,
+                        n.components = 2,
+                        n.neighbors = 20,
+                        spread = .3,
+                        repulsion.strength = 1,
+                        min.dist= .001,
+                        verbose = T,
+                        num_threads=0,
+                        n.epochs = 200,
+                        metric = "euclidean",
+                        seed.use = 42,
+                        reduction.name="umap")
+
+# plot tSNE
+DimPlot(object = CombinedSeuratObject,
+#        group.by = c("DATASET"),
+        reduction = "tsne",
+        dims = c(1,2),
+        pt.size = .1,
+        label = T,
+        ncol = 3)
+
+# plot UMAP
+DimPlot(object = CombinedSeuratObject,
+#        group.by = c("DATASET"),
+        reduction = "umap",
+        dims = c(1,2),
+        pt.size = .1,
+        label = T,
+        ncol = 3)
+
+# plot tSNE
+FeaturePlot(object = CombinedSeuratObject,
+            features = c("percent_mito", "nCount_RNA", "nFeature_RNA"),
+            reduction = "tsne",
+            dims = c(1,2),
+            order = T,
+            pt.size = .1,
+            ncol = 3)
+
+```
+
+- Following the question above, how the parameters in this method influence your visual representation?
+
+I we choose the first few PCs, that would explain the majority of the variance. If we'd choose more PCs, clusters will be less well separated because we are considering more variablity of the data. 
+
+- How some of your QC parameters and datasets influence the separation of your cells?
+
+If we don't remove poor quality cells, these could cluster together without giving us biologically-relevant information. 
+
+- Where in the Seurat object is your reductions stored?
+
+```{r}
+# CombinedSeuratObject@reductions
+```
+
+- Describe in form of text the rational for this step in your markdown report
+
+We have visualized the data as a PCA ,to reduce the complexity. 
+
+<br/>
+
+
+## Milestone 3
+
+### Dataset integration
+- Consult the Glossary or additional sources for help
+- Are there any batch effects in the data? Is batch correction / dataset integration necessary?
+
+Patient. They are separated. We need to integrate them to be able to separate cell types.
+
+
+- Following the question above, which parameters allow you to say that batch effects are present?
+
+We saw in in the UMAP/tSNE (covid_15 is apart.)
+
+- Would a simple linear regression be sufficient for removing batch effects on your dataset?
+ 
+ We do scaling again adding the sample replicates  Then do PCA, tSNE and plot that again.
+ 
+```{r}
+# Linear scaling and centering (faster than poisson)
+CombinedSeuratObject <- ScaleData(
+  object = CombinedSeuratObject,
+  vars.to.regress = c("nCount_RNA","nFeature_RNA","percent_mito","S.Score","orig.ident"),
+  model.use = "linear",
+  do.scale = T,
+  do.center = T)
+
+# pca
+CombinedSeuratObject <- RunPCA(object = CombinedSeuratObject,
+                               assay = "RNA",
+                               npcs = 100,
+                               verbose = FALSE )
+# tSNE
+CombinedSeuratObject <- RunTSNE(object = CombinedSeuratObject,
+                                reduction = "pca",
+                                perplexity=30,
+                                max_iter=1000,
+                                theta=0.5,
+                                eta=200,
+                                exaggeration_factor=12,
+                                dims.use = 1:50,
+                                verbose = T,
+                                num_threads=0)
+# plot tSNE
+DimPlot(object = CombinedSeuratObject,
+        #        group.by = c("DATASET"),
+        reduction = "tsne",
+        dims = c(1,2),
+        pt.size = .1,
+        label = T,
+        ncol = 3)
+
+```
+ 
+ 
+ No it's not good enough to do simple linear regression. 
+
+- Which method for batch effect would you choose?
+
+CCA. 
+
+```{r}
+SeuratObject.list <- SplitObject(
+  object = CombinedSeuratObject,
+  split.by = "orig.ident")
+
+SeuratObject.anchors <- FindIntegrationAnchors(
+  object.list = SeuratObject.list,
+  dims = 1:30)
+
+CombinedSeuratObject <- IntegrateData(
+  anchorset = SeuratObject.anchors,
+  dims = 1:30,
+  new.assay.name = "cca")
+```
+
+
+- How could you tell the batch correction procedure worked?
+
+Scaling, PCA, tSNE and plotting.
+
+```{r}
+# Linear scaling and centering (faster than poisson)
+CombinedSeuratObject <- ScaleData(
+  object = CombinedSeuratObject,
+  assay = "cca",
+#  vars.to.regress = c("nCount_RNA","nFeatures_RNA","percent_mito","S.Score"),
+  model.use = "linear",
+  do.scale = T,
+  do.center = T)
+
+# pca
+CombinedSeuratObject <- RunPCA(object = CombinedSeuratObject,
+                               assay = "cca",
+                               npcs = 100,
+                               verbose = FALSE )
+# tSNE
+CombinedSeuratObject <- RunTSNE(object = CombinedSeuratObject,
+                                reduction = "pca",
+                                perplexity=30,
+                                max_iter=1000,
+                                theta=0.5,
+                                eta=200,
+                                exaggeration_factor=12,
+                                dims.use = 1:50,
+                                verbose = T,
+                                num_threads=0)
+# plot tSNE
+DimPlot(object = CombinedSeuratObject,
+        #        group.by = c("DATASET"),
+        reduction = "tsne",
+        dims = c(1,2),
+        pt.size = .1,
+        label = T,
+        ncol = 3)
+
+# plot tSNE with categories
+FeaturePlot(object = CombinedSeuratObject,
+            features = c("percent_mito", "nCount_RNA", "nFeature_RNA","S.Score"),
+            reduction = "tsne",
+            dims = c(1,2),
+            order = T,
+            pt.size = .1,
+            ncol = 3)
+
+```
+
+After CCA samples have been well integrated. Only a cluster on covid-15 that hasnt been integrated, but it doesn't correspond to cells with high mt-genes proportion. 
+
+But we do see a cluster of cells with high mt-genes content, that we should remove.
+
+```{r}
+# CombinedSeuratObject <- CombinedSeuratObject[,CombinedSeuratObject$percent_mito < 25]
+```
+
+Run the whole analysis again, from combining datasets onwards.
+
+```{r}
+CombinedSeuratObject <- merge(
+  x = cov15.seurat,
+  y = c( cov17.seurat ,
+         ctl13.seurat,
+         ctl14.seurat),
+  add.cell.ids = c('covid_15','covid_17','control_13','control_14'))
+
+# creating a metadata object with the group (control/covid), taken from sample name (everything before the "_")
+CombinedSeuratObject$group <-sub("_.*","",CombinedSeuratObject$orig.ident)
+
+# create seurat object of MT- genes:
+CombinedSeuratObject <- PercentageFeatureSet(
+  object = CombinedSeuratObject,
+  pattern = "^MT-",
+  assay = "RNA",
+  col.name = "percent_mito")
+
+# remove cells that have more than 25% mt genes
+#rows are genes; columns are cells
+
+CombinedSeuratObject <- CombinedSeuratObject[,CombinedSeuratObject$percent_mito < 25]
+
+ # ribo genes
+# create seurat object of ribo- genes:
+CombinedSeuratObject <- PercentageFeatureSet(
+  object = CombinedSeuratObject,
+  pattern = "^RP[SL]",
+  assay = "RNA",
+  col.name = "percent_ribo")
+# Feature plot of mt genes
+VlnPlot(CombinedSeuratObject,
+        group.by= "orig.ident",
+        features = c("nFeature_RNA","nCount_RNA", "percent_mito","percent_ribo"),
+        pt.size = 0.1,
+        ncol = 4) + NoLegend()
+
+
+#  % Gene biotype and chromossome location
+
+library(biomaRt)
+# get names of species:
+#biomaRt::listDatasets(mart)[,"dataset"]
+# get versin names, to use latest
+#biomaRt::listEnsemblArchives()
+
+# Retrieve human gene annotation from ENSEMBL
+mart = biomaRt::useMart(
+  biomart = "ensembl",
+  dataset = "hsapiens_gene_ensembl",
+  host = "aug2020.archive.ensembl.org")
+
+# Retrieve the selected attributes mouse gene annotation
+annot <- biomaRt::getBM(
+  attributes = c(
+    "external_gene_name",
+    "gene_biotype",
+    "chromosome_name"),
+  mart = mart)
+
+# Match the gene names with their respective gene biotype
+item <- annot[match(rownames(CombinedSeuratObject@assays$RNA@counts) , annot[,1]),"gene_biotype"]
+item[is.na(item)] <- "unknown"
+
+# Calculate the percentage of each gene biotype
+perc <- rowsum(as.matrix(CombinedSeuratObject@assays$RNA@counts) , group=item)
+perc <- (t(perc)/Matrix::colSums(CombinedSeuratObject@assays$RNA@counts))
+o <- order(apply(perc,2,median),decreasing = F)
+perc <- perc[,o]
+
+# Add table to the object
+gene_biotype_table <- setNames(as.data.frame((perc*100)[,names(sort(table(item),decreasing = T))]),paste0("percent_",names(sort(table(item),decreasing = T))))
+
+CombinedSeuratObject@meta.data <- CombinedSeuratObject@meta.data[,!(colnames(CombinedSeuratObject@meta.data) %in% colnames(gene_biotype_table))]
+
+CombinedSeuratObject@meta.data <- cbind(
+  CombinedSeuratObject@meta.data,
+  gene_biotype_table)
+
+#Same is done with chromosome_name
+
+# Match the gene names with their respective chromosome location
+item <- annot[match(rownames(CombinedSeuratObject@assays$RNA@counts) , annot[,1]),"chromosome_name"]
+item[is.na(item)] <- "unknown"
+item[! item %in% as.character(c(1:23,"X","Y","MT")) ] <- "other"
+
+# Calculate the percentage of each gene biotype
+perc <- rowsum(as.matrix(CombinedSeuratObject@assays$RNA@counts) , group=item)
+perc <- (t(perc)/Matrix::colSums(CombinedSeuratObject@assays$RNA@counts))
+o <- order(apply(perc,2,median),decreasing = F)
+perc <- perc[,o]
+
+# Add table to the object
+gene_biotype_table <- setNames(as.data.frame((perc*100)[,names(sort(table(item),decreasing = T))]),paste0("percent_",names(sort(table(item),decreasing = T))))
+
+CombinedSeuratObject@meta.data <- CombinedSeuratObject@meta.data[,!(colnames(CombinedSeuratObject@meta.data) %in% colnames(gene_biotype_table))]
+
+CombinedSeuratObject@meta.data <- cbind(
+  CombinedSeuratObject@meta.data,
+  gene_biotype_table)
+
+
+# keep only protein coding genes
+dim(CombinedSeuratObject)
+sel <- annot[match(rownames(CombinedSeuratObject) ,
+                   annot[,1]),2] == "protein_coding"
+genes_use <- rownames(CombinedSeuratObject)[sel]
+genes_use <- as.character(na.omit(genes_use))
+CombinedSeuratObject <- CombinedSeuratObject[genes_use,]
+dim(CombinedSeuratObject)
+
+# cell cycle
+CombinedSeuratObject <- CellCycleScoring(
+  object = CombinedSeuratObject,
+  g2m.features = cc.genes$g2m.genes,
+  s.features = cc.genes$s.genes)
+
+CombinedSeuratObject$G1.Score <- 1 - CombinedSeuratObject$S.Score - CombinedSeuratObject$G2M.Score
+
+# filtering 
+# Filtering out genes that are expressed in less than 3 samples, as well as cells with less than 200 genes expressed.
+
+CombinedSeuratObject <- CombinedSeuratObject[rowSums(as.matrix(CombinedSeuratObject@assays$RNA@counts)>0)>=3 ,
+                                             colSums(as.matrix(CombinedSeuratObject@assays$RNA@counts)>0)>=200]
+
+
+# feature selection
+CombinedSeuratObject <- FindVariableFeatures(
+  object = CombinedSeuratObject,
+  nfeatures = 3000,
+  selection.method = "vst",
+  verbose = FALSE,
+  assay = "RNA")
+# Normalization
+#remove genes with zero variance
+CombinedSeuratObject <- CombinedSeuratObject[ Matrix::rowSums(CombinedSeuratObject) > 0, ]
+
+#remove genes with zero variance
+CombinedSeuratObject <- NormalizeData(
+  object = CombinedSeuratObject,
+  scale.factor = 10000,
+  normalization.method = "LogNormalize")
+
+#Variable gene plot:
+top20 <- head(VariableFeatures(CombinedSeuratObject), 20)
+LabelPoints(plot = VariableFeaturePlot(CombinedSeuratObject), points = top20, repel = TRUE)
+
+
+# Linear scaling and centering (faster than poisson)
+CombinedSeuratObject <- ScaleData(
+  object = CombinedSeuratObject,
+  vars.to.regress = c("nCount_RNA","nFeatures_RNA","percent_mito","S.Score"),
+  model.use = "linear",
+  do.scale = T,
+  do.center = T)
+
+# pca
+CombinedSeuratObject <- RunPCA(object = CombinedSeuratObject,
+                               assay = "RNA",
+                               npcs = 100,
+                               verbose = FALSE )
+# tSNE
+CombinedSeuratObject <- RunTSNE(object = CombinedSeuratObject,
+                                reduction = "pca",
+                                perplexity=30,
+                                max_iter=1000,
+                                theta=0.5,
+                                eta=200,
+                                exaggeration_factor=12,
+                                dims.use = 1:50,
+                                verbose = T,
+                                num_threads=0)
+# plot tSNE
+DimPlot(object = CombinedSeuratObject,
+        #        group.by = c("DATASET"),
+        reduction = "tsne",
+        dims = c(1,2),
+        pt.size = .1,
+        label = T,
+        ncol = 3)
+
+# uMAP
+CombinedSeuratObject <- RunUMAP(object = CombinedSeuratObject,
+                                reduction = "pca",
+                                dims = 1:50,
+                                n.components = 2,
+                                n.neighbors = 20,
+                                spread = .3,
+                                repulsion.strength = 1,
+                                min.dist= .001,
+                                verbose = T,
+                                num_threads=0,
+                                n.epochs = 200,
+                                metric = "euclidean",
+                                seed.use = 42,
+                                reduction.name="umap")
+# plot UMAP
+DimPlot(object = CombinedSeuratObject,
+        #        group.by = c("DATASET"),
+        reduction = "umap",
+        dims = c(1,2),
+        pt.size = .1,
+        label = T,
+        ncol = 3)
+
+# plot tSNE
+FeaturePlot(object = CombinedSeuratObject,
+            features = c("percent_mito", "nCount_RNA", "nFeature_RNA"),
+            reduction = "tsne",
+            dims = c(1,2),
+            order = T,
+            pt.size = .1,
+            ncol = 3)
+# plot umap
+FeaturePlot(object = CombinedSeuratObject,
+            features = c("percent_mito", "nCount_RNA", "nFeature_RNA"),
+            reduction = "umap",
+            dims = c(1,2),
+            order = T,
+            pt.size = .1,
+            ncol = 3)
+
+# remove batch with cca
+SeuratObject.list <- SplitObject(
+  object = CombinedSeuratObject,
+  split.by = "orig.ident")
+
+SeuratObject.anchors <- FindIntegrationAnchors(
+  object.list = SeuratObject.list,
+  dims = 1:30)
+
+CombinedSeuratObject <- IntegrateData(
+  anchorset = SeuratObject.anchors,
+  dims = 1:30,
+  new.assay.name = "cca")
+
+# Linear scaling and centering (faster than poisson)
+CombinedSeuratObject <- ScaleData(
+  object = CombinedSeuratObject,
+  assay = "cca",
+#  vars.to.regress = c("nCount_RNA","nFeatures_RNA","percent_mito","S.Score"),
+  model.use = "linear",
+  do.scale = T,
+  do.center = T)
+
+# pca
+CombinedSeuratObject <- RunPCA(object = CombinedSeuratObject,
+                               assay = "cca",
+                               npcs = 100,
+                               verbose = FALSE )
+# tSNE
+CombinedSeuratObject <- RunTSNE(object = CombinedSeuratObject,
+                                reduction = "pca",
+                                perplexity=30,
+                                max_iter=1000,
+                                theta=0.5,
+                                eta=200,
+                                exaggeration_factor=12,
+                                dims.use = 1:50,
+                                verbose = T,
+                                num_threads=0)
+# plot tSNE
+DimPlot(object = CombinedSeuratObject,
+        #        group.by = c("DATASET"),
+        reduction = "tsne",
+        dims = c(1,2),
+        pt.size = .1,
+        label = T,
+        ncol = 3)
+# plot tSNE with categories
+FeaturePlot(object = CombinedSeuratObject,
+            features = c("percent_mito", "nCount_RNA", "nFeature_RNA","S.Score"),
+            reduction = "tsne",
+            dims = c(1,2),
+            order = T,
+            pt.size = .1,
+            ncol = 3)
+```
+
+
+- Where in the Seurat object is your integrated data stored?
+
+```{r}
+# CombinedSeuratObject@assays$cca
+```
+
+- After batch correction, do you have corrected data matrix (genes x samples) or a matrix in a reduction embedding (samples x dimensions).
+
+CCA: corrected matrix.
+
+Scanorama and harmony: reduction embedding.
+
+
+- Where should you put the embedding results?
+
+In CCA, we create a new assay (see above), but the embeddings (PCA) need to be calculated
+
+But in scanorama and harmony, it creates already the embeddings (PCA), so pca doesnt need to run again, one can directly plot UMAP/tSNE. 
+
+- Visualize your results using the new matricies.
+
+See above.
+
+- Describe in form of text the rational for this step in your markdown report
+
+We integrate the data to remove batch effects. 
+
+<br/>
+
+
+## Milestone 4
+
+### Cell Clustering
+- Consult the Glossary or additional sources for help
+- What is a graph?
+
+Representation of data in a simplified way.
+
+- Which kind of graph is the most robust to represent your data?
+
+SNN, because it removes spurious connections. 
+
+```{r}
+## SNN
+CombinedSeuratObject <- FindNeighbors(CombinedSeuratObject,
+                              assay = "cca",
+                              compute.SNN = T,
+                              reduction = "pca" ,
+                              dims = 1:50,
+                              graph.name="SNN",
+                              prune.SNN = 1/15,
+                              k.param = 20,
+                              force.recalc = T)
+# Louvain
+CombinedSeuratObject <- FindClusters(
+  object = CombinedSeuratObject,
+  graph.name = "SNN",
+  resolution = 0.2, # to get 8 clusters
+  algorithm = 1) #algorithim 1 = Louvain
+
+DimPlot(object = CombinedSeuratObject,
+        group.by = c("seurat_clusters"),
+        reduction = "tsne",
+        dims = c(1,2),
+        pt.size = .1,
+        label = T,
+        ncol = 3)
+```
+
+
+- Where in the Seurat object is your graph stored?
+
+```{r}
+# CombinedSeuratObject@graphs$SNN
+```
+
+- Why do we need to cluster our cells?
+
+Ti identify the cell types.
+
+- Which parameters have you chosen when clustering?
+
+We choose a resolution (0.2) that gives us sufficient number of clusters to distinguish the main blood cell types (see also later the identification of marker genes). 
+
+We choose Louvain because we don't have the package for Leiden. 
+
+- How can you tell which clustering resolution is best?
+
+By trying and see what makes sense from biological point of  view. We could create more clusters but they have the same expression profile. 
+
+- Do the clustering reflect the cell separation seen by the visualization method you are using?
+
+Yes. 
+
+- How are your clusters distributed across the samples, groups, experimental conditions, etc.?
+
+```{r}
+# comparison of clusters. Are the clusters homogeneously distributed among samples.
+comparison_table <- table(list(
+  CombinedSeuratObject@meta.data[,"orig.ident"],
+  CombinedSeuratObject@meta.data[,"seurat_clusters"]
+))
+#Transform data to percentages:
+comparison_table <- t(t(comparison_table)/colSums(comparison_table))*100
+#Barplot
+barplot(comparison_table,
+        col=scales::hue_pal()(nrow(comparison_table))[1:nrow(comparison_table)],
+        border=NA,
+        las=2, legend = T)
+
+
+
+# comparison of clusters. Are the clusters homogeneously distributed among samples.
+comparison_table <- table(list(
+  CombinedSeuratObject@meta.data[,"group"],
+  CombinedSeuratObject@meta.data[,"seurat_clusters"]
+))
+#Transform data to percentages:
+comparison_table <- t(t(comparison_table)/colSums(comparison_table))*100
+#Barplot
+barplot(comparison_table,
+        col=scales::hue_pal()(nrow(comparison_table))[1:nrow(comparison_table)],
+        border=NA,
+        las=2, legend = T)
+
+```
+
+We see a few clusters that have mostly covid samples. 
+
+- Where in the Seurat object is your clustering data stored?
+
+```{r}
+# CombinedSeuratObject@meta.data$seurat_clusters
+```
+
+
+- Describe in form of text the rationale for this step in your markdown report
+
+To identify cell clusters. 
+
+
+<br/>
+
+
+## Milestone 5
+
+### Differential expression
+- Consult the Glossary or additional sources for help
+- Which biological question(s) do you want to answer with differential expression?
+
+1. Detect genes that have higher expression in one cluster of cells compared to another (find cluster-specific markers):
+
+```{r}
+#Find markers:
+
+markers <- FindAllMarkers( object = CombinedSeuratObject,
+                           assay = "cca",
+                           logfc.threshold = 0.25,
+                           test.use = "wilcox",
+                           slot = "data",
+                           min.pct = 0.1,
+                           min.diff.pct = -Inf,
+                           only.pos = FALSE,
+                           max.cells.per.ident = 51,
+                           latent.vars = NULL,
+                           min.cells.feature = 3,
+                           min.cells.group = 3,
+                           pseudocount.use = 1,
+                           return.thresh = 0.01 )
+#plot
+library(dplyr)
+top5 <- markers %>% group_by(cluster) %>% top_n(-5, p_val_adj)
+
+DoHeatmap(object = CombinedSeuratObject,
+          features = as.character(unique(top5$gene)),
+          group.by = "seurat_clusters",
+          assay = "cca")
+
+```
+
+
+
+2. which genes are differentially expressed within a cluster between covid vs. control, code below.
+
+- Are you interested in comparing all cells or using a specific cluster?
+
+Specific cluster.
+
+- If you are interested in a particular cluster, which cluster, why?
+
+We are interested in clusters that have DEG between conditions. Those are cluster 0 and 6.
+
+After trying all 8 clusters, these 2 show DEG between covid and control samples.
+
+
+```{r}
+# DEG within a cluster.
+cell_selection <- CombinedSeuratObject[,CombinedSeuratObject$seurat_clusters == 0]
+cell_selection <- SetIdent(cell_selection, value = "group")
+
+# Compute differentiall expression
+DGE_cell_selection <- FindAllMarkers(
+  object = cell_selection,
+  assay = "RNA",
+  logfc.threshold = 0.2,
+  test.use = "wilcox",
+  min.pct = 0.1,
+  min.diff.pct = -Inf,
+  only.pos = FALSE,
+  max.cells.per.ident = 51, # number cells of smallest cluster
+  latent.vars = NULL,
+  min.cells.feature = 3,
+  min.cells.group = 3,
+  pseudocount.use = 1,
+  return.thresh = 0.01 )
+
+# plot top 5 genes
+top5dg4 <- DGE_cell_selection %>% group_by(cluster) %>% top_n(-5, p_val_adj)
+# heatmap
+DoHeatmap(object = cell_selection,
+          features = as.character(unique(top5dg4$gene)),
+          group.by = "group",
+          assay = "RNA",slot = "data")
+
+
+# DEG within a cluster.
+cell_selection <- CombinedSeuratObject[,CombinedSeuratObject$seurat_clusters == 6]
+cell_selection <- SetIdent(cell_selection, value = "group")
+
+# Compute differentiall expression
+DGE_cell_selection <- FindAllMarkers(
+  object = cell_selection,
+  assay = "RNA",
+  logfc.threshold = 0.2,
+  test.use = "wilcox",
+  min.pct = 0.1,
+  min.diff.pct = -Inf,
+  only.pos = FALSE,
+  max.cells.per.ident = 51, # number cells of smallest cluster
+  latent.vars = NULL,
+  min.cells.feature = 3,
+  min.cells.group = 3,
+  pseudocount.use = 1,
+  return.thresh = 0.01 )
+
+# plot top 5 genes
+top5dg4 <- DGE_cell_selection %>% group_by(cluster) %>% top_n(-5, p_val_adj)
+# heatmap
+DoHeatmap(object = cell_selection,
+          features = as.character(unique(top5dg4$gene)),
+          group.by = "group",
+          assay = "RNA",slot = "data")
+
+```
+
+From cluster 6, we have IFI6 and IFI27, two genes related to Interferon alpha signalling and innate immune response. These two are downregulated in covid patient samples (they could be interesting for follow-up studies)
+
+
+
+- Which clustering resolution would you run your differential expression?
+
+Clustering with resolution = 0.2 in Louvain to get 8 clusters that are representative of one cell type. 
+
+
+- Which test did you choose for differential expression?
+
+Wilcox
+
+- What parameters did you set for computing differential expression? Justify each one
+
+  logfc.threshold = 0.2, # we will detect small differences (2^0.2= 1.15) as a first step; and later one could find stronger changes. 
+  
+  
+  min.pct = 0.1, # means the gene should be expressed in at least 10% of cells.
+  
+  min.diff.pct = -Inf, # to consider all
+  
+  only.pos = FALSE, # for up and down-regulated 
+  
+  max.cells.per.ident = 51, # number cells of smallest cluster, so it's scaled down to the smallest cluster. 
+  
+  latent.vars = NULL, # we don't want to correct confounding factors, we already did. 
+  
+  min.cells.feature = 3, # we want genes that are expressed in at least 3 cells (we did this already before)
+  
+  min.cells.group = 3, # Every group should have at least 3 cells. 
+  
+  return.thresh = 0.01 # significance threshold to consider. 
+
+- Which marker genes can separate each of the cell clusters in your data?
+
+We plot known marker genes for each blood cell type, to try to know which cells identify each cluster. This will help later to know in which cells we have DEG.
+
+```{r}
+#plotting clusters
+DimPlot(object = CombinedSeuratObject,
+        group.by = c("seurat_clusters"),
+        reduction = "tsne",
+        dims = c(1,2),
+        pt.size = .1,
+        label = T,
+        ncol = 3)
+# plotting known marker genes for different cell types
+FeaturePlot(object = CombinedSeuratObject,
+            features = c("CD4","CD8B","CD3G","CD14","HBA1","MS4A1"),
+            reduction = "tsne",
+            dims = c(1,2),
+            order = T,
+            pt.size = .1,
+            ncol = 3)
+
+```
+
+With this we see that the clusters 0 and 6 having DEG between covid and control correspond to CD4 and monocytes cells.
+
+
+- Which cell types do they represent?
+
+ "CD4","CD8B","CD3G","CD14","HBA1","MS4A1", representing CD4, CD8, NK, monocytes, red blood cells, B cells, respectively.
+
+- How would you visualize the list of differentially expressed genes?
+
+Heatmap.
+
+- Describe in form of text the rationale for this step in your markdown report
+
+We identify DEG between conditions and we associate them to the cell type using known marker genes. 
+
+
+### Functional enrichment analysis
+
+```{r}
+
+# from cluster 6 (CD4 T cells)
+
+
+# functional enrichment 
+library(enrichR)
+
+# Check available databases to perform enrichment (then choose one)
+enrichR::listEnrichrDbs()
+
+# perform enrichment
+enrich_results <- enrichr(
+  genes = top5dg4$gene[ top5dg4$cluster == "covid" ],
+  databases = "GO_Biological_Process_2017b" )[[1]]
+
+# Some databases of interest:
+#   
+#   GO_Biological_Process_2017b
+# KEGG_2019_Human
+# KEGG_2019_Mouse
+# WikiPathways_2019_Human
+# WikiPathways_2019_Mouse
+
+enrich_results$Term <- sub("GO.*","",enrich_results$Term)
+
+par(1,1,mar=c(3,20,2,1))
+barplot( height = -log10(enrich_results$P.value)[20:1],
+         names.arg = enrich_results$Term[20:1],
+         horiz = T,
+         las=2,
+         border=F,
+         cex.names = .6 )
+abline( v=c( -log10(0.05) ),lty=2 )
+abline( v=0,lty=1 )
+
+```
+
+GO analysis of DEG in covid samples of cluster 6 shows and enrichment for the interferon signalling pathway, a pathway that has recently been shown to be impaired in severe COVID-19 patients (Hadjadj et al. Science 2020)
+
+<br/>

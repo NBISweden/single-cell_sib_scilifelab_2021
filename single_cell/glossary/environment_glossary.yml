@@ -1,0 +1,22 @@
+name: glossary
+
+channels:
+ - bioconda
+ - conda-forge
+ - defaults
+ - anaconda
+ - rdonnelly
+ - Eugene_T
+
+dependencies:
+ - r-base=3.5
+ - rstudio=1.2.502
+ - r-bookdown
+ - r-seurat=3.2.0
+ # - r-conos
+ # - r-harmony
+ # - r-liger
+ # - r-seuratwrappers
+ - r-destiny
+ - r-apcluster
+ 

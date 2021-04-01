@@ -1,0 +1,46 @@
+name: sibRNA2020
+
+channels:
+ - conda-forge
+ - bioconda
+ - defaults
+ - anaconda
+ - r
+ - rdonnelly
+ - psi4
+
+dependencies:
+ - r-base
+ - rstudio
+ - bioconductor-biomart
+ - bioconductor-slingshot
+ - bioconductor-tradeseq
+ - bioconductor-destiny
+ - bioconductor-rhdf5
+ - r-biocmanager
+ - r-devtools
+ - r-pheatmap
+ - r-dplyr
+ - r-seurat>=3.1.2
+ - r-igraph
+ - r-scales
+ - r-rafalib
+ - r-enrichr
+ - r-umap=0.2
+ - r-grr
+ - r-hdf5r=1.2.0
+ - r-bookdown
+ - wget
+ # - umap-learn=0.2.0
+ # - leidenalg=0.8.0
+ - scanorama
+ - clang_osx-64     #MacOS only
+ - clangxx_osx-64   #MacOS only
+ - gfortran_osx-64  #MacOS only
+ # - gcc_linux-64       #Linux only
+ # - gxx_linux-64       #Linux only
+ # - gfortran_linux-64  #Linux only
+ - pip
+ - pip:
+   - umap-learn
+   - leidenalg

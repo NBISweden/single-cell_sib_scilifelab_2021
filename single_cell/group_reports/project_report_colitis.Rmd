@@ -1,0 +1,799 @@
+---
+title: 'Title'
+output:
+  html_document:
+    toc: true
+    toc_depth: 3
+    toc_float: 
+      collapsed: true
+    code_folding: hide
+  pdf_document: default
+editor_options:
+  chunk_output_type: inline
+---
+***
+
+<br/>
+
+# Research Analysis Tasks
+
+The following milestones and tasks are what you will need to perform in order
+to complete the project-based learning outcomes for this course. Go through
+them in order and refer to the glossary for more detailed information on each
+individual step.
+
+## Milestone 1
+
+### Download the data
+The data for this project is available at the course GitHub repository, which
+can be downloaded like so:
+
+1. Run `git clone https://github.com/sib-swiss/SchoolRNA2020.git`
+2. A new directory will be created named `SchoolRNA2020`; the data is residing
+   in the `single_cell/data/` directory
+
+You can either read the data from there (check the glossary for details) or
+copy the data to some other location, if you prefer. You can run the above
+command either on the command line interface or from within RStudio (more
+details in the glossary).
+
+Data download:
+```{bash}
+cd ~/Downloads
+git clone https://github.com/sib-swiss/SchoolRNA2020.git
+cd SchoolRNA2020
+mv single_cell/ ~/RProjects/sibsinglecell/single_cell
+```
+
+Data location:
+```{r}
+data_dir <- "~/RProjects/sibsinglecell/single_cell/data"
+```
+
+The data GSM3396167 is located at https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM3396167.
+Paper: 10.1172/jci.insight.124928. 
+
+### Load and merge datasets
+- Consult the Glossary or additional sources for help
+- Which file format do we have the data in? .mtx: sparse matrix, barcodes: column names, features: row names (the gene names)
+- Why do we need to create a Seurat object? 
+- Where in the Seurat object is your counts stored? 
+- Describe in form of text the rational for this step in your markdown report.
+
+We have 3 samples in the sparse matrix format (.mtx) and we want to load them separately to not loose any cells (`min.cells = 0` and `min.features=0$`) and hold the information of the sample name. Then, we create seurat objects separately in order to perform the whole analysis (normalisation, scaling, dimensionality reduction, visualisation, etc.). Finally we merge it. Like this, we end up with one object that contains the information of the samples.
+```{r}
+library(Seurat)
+
+sparse_matrix_A <- Seurat::Read10X(
+  data.dir = file.path(data_dir, "marrow_data_GSE120221", "GSM3396167_matrix_A"))
+sparse_matrix_E <- Seurat::Read10X(
+  data.dir = file.path(data_dir, "marrow_data_GSE120221", "GSM3396167_matrix_E"))
+sparse_matrix_F <- Seurat::Read10X(
+  data.dir = file.path(data_dir, "marrow_data_GSE120221", "GSM3396167_matrix_F"))
+
+seurat_A <- CreateSeuratObject(counts = sparse_matrix_A,
+                               min.cells = 0, min.features = 0,
+                               assay = "RNA",
+                               project = "matrix_A")
+seurat_E <- CreateSeuratObject(counts = sparse_matrix_E,
+                               min.cells = 0, min.features = 0,
+                               assay = "RNA",
+                               project = "matrix_E")
+seurat_F <- CreateSeuratObject(counts = sparse_matrix_F,
+                               min.cells = 0, min.features = 0,
+                               assay = "RNA",
+                               project = "matrix_F")
+rm(sparse_matrix_A, sparse_matrix_E, sparse_matrix_F)
+
+SeuratObject <- merge(seurat_A, c(seurat_E, seurat_F),
+                       add.cell.ids = c("matrix_A", "matrix_E", "matrix_F"))
+rm(seurat_A, seurat_E, seurat_F)
+```
+
+final object:
+```{r}
+SeuratObject
+```
+
+counts are in
+```{r}
+SeuratObject@assays$RNA@counts[1:6,1:6]
+```
+
+
+### Compute QC
+- Consult the Glossary or additional sources for help
+- Which QC metrics should you calculate?
+- What does each QC metric mean?
+- Describe in form of text the rationale for this step in your markdown report
+
+Total number of features per sample in the violin plot.
+```{r}
+VlnPlot(SeuratObject,
+        group.by= "orig.ident",
+        features = c("nFeature_RNA","nCount_RNA"),
+        pt.size = 0.1,
+        ncol = 4) + NoLegend()
+```
+Gene QC
+```{r}
+#Compute the relative expression of each gene per cell
+rel_expression <- Matrix::t( Matrix::t(SeuratObject@assays$RNA@counts) / Matrix::colSums(SeuratObject@assays$RNA@counts)) * 100
+most_expressed <- sort(Matrix::rowSums( rel_expression ),T) / ncol(SeuratObject)
+
+#Plot the relative expression of each gene per cell
+par(mfrow=c(1,3),mar=c(4,6,1,1))
+boxplot( as.matrix(Matrix::t(rel_expression[names(most_expressed[30:1]),])),cex=.1, las=1, xlab="% total count per cell",col=scales::hue_pal()(90)[30:1],horizontal=TRUE,ylim=c(0,8))
+boxplot( as.matrix(Matrix::t(rel_expression[names(most_expressed[60:31]),])),cex=.1, las=1, xlab="% total count per cell",col=scales::hue_pal()(90)[60:31],horizontal=TRUE,ylim=c(0,8))
+boxplot( as.matrix(Matrix::t(rel_expression[names(most_expressed[90:61]),])),cex=.1, las=1, xlab="% total count per cell",col=scales::hue_pal()(90)[90:61],horizontal=TRUE,ylim=c(0,8))
+```
+Percentage mitochondrial and ribosomal genes
+```{r}
+# Calculating % mitochondrial genes
+SeuratObject <- PercentageFeatureSet(
+  object = SeuratObject,
+  pattern = "^MT-",
+  assay = "RNA",
+  col.name = "percent_mito")
+# Calculating % ribosomal genes
+SeuratObject <- PercentageFeatureSet(
+  SeuratObject,
+  pattern = "^RP[SL]",
+  col.name = "percent_ribo")
+VlnPlot(SeuratObject,
+        group.by= "orig.ident",
+        features = c("percent_mito","percent_ribo"),
+        pt.size = 0.1,
+        ncol = 4) + NoLegend()
+```
+Percentage gene biotype
+```{r}
+library(biomaRt)
+
+# Retrieve mouse gene annotation from ENSEMBL
+mart = biomaRt::useMart(
+  biomart = "ensembl",
+  dataset = "hsapiens_gene_ensembl",
+  host = "apr2020.archive.ensembl.org")
+
+# Retrieve the selected attributes mouse gene annotation
+annot <- biomaRt::getBM(
+  attributes = c(
+    "external_gene_name",
+    "gene_biotype",
+    "chromosome_name"),
+  mart = mart)
+```
+
+```{r}
+# Match the gene names with theit respective gene biotype
+item <- annot[match(rownames(SeuratObject@assays$RNA@counts) , annot[,1]),"gene_biotype"]
+item[is.na(item)] <- "unknown"
+
+# Calculate the percentage of each gene biotype
+perc <- rowsum(as.matrix(SeuratObject@assays$RNA@counts) , group=item)
+perc <- (t(perc)/Matrix::colSums(SeuratObject@assays$RNA@counts))
+o <- order(apply(perc,2,median),decreasing = F)
+perc <- perc[,o]
+
+# Plot percentage of each gene biotype
+boxplot( perc*100,outline=F,las=2,main="% reads per cell",col=scales::hue_pal()(100),horizontal=T)
+
+# Add table to the object
+gene_biotype_table <- setNames(as.data.frame((perc*100)[,names(sort(table(item),decreasing = T))]),paste0("percent_",names(sort(table(item),decreasing = T))))
+SeuratObject@meta.data <- SeuratObject@meta.data[,!(colnames(SeuratObject@meta.data) %in% colnames(gene_biotype_table))]
+
+SeuratObject@meta.data <- cbind(
+  SeuratObject@meta.data,
+  gene_biotype_table)
+```
+
+```{r}
+# Match the gene names with their respective chromosome location
+item <- annot[match(rownames(SeuratObject@assays$RNA@counts) , annot[,1]),"chromosome_name"]
+item[is.na(item)] <- "unknown"
+item[! item %in% as.character(c(1:23,"X","Y","MT")) ] <- "other"
+
+# Calculate the percentage of each gene biotype
+perc <- rowsum(as.matrix(SeuratObject@assays$RNA@counts) , group=item)
+perc <- (t(perc)/Matrix::colSums(SeuratObject@assays$RNA@counts))
+o <- order(apply(perc,2,median),decreasing = F)
+perc <- perc[,o]
+
+# Plot percentage of each gene biotype
+boxplot( perc*100,outline=F,las=2,main="% reads per cell",col=scales::hue_pal()(100),horizontal=T)
+
+# Add table to the object
+gene_biotype_table <- setNames(as.data.frame((perc*100)[,names(sort(table(item),decreasing = T))]),paste0("percent_",names(sort(table(item),decreasing = T))))
+SeuratObject@meta.data <- SeuratObject@meta.data[,!(colnames(SeuratObject@meta.data) %in% colnames(gene_biotype_table))]
+
+SeuratObject@meta.data <- cbind(
+  SeuratObject@meta.data,
+  gene_biotype_table)
+```
+
+Cell cycle scoring
+```{r}
+SeuratObject <- CellCycleScoring(
+  object = SeuratObject,
+  g2m.features = cc.genes$g2m.genes,
+  s.features = cc.genes$s.genes)
+
+SeuratObject$G1.Score <- 1 - SeuratObject$S.Score - SeuratObject$G2M.Score
+
+VlnPlot(SeuratObject,
+        group.by= "orig.ident",
+        features = c("G1.Score","S.Score", "G2M.Score"),
+        pt.size = 0.1,
+        ncol = 4) + NoLegend()
+```
+
+PCA on metadata
+```{r}
+# Calculate PCA using selected metadata parameters
+metadata_use <- grep("perc",colnames(SeuratObject@meta.data),value = T)
+metadata_use <- c("nCount_RNA","nFeature_RNA","S.Score","G2M.Score",metadata_use)
+
+#remove columns in the metadata that are all 0s
+metadata_use <- metadata_use [ colSums( SeuratObject@meta.data[,metadata_use] != 0 ) > 0 ]
+
+#Run PCA
+PC <- prcomp( SeuratObject@meta.data[,metadata_use] ,center = T, scale. = T)
+
+# Add the PCA (ran on the METADATA) in the object
+SeuratObject@reductions[["pca_metadata"]] <- CreateDimReducObject(
+  embeddings = PC$x,
+  key = "metadataPC_",
+  assay = "RNA")
+
+# Plot the PCA ran on the METADATA
+DimPlot(SeuratObject,
+        reduction = "pca_metadata",
+        dims = c(1,2),
+        group.by = "orig.ident" )
+```
+
+
+### Define appropriate filtering thresholds
+- Consult the Glossary or additional sources for help
+- Which QC metric needs filtering in your data?
+nFeature_RNA, nCount_RNA, percent_mito, percent_ribo
+- Which filtering parameters and respective thresholds suit your data?
+
+- Describe in form of text the rationale for this step in your markdown report
+
+
+<br/>
+
+Filter cells with percentage mitochondria > XX%
+```{r}
+SeuratObject <- subset(SeuratObject, subset = percent_mito < 15 & nFeature_RNA < 4500)
+```
+
+
+## Milestone 2
+
+### Normalization and scaling
+- Consult the Glossary or additional sources for help
+- Why do we need to normalize the data? What exactly are we normalizing?
+Normalisation is needed to account for varying sequencing depth. Normalisation to the library size per cell, and then the ln + 1 is taken. 
+- Where in the Seurat object is your normalized data stored?
+SeuratObject@assays$RNA@data
+- Which data covariates could potentially influence the interpretation of the results?
+percentage mitochondria, percentage ribosome
+- Following the question above, are there any covariates that need to be regressed out?
+UMI counts, percent mitochondria, number of genes per cell
+- Are all genes equally important for your analysis? Justify.
+
+- Where in the Seurat object is your scaled data stored?
+SeuratObject@assays$RNA@scale.data
+- Describe in form of text the rational for this step in your markdown report
+
+Normalisation
+```{r}
+#remove genes with zero variance
+SeuratObject <- SeuratObject[ Matrix::rowSums(SeuratObject) > 0, ]
+
+#remove genes with zero variance
+SeuratObject <- NormalizeData(
+  object = SeuratObject,
+  scale.factor = 10000,
+  normalization.method = "LogNormalize")
+```
+
+Feature selection
+```{r}
+SeuratObject <- FindVariableFeatures(
+  object = SeuratObject,
+  nfeatures = 3000,
+  selection.method = "vst",
+  verbose = FALSE,
+  assay = "RNA")
+```
+
+```{r}
+top20 <- head(VariableFeatures(SeuratObject, assay = "RNA"), 20)
+LabelPoints(plot = VariableFeaturePlot(SeuratObject, assay = "RNA"), points = top20, repel = TRUE)
+```
+
+Scaling and Centering (linear)
+```{r}
+if(!file.exists("SeuratObject_scaled.RData")){
+  SeuratObject <- ScaleData(
+    object = SeuratObject,
+    features = VariableFeatures(SeuratObject),
+    assay = "RNA",
+    vars.to.regress = c("nCount_RNA"),
+    model.use = "linear",
+    do.scale = T,
+    do.center = T)
+  save(SeuratObject, file = "SeuratObject_scaled.RData")
+} else{
+  load("SeuratObject_scaled.RData")
+}
+```
+
+### Data Visualization
+- Consult the Glossary or additional sources for help
+- Which method would you use to capture most significant information out of the data?
+PCA and elbow plot to find dimensionality of data
+- Following the question above, which parameters would you choose? Why?
+- Which method would you choose for visualization of the differences between your cells?
+- Following the question above, how the parameters in this method influence your visual representation?
+- How some of your QC parameters and datasets influence the separation of your cells?
+- Where in the Seurat object is your reductions stored?
+- Describe in form of text the rational for this step in your markdown report
+
+<br/>
+
+PCA
+```{r}
+SeuratObject <- RunPCA(object = SeuratObject,
+                       features = VariableFeatures(SeuratObject),
+                       assay = "RNA",
+                       npcs = 100,
+                       verbose = FALSE,
+                       reduction.name = "pca")
+ElbowPlot(SeuratObject, ndims = 30, reduction = "pca")
+```
+Choose dimensionality
+```{r}
+top_PCs <- 15
+```
+
+Run UMAP
+```{r}
+SeuratObject <- RunUMAP(object = SeuratObject,
+                        assay = "RNA",
+                        reduction = "pca",
+                        dims = 1:top_PCs,
+                        n.components = 2,
+                        n.neighbors = 20,
+                        spread = 1,
+                        repulsion.strength = 1,
+                        min.dist= .001,
+                        verbose = F,
+                        n.epochs = 200,
+                        metric = "euclidean",
+                        seed.use = 42,
+                        reduction.name="umap")
+```
+Run tSNE
+```{r}
+SeuratObject <- RunTSNE(object = SeuratObject,
+                        assay = "RNA",
+                        reduction = "pca",
+                        perplexity=30,
+                        max_iter=1000,
+                        theta=0.5,
+                        eta=200,
+                        exaggeration_factor=12,
+                        dims.use = 1:top_PCs,
+                        verbose = F,
+                        num_threads=0,
+                        reduction.name = "tsne")
+```
+
+Plot PCA, UMAP
+```{r}
+DimPlot(SeuratObject, reduction = "pca", dims = c(1,2))
+DimPlot(SeuratObject, reduction = "pca", dims = c(3,4))
+DimPlot(SeuratObject, reduction = "umap")
+DimPlot(SeuratObject, reduction = "tsne")
+```
+
+
+## Milestone 3
+
+### Dataset integration
+- Consult the Glossary or additional sources for help
+- Are there any batch effects in the data? Is batch correction / dataset integration necessary?
+Based on the PC, and UMAP plots, yes, there appears to be a batch effect.
+- Following the question above, which parameters allow you to say that batch effects are present?
+No overlap of samples/batches in 2D representation in individual clusters
+- Would a simple linear regression be sufficient for removing batch effects on your dataset?
+Probably not, since the data is high dimensional
+- Which method for batch effect would you choose?
+Harmony
+- How could you tell the batch correction procedure worked?
+If there is reasonable overlap
+- Where in the Seurat object is your integrated data stored?
+- After batch correction, do you have corrected data matrix (genes x samples) or a matrix in a reduction embedding (samples x dimensions).
+- Where where should you put the embedding results?
+- Visualize your results using the new matricies.
+- Describe in form of text the rational for this step in your markdown report
+
+<br/>
+
+#### Harmony
+```{r}
+# Load additional libraries
+library(harmony)
+library(SeuratWrappers)
+
+SeuratObject <- RunHarmony(
+  SeuratObject,
+  reduction = "pca", dims.use = 1:100,
+  nclust = NULL,
+  group.by.vars = "orig.ident",
+  reduction.save = "harmony",
+  project.dim = TRUE)
+```
+
+```{r}
+DimPlot(SeuratObject, reduction = "harmony", dims = c(1,2))
+DimPlot(SeuratObject, reduction = "harmony", dims = c(3,4))
+```
+
+```{r}
+ElbowPlot(SeuratObject, ndims = 30, reduction = "harmony")
+SeuratObject <- RunUMAP(object = SeuratObject,
+                        reduction = "harmony",
+                        dims = 1:top_PCs,
+                        n.components = 2,
+                        n.neighbors = 20,
+                        spread = 1,
+                        repulsion.strength = 1,
+                        min.dist= .001,
+                        verbose = F,
+                        n.epochs = 200,
+                        metric = "euclidean",
+                        seed.use = 42,
+                        reduction.name="umap_harmony")
+SeuratObject <- RunTSNE(object = SeuratObject,
+                        reduction = "harmony",
+                        perplexity=30,
+                        max_iter=1000,
+                        theta=0.5,
+                        eta=200,
+                        exaggeration_factor=12,
+                        dims.use = 1:top_PCs,
+                        verbose = F,
+                        num_threads=0,
+                        reduction.name = "tsne_harmony")
+```
+
+```{r}
+p <- DimPlot(SeuratObject, reduction = "umap_harmony")
+q <- DimPlot(SeuratObject, reduction = "umap")
+grid.arrange(p, q, ncol = 2)
+p <- DimPlot(SeuratObject, reduction = "tsne_harmony")
+q <- DimPlot(SeuratObject, reduction = "tsne")
+grid.arrange(p, q, ncol = 2)
+```
+
+```{r}
+FeaturePlot(SeuratObject, features = "percent_ribo", reduction = "umap_harmony", split.by = "orig.ident")
+FeaturePlot(SeuratObject, features = "percent_mito", reduction = "umap_harmony", split.by = "orig.ident")
+FeaturePlot(SeuratObject, features = "nFeature_RNA", reduction = "umap_harmony")
+FeaturePlot(SeuratObject, features = "nCount_RNA", reduction = "umap_harmony")
+```
+
+```{r}
+FeaturePlot(SeuratObject, features = c("CD3E", "ITGAM", "ITGAX", "ADGRE1", "CD19","LY6G"), reduction = "umap_harmony")
+```
+
+## Milestone 4
+
+### Cell Clustering
+- Consult the Glossary or additional sources for help
+- What is a graph? A graph is a diagram showing the relation between variables. It consists of nodes (cells) and edges, the connections betweens nodes.
+- Which kind of graph is the most robust to represent your data?
+A graph that connects closely related cells and has little connection to unrelated cells.
+- Where in the Seurat object is your graph stored?
+
+- Why do we need to cluster our cells?
+So that we can annotate them.
+- Which parameters have you chosen when clustering?
+
+- How can you tell which clustering resolution is best?
+
+- Do the clustering reflect the cell separation seen by the visualization method you are using?
+
+- How are your clusters distributed across the samples, groups, experimental conditions, etc.?
+
+- Where in the Seurat object is your clustering data stored?
+
+- Describe in form of text the rationale for this step in your markdown report
+
+<br/>
+
+```{r}
+SeuratObject <- FindNeighbors(SeuratObject,
+                              assay = "RNA",
+                              compute.SNN = T,
+                              reduction = "harmony" ,
+                              dims = 1:15,
+                              graph.name="SNN",
+                              prune.SNN = 1/15,
+                              k.param = 20,
+                              force.recalc = T)
+```
+
+```{r}
+SeuratObject <- FindClusters(
+  object = SeuratObject,
+  graph.name = "SNN",
+  resolution = 0.8,
+  algorithm = 1) #algorithim 1 = Louvain
+```
+
+```{r}
+# DimPlot(SeuratObject, reduction = "harmony", group.by = "seurat_clusters")
+DimPlot(SeuratObject, reduction = "umap_harmony", group.by = "seurat_clusters", label = TRUE)
+DimPlot(SeuratObject, reduction = "umap_harmony", group.by = "seurat_clusters", label = TRUE, split.by = "orig.ident")
+DimPlot(SeuratObject, reduction = "tsne_harmony", group.by = "seurat_clusters", label = TRUE, split.by = "orig.ident")
+```
+
+
+## Milestone 5
+
+### Differential expression
+- Consult the Glossary or additional sources for help
+- Which biological question(s) do you want to answer with differential expression? What genes are expressed deifferentially in each cluster? what is the cluster representing in terms of cell type?
+- Are you interested in comparing all cells or using a specific cluster? First, in all cells, then later maybe only in a subset.
+- If you are interested in a particular cluster, which cluster, why? Cluster expressing CD34 and G0S2 because they are markers for progenitors and neutrophils. 
+- Which clustering resolution would you run your differential expression? 
+- Which test did you choose for differential expression?
+- What parameters did you set for computing differential expression? Justify each one
+- Which marker genes can separate each of the cell clusters in your data?
+- Which cell types do they represent?
+- How would you visualize the list of differentially expressed genes?
+- Describe in form of text the rationale for this step in your markdown report
+
+<br/>
+
+```{r}
+if(!file.exists("all_markers.RData")){
+  markers <- FindAllMarkers( object = SeuratObject,
+                             assay = "RNA",
+                             logfc.threshold = 0.25,
+                             test.use = "wilcox",
+                             slot = "data",
+                             min.pct = 0.1,
+                             min.diff.pct = 0.2,
+                             only.pos = TRUE,
+                             max.cells.per.ident = min(table(SeuratObject@meta.data$seurat_clusters)),
+                             random.seed = 42,
+                             latent.vars = NULL,
+                             min.cells.feature = 3,
+                             min.cells.group = 3,
+                             pseudocount.use = 1,
+                             return.thresh = 0.01 )
+  save(markers, file = "all_markers.RData")
+} else{
+  load("all_markers.RData")
+}
+```
+
+```{r}
+library(dplyr)
+top5 <- markers %>% group_by(cluster) %>% top_n(-5, p_val_adj)
+DoHeatmap(object = SeuratObject,
+          features = as.character(unique(top5$gene)),
+          group.by = "seurat_clusters",
+          assay = "RNA")
+
+markers %>% filter(gene %in% c("CD34", "G0S2")) 
+```
+
+```{r}
+FeaturePlot(SeuratObject, features = c("CD34", "G0S2"), reduction = "umap_harmony", order = TRUE)
+```
+
+```{r}
+library(ggplot2)
+DotPlot(object = SeuratObject,
+        features = c("CD34", "G0S2"),
+        group.by = "seurat_clusters",
+        assay = "RNA") + coord_flip()
+VlnPlot(object = SeuratObject,
+        features = c("CD34", "G0S2"),
+        ncol = 2,
+        group.by = "seurat_clusters",
+        split.by = "orig.ident",
+        assay = "RNA")
+```
+
+
+### Trajectory inference analysis
+- Consult the Glossary or additional sources for help
+- Which biological question(s) do you want to answer with trajectory? Which genes specifically drive the differentiation of Neutrophils.
+- Are you sure you have a developmental path in your data? Based on the UMAP, somewhat sure yes.
+- Are you interested in using all cells or using a specific cluster? only clusters involved in differentiation
+- Which embeddings will you use for computing trajectories? why? PCA or harmony because they have lots of dimensions
+- Which differential expression test are you interested in? which genes drive differentiation? and what is the difference in the two lineages?
+- How would you visualize your results?
+- Describe in form of text the rationale for this step in your markdown report
+
+```{r}
+cells_to_use <- rownames(filter(SeuratObject@meta.data, seurat_clusters %in% c(5,9,10,15)))
+dimred <- SeuratObject@reductions[['umap_harmony']]@cell.embeddings
+dimred <- dimred[cells_to_use,]
+
+clustering <- factor(SeuratObject@meta.data[cells_to_use, "seurat_clusters"])
+```
+
+Slingshot
+```{r}
+library(slingshot)
+# Run default Slingshot lineage identification
+set.seed(1)
+lineages <- getLineages(
+  data = dimred,
+  clusterLabels = clustering,
+ #end.clus = c("11","7","10","9","5"), #define how many branches/lineages to consider
+ start.clus = "10" #define where to start the trajectories
+ )
+lineages
+```
+
+```{r}
+# Plot the lineages
+par(mfrow=c(1,2))
+plot(dimred[,1:2], col = clustering,  cex=.5,pch = 16)
+for(i in levels(clustering)){
+  text( mean(dimred[clustering==i,1]),
+        mean(dimred[clustering==i,2]), labels = i,font = 2) }
+plot(dimred[,1:2], col = clustering,cex=.5, pch = 16)
+lines(lineages, lwd = 3, col = 'black')
+```
+
+```{r}
+curves <- getCurves(lineages, 
+                    approx_points = 300, 
+                    thresh = 0.01, 
+                    stretch = .8, 
+                    allow.breaks = FALSE, 
+                    shrink = .99)
+curves
+
+plot(dimred, col = clustering, asp = 1, pch = 16)
+lines(curves, lwd = 3, col = 'black')
+```
+
+Find differentially expressed genes along trajectories
+```{r}
+BiocParallel::register(BiocParallel::SerialParam())
+
+library(tradeSeq)
+counts <- as.matrix( SeuratObject@assays$RNA@counts[ SeuratObject@assays$RNA@var.features , ] )
+# filter counts to cells of interest
+counts <- counts[,cells_to_use]
+
+# Removing some genes to speed up the computations for this tutorial
+filt_counts <- counts [ rowSums(counts > 5) > ncol(counts)/100, ]
+dim(filt_counts)
+```
+
+```{r}
+# Fitting a Gamma distribution
+sce <- fitGAM( counts = as.matrix(filt_counts),
+               sds = curves,
+               nknots = 6)
+plotGeneCount(curve = curves,
+              counts = filt_counts,
+              clusters = clustering,
+              models = sce)
+```
+#### Genes that change with pseudotime
+```{r}
+pseudotime_association <- associationTest(sce)
+pseudotime_association$fdr <- p.adjust(pseudotime_association$pvalue, method = "fdr")
+pseudotime_association <- pseudotime_association[ order(pseudotime_association$pvalue), ]
+pseudotime_association$feature_id <- rownames(pseudotime_association)
+pseudotime_association %>% filter(fdr < 0.05) 
+write.table(pull(pseudotime_association, feature_id), file = "genes_pseudotime.txt", sep = "\t",
+            row.names = FALSE, quote = FALSE, col.names = FALSE)
+```
+
+```{r}
+# Define function to plot
+plot_differential_expression <- function(feature_id) {
+
+    # cowplot::plot_grid(
+      plotGeneCount(curve = curves,
+                    counts = filt_counts,
+                    gene=feature_id[1],
+                    clusters = clustering,
+                    models = sce) 
+  
+
+      # plotSmoothers(models = sce,
+      #               counts=filt_counts,
+      #               gene = feature_id[1])
+}
+
+# Get genes and plot
+feature_id <- pseudotime_association %>%
+  filter(fdr < 0.05) %>%
+  top_n(10, waldStat) 
+plot_differential_expression(feature_id[1, "feature_id"])
+
+```
+
+```{r}
+plot_smoothers <- function(seuratObject,
+                           SlingshotCurves,
+                           gene,
+                           clustering_use,
+                           plotOrder=T,
+                           col=pal,
+                           colorByPseudotime=T,
+                           spar=.9,
+                           pt.size=.3,
+                           factorScale=1.3){
+  pt <- slingshot::slingPseudotime(curves)
+  pt <- apply(pt,1,function(x) min(x,na.rm = T))
+  ooo <- order(pt)[order(pt)]
+  
+  if(plotOrder){
+    x <- 1:length(pt)
+    y <- seuratObject@assays$RNA@data[gene,order(pt)]
+    col <- col[seuratObject@meta.data[order(pt),clustering_use]]
+  } else {
+    x <- pt
+    y <- seuratObject@assays$RNA@data[gene,]
+    col <- col[seuratObject@meta.data[,clustering_use]]
+  }
+  plot(x,y,col=col,cex=pt.size,pch=16,xlab="Pseudotime",ylab="",las=1,main=gene)
+  sm <- smooth.spline( x,y , spar = spar)
+  lines(sm$x,sm$y*factorScale,lwd=2)
+}
+
+
+pal <- scales::hue_pal()(length(unique((SeuratObject@meta.data[cells_to_use, "seurat_clusters"]))))
+```
+
+```{r}
+temp <- SeuratObject[,cells_to_use]
+temp$seurat_clusters <- factor(temp$seurat_clusters,levels = c("10","15","5","9") )
+
+plot_smoothers(seuratObject = temp,
+               SlingshotCurves = curves,
+               clustering_use = "seurat_clusters",
+               gene = feature_id[1, "feature_id"],
+               plotOrder = TRUE,
+               col=pal,
+               spar=.9,
+               pt.size=.3,
+               factorScale=1)
+```
+
+Gene enrichment
+```{r}
+library(enrichR)
+
+# Check available databases to perform enrichment (then choose one)
+enrichR::listEnrichrDbs()
+
+my_genes <- pseudotime_association %>% filter(fdr < 0.05) %>% pull(feature_id)
+my_database <- "GO_Biological_Process_2018"
+
+# perform enrichment
+enrich_results <- enrichr(
+  genes =  my_genes,
+  databases =  my_database)[[1]]
+enrich_results
+```
+

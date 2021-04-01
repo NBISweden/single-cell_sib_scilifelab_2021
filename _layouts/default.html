@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+  <head>
+    <style type="text/css">
+    h1.title { font-size: 40px; color: DarkRed; }
+    h1 { /* Header 1 */ font-size: 40px; color: DarkRed;  }
+    h2 { /* Header 2 */ font-size: 16px; }
+    h3 { /* Header 3 */ font-size: 18px; }
+    code.r{ /* Code block */ font-size: 12px; }
+    body{ /* Normal  */ font-size: 12px; }
+    td {  /* Table  */ font-size: 12px; }
+    pre { /* Code block - determines code spacing between lines */ font-size: 12px; }
+    </style>
+
+
+
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+
+    <title>Computational RNA Biology</title>
+    <!--
+    <title>{{ site.title | default: site.github.repository_name }} by {{ site.github.owner_name }}</title>
+    -->
+    <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+
+    <meta name="viewport" content="width=device-width">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+  </head>
+  <body>
+
+    <style> .wrapper{ width: 100%; padding: 0px} </style>
+    <div class="wrapper">
+      <style> header{ width: 12%; padding: 0px; text-align: right;} </style>
+      <header>
+
+        <br/>
+        <img src="/SchoolRNA2020/logos/sib_logo_high.jpg" height="70">
+        <br/>
+        <br/>
+        <img src="/SchoolRNA2020/logos/NCCR.png" height="60">
+<!--
+        <br/>
+        <br/>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXrM7nmHWY7IctvH_9tb8YpqNbbSjaFxHkyMmZFaYkehgGER8X" height="40">
+-->
+        <br/>
+        <br/>
+        <br/>
+
+        <a href="/SchoolRNA2020/README.html">Main Page&nbsp;&nbsp;<img border="0" src="https://cdn2.iconfinder.com/data/icons/inverticons-stroke-vol-1/32/home_house_building_main_page-512.png" width="20" height="20"></a>
+        <br/>
+        <br/>
+        <a href="/SchoolRNA2020/schedule.html">Schedule&nbsp;&nbsp;<img border="0" src="https://www.svgrepo.com/show/158264/schedule.svg" width="20" height="20"></a>
+        <br/>
+        <br/>
+        <a href="/SchoolRNA2020/precourse.html">Pre-course&nbsp;&nbsp;<img border="0" src="https://www.svgrepo.com/show/19652/maths-class-materials-cross-of-a-pencil-and-a-ruler.svg" width="20" height="20"></a>
+        <br/>
+        <br/>
+        <a href="/SchoolRNA2020/projects.html">Projects&nbsp;&nbsp;<img border="0" src="https://www.svgrepo.com/show/1025/task.svg" width="20" height="20"></a>
+        <br/>
+        <br/>
+        <a href="/SchoolRNA2020/travel_info.html">Travel Info&nbsp;&nbsp;<img border="0" src="https://www.svgrepo.com/show/4199/placeholder-on-a-map.svg" width="20" height="20"></a>
+        <br/>
+        <br/>
+        <a href="/SchoolRNA2020/faq.html">FAQ&nbsp;&nbsp;<img border="0" src="https://www.svgrepo.com/show/83019/faq-button.svg" width="20" height="20"></a>
+        <br/>
+        <br/>
+
+<!--
+         <br>
+        <a href="/SchoolRNA2020/session-dimensionality-reduction/lecture_dimensionality_reduction.pdf">Dim_red</a>
+        <br>
+        <a href="/SchoolRNA2020/session-dimensionality-reduction/seurat/seurat_02_dim_reduction_compiled.html">QC_seurat</a>
+        <br>
+        <a href="/SchoolRNA2020/session-dimensionality-reduction/scater/scater_02_dim_reduction_compiled.html">QC_scater</a>
+        <br>
+-->
+
+        {% if site.github.is_project_page %}
+          <p class="view"><a href="{{ site.github.repository_url }}">View on GitHub&nbsp;&nbsp;<img border="0" src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" width="20" height="20">{{ github_name }}</a></p>
+        {% endif %}
+
+        <br/>
+
+        <p><small>Theme: <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </header>
+
+      <style> section{ width: 80%; padding: 0px; } </style>
+      <section>
+
+      {{ content }}
+
+      </section>
+
+      <footer>
+
+      </footer>
+    </div>
+    <script src="{{ '/assets/js/scale.fix.js' | relative_url }}"></script>
+  </body>
+</html>
