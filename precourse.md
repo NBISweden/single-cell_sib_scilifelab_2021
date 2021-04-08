@@ -20,7 +20,7 @@ Since each of the 4 group themes have completely different softwares, please fol
 # Projects
 
 
-### <img border="0" src="/SchoolRNA2020/logos/single_cell.png" width="40" height="40"> Single cell RNA analysis
+### <img border="0" src="/single-cell_sib_scilifelab_2021/logos/single_cell.png" width="40" height="40"> Single cell RNA analysis
 ***
 
 <details>
@@ -52,7 +52,7 @@ CONDA_BUILD_SYSROOT='/opt/MacOSX10.9.sdk'
 CONDA_BUILD_SYSROOT='/Library/Developer/CommandLineTools/SDKs/MacOSX10.9.sdk'
 ```
 
-On Ubuntu, you might need to do this AFTER starting `rstudio`. The `Seurat` package will fail 
+On Ubuntu, you might need to do this AFTER starting `rstudio`. The `Seurat` package will fail
 
 ```r
 install.packages('stringi')
@@ -64,7 +64,7 @@ library(Seurat)
 
 <br/>
 
-### <img border="0" src="/SchoolRNA2020/logos/long_read.png" width="40" height="40"> Long-read RNA sequencing
+### <img border="0" src="/single-cell_sib_scilifelab_2021/logos/long_read.png" width="40" height="40"> Long-read RNA sequencing
 ***
 
 <details>
@@ -76,7 +76,7 @@ library(Seurat)
 
 <br/>
 
-### <img border="0" src="/SchoolRNA2020/logos/ribo_profiling.png" width="40" height="40"> Ribosome-profiling
+### <img border="0" src="/single-cell_sib_scilifelab_2021/logos/ribo_profiling.png" width="40" height="40"> Ribosome-profiling
 ***
 
 <details>
@@ -87,7 +87,7 @@ library(Seurat)
 
 <br/>
 
-### <img border="0" src="/SchoolRNA2020/logos/uv_crosslink_ip.png" width="40" height="40"> UV cross-linking immunoprecipitation (CLIP-seq)
+### <img border="0" src="/single-cell_sib_scilifelab_2021/logos/uv_crosslink_ip.png" width="40" height="40"> UV cross-linking immunoprecipitation (CLIP-seq)
 ***
 
 <details>

@@ -27,7 +27,7 @@ You are encouraged to use any other additional website / article in your report.
 In the end, each group is expected to have 1 report file with all analysis steps and the rationale for the following projects:
 
 
-# <img border="0" src="/SchoolRNA2020/logos/single_cell.png" width="40" height="40"> Spatial Transcriptomics
+# <img border="0" src="/single-cell_sib_scilifelab_2021/logos/single_cell.png" width="40" height="40"> Spatial Transcriptomics
 ***
 
 <br/>
@@ -75,7 +75,7 @@ In the end, each group is expected to have 1 report file with all analysis steps
 
 <br/>
 
-# <img border="0" src="/SchoolRNA2020/logos/long_read.png" width="40" height="40"> RNA velocity and trajectories
+# <img border="0" src="/single-cell_sib_scilifelab_2021/logos/long_read.png" width="40" height="40"> RNA velocity and trajectories
 ***
 
 <details>
@@ -87,7 +87,7 @@ In the end, each group is expected to have 1 report file with all analysis steps
 
 <br/>
 
-# <img border="0" src="/SchoolRNA2020/logos/ribo_profiling.png" width="40" height="40"> Multi-omics integration
+# <img border="0" src="/single-cell_sib_scilifelab_2021/logos/ribo_profiling.png" width="40" height="40"> Multi-omics integration
 ***
 
 <details>
@@ -99,7 +99,7 @@ In the end, each group is expected to have 1 report file with all analysis steps
 
 <br/>
 
-# <img border="0" src="/SchoolRNA2020/logos/uv_crosslink_ip.png" width="40" height="40"> Deep learning
+# <img border="0" src="/single-cell_sib_scilifelab_2021/logos/uv_crosslink_ip.png" width="40" height="40"> Deep learning
 ***
 
 <details>
