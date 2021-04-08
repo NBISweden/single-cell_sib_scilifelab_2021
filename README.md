@@ -5,11 +5,16 @@
 
 <br/>
 
-Bioinformatics has always been a foundation for understanding RNA. This importance has only grown with the advent of next generation sequencing (NGS), as rapidly diversifying methods have been developed to study virtually all aspects of RNA, including expression, processing, structure and translation. While these techniques are based on a common foundation of NGS, each has unique aspects that remain within the realm of specialists. This presents a challenge for young researchers wishing to add these techniques to their skills toolkit.
-The aim of this School is to broaden early-stage researchers’ expertise in RNA bioinformatics, with a particular focus on NGS-based analyses. Participants will gain an overview of the state-of-the-art in RNA bioinformatics, before embarking on a challenging, hands-on training project in a chosen area. Learning will be guided by experts from fields including single cell RNA analysis, long-read RNA sequencing, ribosome-profiling and UV cross-linking immunoprecipitation (CLIP-seq). There will be a focus on team-work and many opportunities for networking with trainers and other participants.
+In recent years, single-cell transcriptomics has become a widely used technology to study heterogeneous and dynamic biological systems. A large number of new tools and approaches have been developed for analyzing this new type of data.
+The goal of this joint school is to provide PhD students and postdocs with theoretical and mostly hands-on knowledge on selected advanced topics in Single Cell analysis. In particular, the participants will be divided into small groups to develop mini projects. The following topics have been selected:
+- scRNAseq & Spatial Transcriptomics
+- scRNAseq & RNA Velocity and Trajectory
+- Single cell omics integration
+- Deep Learning for scRNAseq analysis
+
 
 **Audience**
-This course is aimed at early-stage researchers (PhD students, postdocs) in the RNA field. Given the course subject matter, only participants with working knowledge of scientific computing can be considered (see Requirements for further details).
+This school is addressed to participants who are already familiar with the typical steps in single-cell (transcriptomics) analysis, which will not be covered during the event.
 
 <br/>
 
@@ -25,10 +30,10 @@ This course is aimed at early-stage researchers (PhD students, postdocs) in the 
 
 ***
 
-Rånäs Castle near Stockholm
-Arrival: Sunday before 18h
+This course will take place in person in Rånäs Castle, situated close to Stockholm, with rules in accordance with the COVID-19 situation (masks, distance and hands hygiene).
 
-Departure: Friday around 14h30
+IMPORTANT: If the situation at the beginning of August showed that it is impossible to organize this event in person, it would be switched to an online event and the registration fee would be reduced to that of regular courses (around 55 euros / day).
+
 
 <br/>
 
@@ -55,6 +60,7 @@ At the end of this school, the participants should be able to:
 - repeat the same type of analysis achieved during the mini-project,
 - present the mini-project and more globally disseminate their experience to the members of their group.
 
+
 **Pre-requisites - background knowledge**
 - Previous intermediate experience with single cell RNA-seq analysis
 - Familiar with command line and UNIX language
@@ -62,6 +68,24 @@ At the end of this school, the participants should be able to:
 
 **Pre-requisites - material & software**
 - The participants must bring a laptop with install permissions (admin). A list of software to be installed in advance will be communicated on due time.
+
+
+<br/>
+
+
+## <img border="0" src="https://www.svgrepo.com/show/3874/contact-form.svg" width="40" height="40"> Application
+
+The registration fees for academics are 1000 EUR, and 1500 EUR for for-profit companies. A special rate of 500 EUR is applicable to PhD students of the SIB Training Network and to members (PhD students?) of SciLifeLab.
+
+You will be informed by email of your registration confirmation. Upon reception of the confirmation email, participants will be asked to confirm attendance by paying the fees within 5 days.
+
+Applications close on [*DD/MM/YYYY*]. Deadline for free-of-charge cancellation is set to [*DD/MM/YYYY*]. Cancellation after this date will not be reimbursed. Please note that participation in SIB courses is subject to our [general conditions](http://www.sib.swiss/training/terms-and-conditions).
+
+We will recommend 2 ECTS credits for this course.
+
+You are welcome to register to the SIB courses mailing list to be informed of all future courses and workshops, as well as all important deadlines using the form [here](https://lists.sib.swiss/mailman/listinfo/courses).
+
+Please note that participation in SIB courses is subject to our [general conditions](http://www.sib.swiss/training/terms-and-conditions).
 
 
 <br/>
@@ -96,7 +120,7 @@ At the end of this school, the participants should be able to:
 
 **Additional information**
 
-For more information, please contact <a href="mailto:gregoire.rossier@sib.swiss">Grégoire Rossier</a>.
+For more information, please contact [training@sib.swiss](mailto://training@sib.swiss).
 
 <br/>
 
