@@ -4,7 +4,6 @@
 Corticogenesis is the dynamic process that results in the formation of the cerebral cortex, and is characterized by the generation of excitatory glutamatergic neurons from cortical progenitors, and the differentiation of astrocytes and oligodendrocytes. Dynamic changes in the activity of cis-regulatory DNA elements underlie the complex phenotypic transformations that occur during development. 
 
 ### Data
-
 Human fetal brain cortex data from [Trevino et al. 2020](https://www.biorxiv.org/content/10.1101/2020.12.29.424636v2.full) ([source](https://github.com/GreenleafLab/brainchromatin)). 
 
 - Group 1: address the research question with diagonal integration of the unmatched assay data
@@ -68,6 +67,7 @@ N.B. it will be interesting to assess what you gain from the join embedding, in 
 
 ### Objectives
 
+<<<<<<< HEAD
 A. Cell-level integration: Infer a common embedding/pseudotime axis for both modalities 
     - How can you evaluate that the embedding is sensible?
     - Do you gain resolution in cell-type clustering using both modalities?
@@ -102,3 +102,4 @@ C. **_Verticalized_ integration:** transform multiple matrices with no common ax
  
 ### Matching peaks to genes 
 See example implementation in [figR][https://github.com/buenrostrolab/stimATAC_analyses_code]
+
