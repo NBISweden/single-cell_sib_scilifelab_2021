@@ -1,0 +1,168 @@
+---
+title: "Peak 2 gene association example"
+output: html_notebook
+---
+
+```{r}
+library(SingleCellExperiment)
+library(GenomicRanges)
+
+## For variable gene selection
+library(scran)
+
+library(tidyr)
+library(Matrix)
+library(ensembldb)
+library(EnsDb.Hsapiens.v86) ## Remember to pick your genome!
+```
+
+## Load data
+
+```{r}
+atac_sce <- readRDS("./processed_data/Multiome_ATAC_ext_trajectory_SCE.RDS")
+rna_sce <- readRDS("./processed_data/Multiome_RNA_ext_trajectory_SCE.RDS")
+```
+
+## Define peak-gene pairs to test 
+
+```{r}
+## String - GRanges conversion
+## Borrowed from Signac functions 
+## https://satijalab.org/signac/reference/GRangesToString.html
+StringToGRanges <- function(regions, sep = c("-", "-"), ...) {
+  ranges.df <- data.frame(ranges = regions)
+  ranges.df <- separate(
+    data = ranges.df,
+    col = "ranges",
+    sep = paste0(sep[[1]], "|", sep[[2]]),
+    into = c("chr", "start", "end")
+  )
+  granges <- makeGRangesFromDataFrame(df = ranges.df, ...)
+  return(granges)
+}
+
+GRangesToString <- function(grange, sep = c("-", "-")) {
+  regions <- paste0(
+    as.character(x = seqnames(x = grange)),
+    sep[[1]],
+    start(x = grange),
+    sep[[2]],
+    end(x = grange)
+  )
+  return(regions)
+}
+
+# Extend genomicRanges
+# 
+extend <- function(x, upstream=0, downstream=0)     
+{
+    if (any(strand(x) == "*"))
+        warning("'*' ranges were treated as '+'")
+    on_plus <- strand(x) == "+" | strand(x) == "*"
+    new_start <- start(x) - ifelse(on_plus, upstream, downstream)
+    new_end <- end(x) + ifelse(on_plus, downstream, upstream)
+    ranges(x) <- IRanges(new_start, new_end)
+    trim(x)
+}
+
+
+# Find peaks close to features of interest
+#
+# @param peaks_gr GenomicRanges object containing peaks
+# @param features_gr GenomicRanges object containing features (e.g. genes)
+# @param d distance to include peak, in bps (default 50000)
+# @param feat_anno column in `features_gr@elementMetadata` containing annotation to name features (if NULL converts Granges to string)
+#
+# @return Sparse adjacency matrix indicating hits
+peak2feature <- function(peaks_gr, features_gr, d=50000, feat_anno=NULL){
+  seqlevelsStyle(features_gr) <- seqlevelsStyle(peaks_gr)
+  
+  ## Find peaks overlapping the search range around the features
+  ext_gr <- extend(features_gr, upstream = d, downstream = d)
+  ovs <- findOverlaps(peaks_gr, ext_gr)
+  
+  ## Define identifiers for peaks and features
+  all_peaks <- GRangesToString(peaks_gr, sep = c(":", '-'))
+  if (is.null(feat_anno)) {
+    all_feats <- GRangesToString(features_gr, sep = c(":", '-'))
+  } else {
+    all_feats <- features_gr@elementMetadata[[feat_anno]]
+  }
+  
+  ## Build adjacency matrix for hits
+  adj_mat <- Matrix(data=0, nrow = length(all_peaks), ncol=length(all_feats))
+  for (i in unique(subjectHits(ovs))) {
+    # if (length(adj_mat[queryHits(ovs[subjectHits(ovs)==i]),i]) > 0) {
+    adj_mat[queryHits(ovs[subjectHits(ovs)==i]),i] <- 1
+    # }
+  }
+  colnames(adj_mat) <- all_feats
+  rownames(adj_mat) <- all_peaks
+  
+  adj_mat
+  
+}
+
+```
+
+```{r}
+## Select HVGs
+dec_rna <- modelGeneVar(rna_sce)
+hvg_rna <- getTopHVGs(dec_rna, n=1000)
+
+## Extract genomic locations of these genes
+hg38_genes_gr <- genes(EnsDb.Hsapiens.v86)
+hvg_gr <- hg38_genes_gr[hvg_rna[hvg_rna %in% names(hg38_genes_gr)]]
+
+## Extract genomic locations of peaks (trying on a subset of peaks)
+peaks_gr <- rowRanges(atac_sce)[0:10000]
+
+## Find peaks proximal to HVGs
+p2g_mapping <- peak2feature(peaks_gr, hvg_gr, 
+             d = 50000 ## within a range of 50k bps
+             )
+
+## Filter peaks with at least one overlap
+p2g_mapping_filtered <- p2g_mapping[rowSums(p2g_mapping) > 0,]
+```
+
+## Test
+
+Adapting helper functions from `https://github.com/buenrostrolab/stimATAC_analyses_code`
+
+```{r}
+A = counts(atac_sce) # ATAC matrix
+R = counts(rna_sce) # RNA matrix # Gene-Peak overlap pairing data.frame
+
+colnames(p2g_mapping_filtered) <- hvg_rna[hvg_rna %in% names(hg38_genes_gr)]
+
+pairnames <- cbind(rownames(p2g_mapping_filtered)[p2g_mapping_filtered@i], colnames(p2g_mapping_filtered)[p2g_mapping_filtered@p])
+
+uniq_peaks <- unique(p2g_mapping_filtered_ls[,1])
+uniq_genes <- unique(p2g_mapping_filtered_ls[,2])
+
+all_peaks <- GRangesToString(rowRanges(atac_sce), sep = c(":", "-"))
+uniq_peaks_ixs <- which(all_peaks %in% uniq_peaks)
+uniq_genes_ixs <- which(rownames(R) %in% uniq_genes)
+
+# Get indices of genes and peaks from overlap object for chunk
+# Assumes query hits are genes and subject hits are peaks in the overlap object
+# geneIndices <- O$Gene[chunk[1]:chunk[2]]
+# peakIndices <- O$Peak[chunk[1]:chunk[2]]
+#   
+# pairnames <- cbind(rownames(A)[peakIndices],rownames(R)[geneIndices])
+#   
+# uniquegenes <- unique(geneIndices)
+# uniquepeaks <- unique(peakIndices)
+  
+M1 <- as.matrix(Matrix::t(A[uniq_peaks_ixs,,drop=FALSE])) # In case only 1 match, keep matrix structure
+M2 <- as.matrix(Matrix::t(R[uniq_genes_ixs,,drop=FALSE])) # In case only 1 match, keep matrix structure
+
+cormat <- cor(x = M1, y = M2, method = "spearman")
+cormat
+```
+
+```{r}
+p2g_mapping_filtered_ls <- cbind(rownames(p2g_mapping_filtered)[p2g_mapping_filtered@i], colnames(p2g_mapping_filtered)[p2g_mapping_filtered@p])
+```
+
