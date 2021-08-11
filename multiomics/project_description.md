@@ -10,7 +10,7 @@ Human fetal brain cortex data from [Trevino et al. 2020](https://www.biorxiv.org
 - Group 1: address the research question with diagonal integration of the unmatched assay data
 - Group 2: address the research question with vertical integration of the multiome data
 
-### Main research question 
+### Main goal
 
 Identify non-coding genomic regions where chromatin accessibility is associated with expression of genes involved in excitatory neuron development.
 
@@ -74,9 +74,33 @@ Then, you'll need to decide _what type of features_ and _which features_ to use 
 
 ### Step 3: Test for associations between chromatin accessibility and gene expression
 
+At this step it's worth thinking again about **aggregating profiles from multiple cells**, using clustering or the KNN graph on the common embedding. This will be necessary for pairing features in the unmatched datasets. However, it will be advantageous also for the matched cells, as it helps with the high sparsity of the scATAC profiles. We suggest creating pseudobulk profiles of neighbouring cells in the KNN graph. As well as denoising, this step reduces the dimensionality of our dataset (on the cell axis), speeding up computations. You could sample _n_ cells and create pseudobulk profiles from the K-nearest neighbors of those cells (selecting neighbourhoods where there is a sufficient number of cells from both assays in the case of unmatched data). More robust algorithms to sample neighbourhoods on the KNN graph are implemented in [miloR](https://github.com/MarioniLab/miloR) or [MetaCell](https://github.com/tanaylab/metacell). Alternatively, overclustering with the Louvain or Leiden algorithm can be used.
 
+To testing for correlation between gene expression and chromatin accessibility, a common approach is to compute a gene-peak correlation coefficient (Spearman ⍴ or Pearson R2) by correlating normalized scATAC-seq peak peak counts with the corresponding gene’s expression across all ATAC-RNA paired cells. Then the observed coefficient for each gene-peak pair is compared to the coefficients obtained matching the gene to _n_ "background peaks" with matching total accessibility and GC content to the tested one, accounting for technical biases between cells that are caused by PCR amplification or variable Tn5 tagmentation conditions. This results in a null peak-gene correlation distribution that is independent of peak-gene proximity, that can be used for significance testing (for reference see [Ma et al. 2020](https://www.cell.com/cell/fulltext/S0092-8674(20)31253-8?_returnURL=https%3A%2F%2Flinkinghub.elsevier.com%2Fretrieve%2Fpii%2FS0092867420312538%3Fshowall%3Dtrue), [Kartha et al. 2021](https://www.biorxiv.org/content/10.1101/2021.07.28.453784v1.full)).
 
+The chromVAR package implements simple functions to identify the background peaks:
+```
+library(chromVAR)
+library(BSgenome.Hsapiens.UCSC.hg38) ## your reference genome
 
+atac_sce <- readRDS("./processed_data/Multiome_ATAC_ext_trajectory_SCE.RDS")
+atac_chromvar_sce <- addGCBias(atac_sce, genome=BSgenome.Hsapiens.UCSC.hg38)
+bg <- getBackgroundPeaks(atac_chromvar_sce, niterations = 50) ## This can take a while
+```
+
+_Should we compute and provide this in advance?_
+
+The ArchR package also provides a [`Peak2GeneLinkage`](https://www.archrproject.com/bookdown/peak2genelinkage-with-archr.html) function to perform a similar mapping (however this only works if you follow their RNA-ATAC integration pipeline from start to finish).
+
+**Test your workflow on a few genes first!**
+
+### Evaluating your results
+
+Take some time to assess whether your predicted associations make sense. Some ideas:
+- Use positive control: e.g. we expect that peaks in the proximity of Transcription Start Sites should be more frequently linked to gene expression.
+- Can you define a set of "negative control pairs" where you _don't_ expect to see association?
+- Are peaks associated to genes enriched in Transcription Factor motifs? Have a look at [muon functions]() and [motifmatchr]()
+- get creative!
 
 ---
 
