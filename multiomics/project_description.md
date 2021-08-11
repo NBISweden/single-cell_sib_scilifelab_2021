@@ -61,6 +61,20 @@ N.B. it will be interesting to assess what you gain from the join embedding, in 
 
 ### Step 2: Define the genes and accessibility features that you want to test for associations
 
+Now that you have a common embedding and hopefully a common pseudotime axis, we now need to select the features that we will use to associate gene expression to chromatin accessibility. We could be greedy and try to test all the possible combinations of genes and peaks, but this would likely be prohibitively computational expensive (with > 30K genes and > 400k peaks!), not to mention the multiple testing burden we would have. In addition, we know that long range interactions on the genome are possible, but they are not very common, so it doesn't make too much sense to test for associations between genes and chromatin regions that are extremely far apart e.g. on different chromosomes. 
+
+To start with, select a subset of interesting genes that seem to have a dynamic behaviour in the differentiation trajectory. You could select these with standard strategies for variable gene selection (in [R](https://bioconductor.org/books/release/OSCA/feature-selection.html), in [python](https://scanpy.readthedocs.io/en/stable/generated/scanpy.pp.highly_variable_genes.html)), or you could correlate the log-normalized gene expression to the value of pseudotime, to select genes that increase or decrease in expression during differentiation.
+
+Then, you'll need to decide _what type of features_ and _which features_ to use at the chromatin level:
+
+- what type of feature: You could use all the peak identified by peak calling, or aggregate counts in peaks that contain the same transcription factor binding motifs (e.g. using [ChromVAR](https://github.com/GreenleafLab/chromVAR)), or aggregate counts over peaks in larger genomic windows (see the [working with genomic ranges]() example code)
+- which features: especially if you pick features defined by genomic positions, it's best to subset the possible gene-region pairs to regions within a certain range of the gene. A window of 100k base pairs is often used.
+
+**Expected output for this step:** a list, `data.frame` or other object storing possible gene-region pairs
+
+### Step 3: Test for associations between chromatin accessibility and gene expression
+
+
 
 
 
