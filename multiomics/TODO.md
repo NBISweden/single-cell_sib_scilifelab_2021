@@ -15,3 +15,6 @@
     - R to python conversions: using R in python, using python in R, 
     - MOFA usage (to test software requirements)
 - Software requirements / environment 
+
+---
+-precompute latent dimensions for ATACX
