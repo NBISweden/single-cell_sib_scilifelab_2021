@@ -81,14 +81,12 @@ To testing for correlation between gene expression and chromatin accessibility, 
 The chromVAR package implements simple functions to identify the background peaks:
 ```
 library(chromVAR)
-library(BSgenome.Hsapiens.UCSC.hg38) ## your reference genome
+library(BSgenome.Hsapiens.UCSC.hg38) ## your reference genome
 
 atac_sce <- readRDS("./processed_data/Multiome_ATAC_ext_trajectory_SCE.RDS")
 atac_chromvar_sce <- addGCBias(atac_sce, genome=BSgenome.Hsapiens.UCSC.hg38)
 bg <- getBackgroundPeaks(atac_chromvar_sce, niterations = 50) ## This can take a while
 ```
-
-_Should we compute and provide this in advance?_
 
 The ArchR package also provides a [`Peak2GeneLinkage`](https://www.archrproject.com/bookdown/peak2genelinkage-with-archr.html) function to perform a similar mapping (however this only works if you follow their RNA-ATAC integration pipeline from start to finish).
 

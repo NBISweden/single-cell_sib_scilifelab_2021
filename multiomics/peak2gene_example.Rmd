@@ -3,28 +3,25 @@ title: "Peak 2 gene association example"
 output: html_notebook
 ---
 
+In this notebook, we will show an example implementation for association of accessibility of regulatory peaks to gene expression. 
+
 ```{r}
+# ## Install required packages
+# install.packages(c("tidyr", "dplyr"))
+# BiocManager::install(c("SingleCellExperiment", "GenomicRanges", "scran", "tidyr", "Matrix", "ensembldb", 
+#                        "EnsDb.Hsapiens.v86", 'BSgenome.Hsapiens.UCSC.hg38'))
+
 library(SingleCellExperiment)
 library(GenomicRanges)
-
-## For variable gene selection
-library(scran)
-
+library(scran) ## For variable gene selection
 library(tidyr)
-library(Matrix)
 library(ensembldb)
 library(EnsDb.Hsapiens.v86) ## Remember to pick your genome!
+library(BSgenome.Hsapiens.UCSC.hg38)
+library(dplyr)
 ```
 
-## Load data
-
-```{r}
-atac_sce <- readRDS("./processed_data/Multiome_ATAC_ext_trajectory_SCE.RDS")
-rna_sce <- readRDS("./processed_data/Multiome_RNA_ext_trajectory_SCE.RDS")
-```
-
-## Define peak-gene pairs to test 
-
+Define some utils
 ```{r}
 ## String - GRanges conversion
 ## Borrowed from Signac functions 
@@ -65,7 +62,25 @@ extend <- function(x, upstream=0, downstream=0)
     trim(x)
 }
 
+```
 
+
+
+## Load multiome data
+
+```{r}
+atac_sce <- readRDS("./processed_data/Multiome_ATAC_ext_trajectory_SCE.RDS")
+rna_sce <- readRDS("./processed_data/Multiome_RNA_ext_trajectory_SCE.RDS")
+
+atac_sce <- atac_sce[rowSums(counts(atac_sce)) != 0,]
+
+```
+
+## Define peak-gene pairs to test 
+
+Here we select highly variable genes (HVG) and for each gene we test for associations in peaks located within 50 kbs of the gene body.  
+
+```{r}
 # Find peaks close to features of interest
 #
 # @param peaks_gr GenomicRanges object containing peaks
@@ -73,7 +88,7 @@ extend <- function(x, upstream=0, downstream=0)
 # @param d distance to include peak, in bps (default 50000)
 # @param feat_anno column in `features_gr@elementMetadata` containing annotation to name features (if NULL converts Granges to string)
 #
-# @return Sparse adjacency matrix indicating hits
+# @return Sparse adjacency matrix indicating hits (peaks in rows, features in columns)
 peak2feature <- function(peaks_gr, features_gr, d=50000, feat_anno=NULL){
   seqlevelsStyle(features_gr) <- seqlevelsStyle(peaks_gr)
   
@@ -90,7 +105,7 @@ peak2feature <- function(peaks_gr, features_gr, d=50000, feat_anno=NULL){
   }
   
   ## Build adjacency matrix for hits
-  adj_mat <- Matrix(data=0, nrow = length(all_peaks), ncol=length(all_feats))
+  adj_mat <- Matrix::Matrix(data=0, nrow = length(all_peaks), ncol=length(all_feats))
   for (i in unique(subjectHits(ovs))) {
     # if (length(adj_mat[queryHits(ovs[subjectHits(ovs)==i]),i]) > 0) {
     adj_mat[queryHits(ovs[subjectHits(ovs)==i]),i] <- 1
@@ -100,12 +115,8 @@ peak2feature <- function(peaks_gr, features_gr, d=50000, feat_anno=NULL){
   rownames(adj_mat) <- all_peaks
   
   adj_mat
-  
 }
 
-```
-
-```{r}
 ## Select HVGs
 dec_rna <- modelGeneVar(rna_sce)
 hvg_rna <- getTopHVGs(dec_rna, n=1000)
@@ -115,7 +126,7 @@ hg38_genes_gr <- genes(EnsDb.Hsapiens.v86)
 hvg_gr <- hg38_genes_gr[hvg_rna[hvg_rna %in% names(hg38_genes_gr)]]
 
 ## Extract genomic locations of peaks (trying on a subset of peaks)
-peaks_gr <- rowRanges(atac_sce)[0:10000]
+peaks_gr <- rowRanges(atac_sce)
 
 ## Find peaks proximal to HVGs
 p2g_mapping <- peak2feature(peaks_gr, hvg_gr, 
@@ -124,45 +135,102 @@ p2g_mapping <- peak2feature(peaks_gr, hvg_gr,
 
 ## Filter peaks with at least one overlap
 p2g_mapping_filtered <- p2g_mapping[rowSums(p2g_mapping) > 0,]
-```
-
-## Test
-
-Adapting helper functions from `https://github.com/buenrostrolab/stimATAC_analyses_code`
-
-```{r}
-A = counts(atac_sce) # ATAC matrix
-R = counts(rna_sce) # RNA matrix # Gene-Peak overlap pairing data.frame
-
 colnames(p2g_mapping_filtered) <- hvg_rna[hvg_rna %in% names(hg38_genes_gr)]
-
-pairnames <- cbind(rownames(p2g_mapping_filtered)[p2g_mapping_filtered@i], colnames(p2g_mapping_filtered)[p2g_mapping_filtered@p])
-
-uniq_peaks <- unique(p2g_mapping_filtered_ls[,1])
-uniq_genes <- unique(p2g_mapping_filtered_ls[,2])
-
-all_peaks <- GRangesToString(rowRanges(atac_sce), sep = c(":", "-"))
-uniq_peaks_ixs <- which(all_peaks %in% uniq_peaks)
-uniq_genes_ixs <- which(rownames(R) %in% uniq_genes)
-
-# Get indices of genes and peaks from overlap object for chunk
-# Assumes query hits are genes and subject hits are peaks in the overlap object
-# geneIndices <- O$Gene[chunk[1]:chunk[2]]
-# peakIndices <- O$Peak[chunk[1]:chunk[2]]
-#   
-# pairnames <- cbind(rownames(A)[peakIndices],rownames(R)[geneIndices])
-#   
-# uniquegenes <- unique(geneIndices)
-# uniquepeaks <- unique(peakIndices)
-  
-M1 <- as.matrix(Matrix::t(A[uniq_peaks_ixs,,drop=FALSE])) # In case only 1 match, keep matrix structure
-M2 <- as.matrix(Matrix::t(R[uniq_genes_ixs,,drop=FALSE])) # In case only 1 match, keep matrix structure
-
-cormat <- cor(x = M1, y = M2, method = "spearman")
-cormat
+p2g_mapping_filtered <- as(p2g_mapping_filtered, "dgTMatrix")
 ```
 
+## Test for associations.
+
+To testing for correlation between gene expression and chromatin accessibility, we implement the following steps:
+
+1. compute a gene-peak correlation coefficient (Spearman) by correlating normalized scATAC-seq peak peak counts with the corresponding gene’s expression across all ATAC-RNA paired cells (observed correlation);
+2. For each tested peak, define a set of 30 background peaks with matching total accessibility and GC content to the tested one, using the `getBackgroundPeaks` function implemented in ChromVAR
+3. Calculate the correlation between gene expression and the accessibility of all background peaks, to define a null peak-gene correlation distribution that is independent of peak-gene proximity
+4. Test for significance with Z-test: we calculate the background mean and standard deviation of spearman correlation. The Z score is calculated by `Z = (cor_observed-cor_bg_mean)/cor_bg_sd`, and converted to a p-value based on the normal distribution.
+
+This code adapts helper functions from `https://github.com/buenrostrolab/stimATAC_analyses_code`
+
 ```{r}
-p2g_mapping_filtered_ls <- cbind(rownames(p2g_mapping_filtered)[p2g_mapping_filtered@i], colnames(p2g_mapping_filtered)[p2g_mapping_filtered@p])
+run_p2gene_cor <- function(rna_sce, atac_sce, pairnames){
+  pairnames <- as.data.frame(pairnames)
+  uniq_peaks <- unique(pairnames[,1])
+  uniq_genes <- unique(pairnames[,2])
+  
+  A = counts(atac_sce) # ATAC matrix
+  R = counts(rna_sce) # RNA matrix
+  
+  all_peaks <- GRangesToString(rowRanges(atac_sce), sep = c(":", "-"))
+  uniq_peaks_ixs <- which(all_peaks %in% uniq_peaks)
+  uniq_genes_ixs <- which(rownames(R) %in% uniq_genes)
+  
+  M1 <- as.matrix(Matrix::t(A[uniq_peaks_ixs,,drop=FALSE])) 
+  M2 <- as.matrix(Matrix::t(R[uniq_genes_ixs,,drop=FALSE])) 
+  
+  cormat <- cor(x = M1, y = M2, method = "spearman")
+  rownames(cormat) <- uniq_peaks
+  colnames(cormat) <- uniq_genes
+  cors <- sapply(1:nrow(pairnames), function(i) cormat[pairnames[i,1], pairnames[i,2]])
+  pairnames <- cbind(pairnames, cors)
+  colnames(pairnames) <- c("peak", "gene", "cor")
+  return(pairnames)
+}
+
+pairnames <- cbind(rownames(p2g_mapping_filtered)[p2g_mapping_filtered@i], colnames(p2g_mapping_filtered)[p2g_mapping_filtered@j])
+
+## Filter to a single gene for testing
+g <- unique(pairnames[,2])[1]
+pairnames <- pairnames[pairnames[,2]==g,]
+
+## Compute correlation of true peak-gene pairs
+cor_observed <- run_p2gene_cor(rna_sce, atac_sce, pairnames)
+colnames(cor_observed)[3] <- "cor_observed"
+
+## Compare to accessibility of background peaks
+n_iter = 30 ## how many background peaks to use
+sognif_alpha = 0.01 ## Significance threshold for p-values
+
+## Find background peaks
+atac_chromvar_sce <- addGCBias(atac_sce[uniq_peaks_ixs,], genome=BSgenome.Hsapiens.UCSC.hg38)
+rownames(atac_chromvar_sce) <- uniq_peaks
+bg <- getBackgroundPeaks(atac_chromvar_sce, niterations = n_iter) ## This can take a while
+rownames(bg) <- rownames(atac_chromvar_sce)
+
+## Find null correlation to background
+for (i in 1:n_iter){
+  pairnames_bg <- pairnames[,1:2] # Initialize gene-peak pairing to observed
+  pairnames_bg[,1] <- uniq_peaks[bg[pairnames[,1],i]] # replace with bg peaks for iteration
+
+  cor_bg_i <- run_p2gene_cor(rna_sce, atac_sce, pairnames_bg)
+  cor_observed <- cbind(cor_observed, cor_bg_i[,"cor"] )
+  colnames(cor_observed)[ncol(cor_observed)] <- paste0("cor_bg_", i)
+  }
+
+## Test for significance 
+permCols <- 4:(ncol(bg)+3)
+cor_observed_filt <- cor_observed[cor_observed[,"cor_observed"] > 0,]   # Filter to positive correlations
+  
+# Remove multi-mapping peaks (force 1-1 mapping)
+cor_observed_filt <- data.frame(cor_observed_filt) %>% group_by(peak) %>% filter(cor_observed==max(cor_observed))
+
+# # Z test pval
+cor_observed_filt$rBgSD <- matrixStats::rowSds(as.matrix(cor_observed_filt[,permCols]))
+cor_observed_filt$rBgMean <- rowMeans(cor_observed_filt[,permCols])
+cor_observed_filt$pvalZ <- 1-stats::pnorm(q = cor_observed_filt$cor_observed, mean = cor_observed_filt$rBgMean,sd = cor_observed_filt$rBgSD)
+
+## Filter to significant results
+signif_cor_observed <- cor_observed_filt[cor_observed_filt$pvalZ < signif_alpha, c("peak","gene","cor_observed","pvalZ")]
+```
+
+## Save output 
+
+```{r}
+## Save peak 2 gene associations
+write.csv(signif_cor_observed, "./outputs/signif_peak2genes_mappings.csv")
+```
+
+---
+
+```{r}
+sessionInfo()
 ```
 
