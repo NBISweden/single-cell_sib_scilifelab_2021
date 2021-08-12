@@ -102,9 +102,13 @@ Take some time to assess whether your predicted associations make sense. Some id
 - Are peaks associated to genes enriched in Transcription Factor motifs? Have a look at [muon functions]() and [motifmatchr]()
 - get creative!
 
+
+### Bonus question
+Can you find genes that are likely to be affected by mutations associated with in Autism Spectrum Disorder? Annotations [here].
+
 ---
 
-### Objectives
+<!-- ### Objectives
 
 A. Cell-level integration: Infer a common embedding/pseudotime axis for both modalities 
     - How can you evaluate that the embedding is sensible?
@@ -114,7 +118,7 @@ B. Feature-level integration: Using the common embedding, find non-coding region
     - What is gained with peak-to-gene mapping at the cluster level VS pseudotime or other continuous embedding strategy?
     - How can you filter out spurious correlations/associations?
     - What strategies can you use to corroborate your peak-to-gene associations? (e.g. TF motif enrichment, comparison with a negative control, co-accessibility) (check out-of-the-box solutions for peak to gene mapping)
-C. Bonus: what genes are likely to be affected by mutations associated with in Autism Spectrum Disorder? annotations here
+C. Bonus: what genes are likely to be affected by mutations associated with in Autism Spectrum Disorder? annotations here -->
 <!-- 
 ### Multi-omics integration methods
 
@@ -138,6 +142,3 @@ C. **_Verticalized_ integration:** transform multiple matrices with no common ax
     
     Others: the wealth of methods for batch correction...
   -->
-### Matching peaks to genes 
-See example implementation in [figR][https://github.com/buenrostrolab/stimATAC_analyses_code]
-
