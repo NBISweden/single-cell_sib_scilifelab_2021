@@ -2,17 +2,18 @@
 title: "Peak 2 gene association example"
 output: html_notebook
 ---
-```{r}
-BiocManager::install(c("SingleCellExperiment", "GenomicRanges", "scran", "tidyr", "Matrix", "ensembldb", 
-                       "EnsDb.Hsapiens.v86", 'BSgenome.Hsapiens.UCSC.hg38'))
-```
+
+In this notebook, we will show an example implementation for association of accessibility of regulatory peaks to gene expression. 
 
 ```{r}
+# ## Install required packages
+# install.packages(c("tidyr", "dplyr"))
+# BiocManager::install(c("SingleCellExperiment", "GenomicRanges", "scran", "tidyr", "Matrix", "ensembldb", 
+#                        "EnsDb.Hsapiens.v86", 'BSgenome.Hsapiens.UCSC.hg38'))
+
 library(SingleCellExperiment)
 library(GenomicRanges)
-
-## For variable gene selection
-library(scran)
+library(scran) ## For variable gene selection
 library(tidyr)
 library(ensembldb)
 library(EnsDb.Hsapiens.v86) ## Remember to pick your genome!
@@ -20,18 +21,7 @@ library(BSgenome.Hsapiens.UCSC.hg38)
 library(dplyr)
 ```
 
-## Load data
-
-```{r}
-atac_sce <- readRDS("./processed_data/Multiome_ATAC_ext_trajectory_SCE.RDS")
-rna_sce <- readRDS("./processed_data/Multiome_RNA_ext_trajectory_SCE.RDS")
-
-atac_sce <- atac_sce[rowSums(counts(atac_sce)) != 0,]
-
-```
-
-## Define peak-gene pairs to test 
-
+Define some utils
 ```{r}
 ## String - GRanges conversion
 ## Borrowed from Signac functions 
@@ -72,7 +62,25 @@ extend <- function(x, upstream=0, downstream=0)
     trim(x)
 }
 
+```
 
+
+
+## Load multiome data
+
+```{r}
+atac_sce <- readRDS("./processed_data/Multiome_ATAC_ext_trajectory_SCE.RDS")
+rna_sce <- readRDS("./processed_data/Multiome_RNA_ext_trajectory_SCE.RDS")
+
+atac_sce <- atac_sce[rowSums(counts(atac_sce)) != 0,]
+
+```
+
+## Define peak-gene pairs to test 
+
+Here we select highly variable genes (HVG) and for each gene we test for associations in peaks located within 50 kbs of the gene body.  
+
+```{r}
 # Find peaks close to features of interest
 #
 # @param peaks_gr GenomicRanges object containing peaks
@@ -80,7 +88,7 @@ extend <- function(x, upstream=0, downstream=0)
 # @param d distance to include peak, in bps (default 50000)
 # @param feat_anno column in `features_gr@elementMetadata` containing annotation to name features (if NULL converts Granges to string)
 #
-# @return Sparse adjacency matrix indicating hits
+# @return Sparse adjacency matrix indicating hits (peaks in rows, features in columns)
 peak2feature <- function(peaks_gr, features_gr, d=50000, feat_anno=NULL){
   seqlevelsStyle(features_gr) <- seqlevelsStyle(peaks_gr)
   
@@ -107,12 +115,8 @@ peak2feature <- function(peaks_gr, features_gr, d=50000, feat_anno=NULL){
   rownames(adj_mat) <- all_peaks
   
   adj_mat
-  
 }
 
-```
-
-```{r}
 ## Select HVGs
 dec_rna <- modelGeneVar(rna_sce)
 hvg_rna <- getTopHVGs(dec_rna, n=1000)
@@ -135,9 +139,16 @@ colnames(p2g_mapping_filtered) <- hvg_rna[hvg_rna %in% names(hg38_genes_gr)]
 p2g_mapping_filtered <- as(p2g_mapping_filtered, "dgTMatrix")
 ```
 
-## Test
+## Test for associations.
 
-Adapting helper functions from `https://github.com/buenrostrolab/stimATAC_analyses_code`
+To testing for correlation between gene expression and chromatin accessibility, we implement the following steps:
+
+1. compute a gene-peak correlation coefficient (Spearman) by correlating normalized scATAC-seq peak peak counts with the corresponding gene’s expression across all ATAC-RNA paired cells (observed correlation);
+2. For each tested peak, define a set of 30 background peaks with matching total accessibility and GC content to the tested one, using the `getBackgroundPeaks` function implemented in ChromVAR
+3. Calculate the correlation between gene expression and the accessibility of all background peaks, to define a null peak-gene correlation distribution that is independent of peak-gene proximity
+4. Test for significance with Z-test: we calculate the background mean and standard deviation of spearman correlation. The Z score is calculated by `Z = (cor_observed-cor_bg_mean)/cor_bg_sd`, and converted to a p-value based on the normal distribution.
+
+This code adapts helper functions from `https://github.com/buenrostrolab/stimATAC_analyses_code`
 
 ```{r}
 run_p2gene_cor <- function(rna_sce, atac_sce, pairnames){
@@ -175,8 +186,8 @@ cor_observed <- run_p2gene_cor(rna_sce, atac_sce, pairnames)
 colnames(cor_observed)[3] <- "cor_observed"
 
 ## Compare to accessibility of background peaks
-n_iter = 30
-sognif_alpha = 0.01
+n_iter = 30 ## how many background peaks to use
+sognif_alpha = 0.01 ## Significance threshold for p-values
 
 ## Find background peaks
 atac_chromvar_sce <- addGCBias(atac_sce[uniq_peaks_ixs,], genome=BSgenome.Hsapiens.UCSC.hg38)
@@ -210,8 +221,16 @@ cor_observed_filt$pvalZ <- 1-stats::pnorm(q = cor_observed_filt$cor_observed, me
 signif_cor_observed <- cor_observed_filt[cor_observed_filt$pvalZ < signif_alpha, c("peak","gene","cor_observed","pvalZ")]
 ```
 
+## Save output 
+
 ```{r}
 ## Save peak 2 gene associations
 write.csv(signif_cor_observed, "./outputs/signif_peak2genes_mappings.csv")
+```
+
+---
+
+```{r}
+sessionInfo()
 ```
 
