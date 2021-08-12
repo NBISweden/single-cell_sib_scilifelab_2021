@@ -14,12 +14,29 @@ Preparations
 
 ```{r}
 hg38_genes <- genes(EnsDb.Hsapiens.v86)
-path2data <- "~/brainchromatin/data_files/rds/"
 ```
+
+## Download data
+
+From terminal:
+```
+git clone https://github.com/GreenleafLab/brainchromatin.git
+cd brainchromatin; source get_data.sh
+```
+
+## Load cluster annotation 
+```{r}
+anno_table <- read.csv("../TrevinoEtAl_cluster_annotations.csv", col.names = c("clusterID", "cluster_name", "cluster_name_long", "Assay"))
+
+ext_traj_clusters <- unique(anno_table$cluster_name_long)[grep("Glutamatergic neuron|Neuronal intermediate progenitor|Neuronal intermedate progenitor", unique(anno_table$cluster_name_long), ignore.case = TRUE)]
+anno_table["in_GluN_trajectory"] <- anno_table$cluster_name_long %in% ext_traj_clusters
+```
+
 
 ## Load scRNA-seq data
 
 ```{r}
+path2data <- "../"
 scrna_sce <- readRDS(paste0(path2data, "scRNA_SCE.RDS"))
 colData(scrna_sce)
 ```
@@ -27,20 +44,26 @@ colData(scrna_sce)
 Save gene names
 
 ```{r}
-gene_names <- rownames(scrna_sce)
-gene_names[rownames(scrna_sce) %in% names(hg38_genes)] <- hg38_genes[rownames(scrna_sce) %in% names(hg38_genes)]$gene_name
-rowData(scrna_sce)[["gene_name"]] <- gene_names
-```
+scrna_sce <- scrna_sce[rownames(scrna_sce) %in% names(hg38_genes),]
 
-Subset to cells on differentiation trajectory of excitatory neurons (picking from the paper).
+gene_names <- rownames(scrna_sce)
+rowData(scrna_sce)[["gene_name"]] <- hg38_genes[gene_names]$gene_name
+```
 
 ```{r}
-traj_clusters <- c("c14", "c2", "c9", "c4", "c5", "c7", "c0", "c12", "c15", 'c21')
-traj_cells <- colnames(scrna_sce)[scrna_sce$seurat_clusters %in% traj_clusters]
-scrna_ext_traj_sce <- scrna_sce[,traj_cells]
-
-plotUMAP(scrna_ext_traj_sce, colour_by="seurat_clusters", point_size=0.2, text_by="seurat_clusters")
+plotUMAP(scrna_sce, colour_by="Batch", point_size=0.2, text_by="seurat_clusters")
+plotUMAP(scrna_sce, colour_by="Assay", point_size=0.2, text_by="seurat_clusters")
 ```
+
+<!-- Subset to cells on differentiation trajectory of excitatory neurons (picking from the paper). -->
+
+<!-- ```{r} -->
+<!-- traj_clusters <- c("c14", "c2", "c9", "c4", "c5", "c7", "c0", "c12", "c15", 'c21') -->
+<!-- traj_cells <- colnames(scrna_sce)[scrna_sce$seurat_clusters %in% traj_clusters] -->
+<!-- scrna_ext_traj_sce <- scrna_sce[,traj_cells] -->
+
+<!-- plotUMAP(scrna_ext_traj_sce, colour_by="seurat_clusters", point_size=0.2, text_by="seurat_clusters") -->
+<!-- ``` -->
 
 ## Load scATAC data
 ```{r}
@@ -48,16 +71,46 @@ scatac_sce <- readRDS(paste0(path2data, "scATAC_SCE.RDS"))
 colData(scatac_sce)
 ## Reverse UMAP coords
 reducedDim(scatac_sce, "UMAP")[,"UMAP2"] <- - reducedDim(scatac_sce, "UMAP")[,"UMAP2"]
+```
+```{r}
+plotUMAP(scatac_sce, colour_by="Batch", point_size=0.2, text_by="Iterative.LSI.Clusters")
+```
+
+### Subset to one batch
+```{r}
+scrna_sce_batch <- scrna_sce[,scrna_sce$Batch  == 'b2020_03']
+scatac_sce_batch <- scatac_sce[,scatac_sce$Batch  == 'b2020_03']
+```
+
+### Add annotations
+```{r}
+library(tibble)
+anno_assay <- anno_table[anno_table$Assay=="scATAC",]
+colData(scatac_sce_batch)[["clusterID"]] <- scatac_sce_batch$Iterative.LSI.Clusters
+colData(scatac_sce_batch) <- left_join(data.frame(colData(scatac_sce_batch)), anno_assay, by="clusterID") %>%
+  column_to_rownames("Cell.ID") %>%
+  DataFrame() 
+
+anno_assay <- anno_table[anno_table$Assay=="scRNA",]
+colData(scrna_sce_batch)[["clusterID"]] <- scrna_sce_batch$seurat_clusters
+colData(scrna_sce_batch) <- left_join(data.frame(colData(scrna_sce_batch)), anno_assay, by="clusterID") %>%
+  column_to_rownames("Cell.ID") %>%
+  DataFrame() 
 
 ```
 
 ```{r}
-traj_clusters <- paste0("c",c(8,1,0,13,6,7,14,5,2))
-traj_cells <- colnames(scatac_sce)[scatac_sce$Iterative.LSI.Clusters %in% traj_clusters]
-scatac_ext_traj_sce <- scatac_sce[,traj_cells]
-
-plotUMAP(scatac_ext_traj_sce, point_size=0.2, colour_by="Iterative.LSI.Clusters", text_by="Iterative.LSI.Clusters")
+plotUMAP(scatac_sce_batch, colour_by="in_GluN_trajectory", point_size=0.2, text_by="Iterative.LSI.Clusters")
+plotUMAP(scrna_sce_batch, colour_by="in_GluN_trajectory", point_size=0.2, text_by="seurat_clusters")
 ```
+
+<!-- ```{r} -->
+<!-- traj_clusters <- paste0("c",c(8,1,0,13,6,7,14,5,2)) -->
+<!-- traj_cells <- colnames(scatac_sce)[scatac_sce$Iterative.LSI.Clusters %in% traj_clusters] -->
+<!-- scatac_ext_traj_sce <- scatac_sce[,traj_cells] -->
+
+<!-- plotUMAP(scatac_ext_traj_sce, point_size=0.2, colour_by="Iterative.LSI.Clusters", text_by="Iterative.LSI.Clusters") -->
+<!-- ``` -->
 
 ## Load multiome data
 
@@ -67,51 +120,75 @@ multi_scatac_sce <- readRDS(paste0(path2data, "Multiome_ATAC_SCE.RDS"))
 
 plotUMAP(multi_scrna_sce, point_size=0.2, colour_by="seurat_clusters", text_by="seurat_clusters")
 ```
-Subset to Exc trajectory
 ```{r}
-traj_clusters <- paste0("c",c(0,1,3,10,6))
-traj_cells <- colnames(multi_scrna_sce)[multi_scrna_sce$seurat_clusters %in% traj_clusters]
-multi_scrna_traj_sce <- multi_scrna_sce[,traj_cells]
-multi_scatac_traj_sce <- multi_scatac_sce[,traj_cells]
+anno_assay <- anno_table[anno_table$Assay=="Multiome_ATAC",]
+colData(multi_scatac_sce)[["clusterID"]] <- multi_scatac_sce$seurat_clusters
+colData(multi_scatac_sce) <- left_join(data.frame(colData(multi_scatac_sce)), anno_assay, by="clusterID") %>%
+  column_to_rownames("Cell.ID") %>%
+  DataFrame() 
 
-plotUMAP(multi_scrna_traj_sce, point_size=0.2, colour_by="seurat_clusters", text_by="seurat_clusters")
+anno_assay <- anno_table[anno_table$Assay=="Multiome_RNA",]
+colData(multi_scrna_sce)[["clusterID"]] <- multi_scrna_sce$seurat_clusters
+colData(multi_scrna_sce) <- left_join(data.frame(colData(multi_scrna_sce)), anno_assay, by="clusterID") %>%
+  column_to_rownames("Cell.ID") %>%
+  DataFrame() 
 ```
+
+```{r}
+plotUMAP(multi_scrna_sce, colour_by="in_GluN_trajectory", point_size=0.2, text_by="seurat_clusters")
+```
+<!-- Subset to Exc trajectory -->
+<!-- ```{r} -->
+<!-- traj_clusters <- paste0("c",c(0,1,3,10,6)) -->
+<!-- traj_cells <- colnames(multi_scrna_sce)[multi_scrna_sce$seurat_clusters %in% traj_clusters] -->
+<!-- multi_scrna_traj_sce <- multi_scrna_sce[,traj_cells] -->
+<!-- multi_scatac_traj_sce <- multi_scatac_sce[,traj_cells] -->
+
+<!-- plotUMAP(multi_scrna_traj_sce, point_size=0.2, colour_by="seurat_clusters", text_by="seurat_clusters") -->
+<!-- ``` -->
 
 Cleaning 
 
 ```{r}
 ## scRNA
 keep_rowdata_colnames <- c('gene_name')
-keep_coldata_colnames <- c("Cell.ID","Sample.ID","Age","Tissue.ID","Sample.Type",
-                           "Assay", "Batch","seurat_clusters","RNA.Counts","RNA.Features",
-                           "Percent.MT","Percent.Ribo","Cell.Barcode")
-colData(scrna_ext_traj_sce) <- colData(scrna_ext_traj_sce)[keep_coldata_colnames]
-rowData(scrna_ext_traj_sce) <- rowData(scrna_ext_traj_sce)[keep_rowdata_colnames]
-reducedDims(scrna_ext_traj_sce) <- NULL
+keep_coldata_colnames <- c("Sample.ID","Age","Tissue.ID","Sample.Type",
+                           "Batch","seurat_clusters","RNA.Counts","RNA.Features",
+                           "Percent.MT","Percent.Ribo","Cell.Barcode","cluster_name", "in_GluN_trajectory")
+colData(scrna_sce_batch) <- colData(scrna_sce_batch)[keep_coldata_colnames]
+rowData(scrna_sce_batch) <- rowData(scrna_sce_batch)[keep_rowdata_colnames]
+reducedDims(scrna_sce_batch) <- NULL
 
 ## scATAC
-colData(scatac_ext_traj_sce) <- colData(scatac_ext_traj_sce)[!startsWith(colnames(colData(scatac_ext_traj_sce)), ".CR")]
-rowData(scatac_ext_traj_sce) <- rowData(scatac_ext_traj_sce)[c("name", "classification")]
-reducedDims(scatac_ext_traj_sce) <- NULL
+colData(scatac_sce_batch) <- colData(scatac_sce_batch)[!startsWith(colnames(colData(scatac_sce_batch)), ".CR")]
+rowData(scatac_sce_batch) <- rowData(scatac_sce_batch)[c("name", "classification")]
+reducedDims(scatac_sce_batch) <- NULL
 
 ## Multiome
-keep_coldata_colnames_multiome <- c(0:10, 66)
-colData(multi_scrna_traj_sce) <- colData(multi_scrna_traj_sce)[keep_coldata_colnames_multiome]
-rowData(multi_scrna_traj_sce) <- rowData(multi_scrna_traj_sce)[c("gene_id", "gene_type", "gene_name")]
-colData(multi_scatac_traj_sce) <- colData(multi_scatac_traj_sce)[keep_coldata_colnames_multiome]
-rowData(multi_scatac_traj_sce) <- rowData(multi_scatac_traj_sce)[c("name")]
-reducedDims(multi_scrna_traj_sce) <- NULL
+keep_coldata_colnames_multiome <- c(colnames(colData(multi_scrna_sce)[0:10]), colnames(anno_assay))
+colData(multi_scrna_sce) <- colData(multi_scrna_sce)[keep_coldata_colnames_multiome]
+rowData(multi_scrna_sce) <- rowData(multi_scrna_sce)[c("gene_id", "gene_type", "gene_name")]
+colData(multi_scatac_sce) <- colData(multi_scatac_sce)[keep_coldata_colnames_multiome]
+rowData(multi_scatac_sce) <- rowData(multi_scatac_sce)[c("name")]
+reducedDims(multi_scrna_sce) <- NULL
 ```
 
 ## Save RDS objects
 
 ```{r}
-saveRDS(scrna_ext_traj_sce, "~/single-cell_sib_scilifelab_2021/multiomics/processed_data/scRNA_ext_trajectory_SCE.RDS")
-saveRDS(scatac_ext_traj_sce, "~/single-cell_sib_scilifelab_2021/multiomics/processed_data/scATAC_ext_trajectory_SCE.RDS")
+saveRDS(scrna_sce_batch, "../processed_data/scRNA_clean_SCE.RDS")
+saveRDS(scatac_sce_batch, "../processed_data/scATAC_clean_SCE.RDS")
 
-saveRDS(multi_scrna_traj_sce, "~/single-cell_sib_scilifelab_2021/multiomics/processed_data/Multiome_RNA_ext_trajectory_SCE.RDS")
-saveRDS(multi_scatac_traj_sce, "~/single-cell_sib_scilifelab_2021/multiomics/processed_data/Multiome_ATAC_ext_trajectory_SCE.RDS")
+saveRDS(multi_scrna_sce, "../processed_data/Multiome_RNA_clean_SCE.RDS")
+saveRDS(multi_scatac_sce, "../processed_data/Multiome_ATAC_clean_SCE.RDS")
 
+```
+```{r}
+scrna_sce_batch  <- readRDS("../processed_data/scRNA_clean_SCE.RDS")
+scatac_sce_batch <- readRDS("../processed_data/scATAC_clean_SCE.RDS")
+
+multi_scrna_sce  <- readRDS("../processed_data/Multiome_RNA_clean_SCE.RDS")
+multi_scatac_sce <- readRDS("../processed_data/Multiome_ATAC_clean_SCE.RDS")
 ```
 
 ## Convert to anndata objects
@@ -120,18 +197,18 @@ Following the [Scanpy in R](https://theislab.github.io/scanpy-in-R/#setting-up) 
 
 ```{r}
 # install.packages(renv)
-renv::init()
-renv::install("reticulate")
-renv::use_python()
-
-py_pkgs <- c(
-    "scanpy",
-    "anndata",
-    "anndata2ri",
-    "rpy2"
-)
-
-reticulate::py_install(py_pkgs)
+# renv::init()
+# renv::install("reticulate")
+# renv::use_python()
+# 
+# py_pkgs <- c(
+#     "scanpy",
+#     "anndata",
+#     "anndata2ri",
+#     "rpy2"
+# )
+# 
+# reticulate::py_install(py_pkgs)
 ```
 
 ```{r}
@@ -139,10 +216,9 @@ sc <- reticulate::import("scanpy")
 convert_sce_2_anndata <- function(sce, assay, filename){
   if (assay=="RNA"){
     adata_sce <- sc$AnnData(
-      X   = t(logcounts(sce)),
+      X   = t(counts(sce)),
       obs = as.data.frame(colData(sce)),
-      var = as.data.frame(rowData(sce)),
-      layers = list(counts=t(counts(sce)))
+      var = as.data.frame(rowData(sce))
       )
   } else {
     adata_sce <- sc$AnnData(
@@ -154,11 +230,11 @@ convert_sce_2_anndata <- function(sce, assay, filename){
   adata_sce$write_h5ad(filename)
 }
 
-outdir <- '/home/jovyan/single-cell_sib_scilifelab_2021/multiomics/processed_data/'
-convert_sce_2_anndata(scrna_ext_traj_sce, "RNA", paste0(outdir, "scRNA_ext_trajectory_SCE.h5ad"))
-convert_sce_2_anndata(scatac_ext_traj_sce, "ATAC", paste0(outdir, "scATAC_ext_trajectory_SCE.h5ad"))
-convert_sce_2_anndata(multi_scrna_traj_sce, "RNA", paste0(outdir, "Multiome_RNA_ext_trajectory_SCE.h5ad"))
-convert_sce_2_anndata(multi_scatac_traj_sce, "ATAC", paste0(outdir, "Multiome_ATAC_ext_trajectory_SCE.h5ad"))
+outdir <- '../processed_data/'
+convert_sce_2_anndata(scrna_sce_batch, "RNA", paste0(outdir, "scRNA_clean_SCE.h5ad"))
+convert_sce_2_anndata(scatac_sce_batch, "ATAC", paste0(outdir, "scATAC_clean_SCE.h5ad"))
+convert_sce_2_anndata(multi_scrna_sce, "RNA", paste0(outdir, "Multiome_RNA_clean_SCE.h5ad"))
+convert_sce_2_anndata(multi_scatac_sce, "ATAC", paste0(outdir, "Multiome_ATAC_clean_SCE.h5ad"))
 ```
 
 
