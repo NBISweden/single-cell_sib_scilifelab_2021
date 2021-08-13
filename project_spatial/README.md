@@ -1,5 +1,5 @@
 
-# <img border="0" src="../logos/rna_velocity.png" width="40" height="40"> Project: Spatial Transcriptomics Project Report
+# <img border="0" src="../logos/rna_velocity.png" width="40" height="40"> Spatial Transcriptomics Project Report
 ***
 
 

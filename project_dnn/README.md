@@ -1,5 +1,5 @@
 
-# <img border="0" src="../logos/deep_learning.png" width="40" height="40"> Project: Deep Learning Project Report
+# <img border="0" src="../logos/deep_learning.png" width="40" height="40"> Deep Learning Project Report
 ***
 
 
