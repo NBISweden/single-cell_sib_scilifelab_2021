@@ -24,7 +24,7 @@ This school is addressed to participants who are already familiar with the typic
 
 <br/>
 
-## <img border="0" src="https://www.svgrepo.com/show/20800/event-date-and-time-symbol.svg" width="40" height="40"> Date
+# <img border="0" src="https://www.svgrepo.com/show/20800/event-date-and-time-symbol.svg" width="40" height="40"> Date
 
 ***
 
@@ -32,7 +32,7 @@ This school is addressed to participants who are already familiar with the typic
 
 <br/>
 
-## <img border="0" src="https://www.svgrepo.com/show/4199/placeholder-on-a-map.svg" width="40" height="40"> Location
+# <img border="0" src="https://www.svgrepo.com/show/4199/placeholder-on-a-map.svg" width="40" height="40"> Location
 
 ***
 
@@ -42,7 +42,7 @@ IMPORTANT: If the situation at the beginning of August showed that it is impossi
 
 <br/>
 
-## <img border="0" src="https://www.svgrepo.com/show/158264/schedule.svg" width="40" height="40"> Programme
+# <img border="0" src="https://www.svgrepo.com/show/158264/schedule.svg" width="40" height="40"> Programme
 
 ***
 
@@ -56,7 +56,7 @@ For the full schedule, please go to: **[Schedule](schedule.md)**
 
 <br/>
 
-## <img border="0" src="https://www.svgrepo.com/show/410/list.svg" width="40" height="40"> Learning objectives
+# <img border="0" src="https://www.svgrepo.com/show/410/list.svg" width="40" height="40"> Learning objectives
 
 ***
 
@@ -77,32 +77,36 @@ At the end of this school, the participants should be able to:
 
 <br/>
 
-## <img border="0" src="https://www.svgrepo.com/show/38706/group-of-people.svg" width="40" height="40"> Staff
+# <img border="0" src="https://www.svgrepo.com/show/38706/group-of-people.svg" width="40" height="40"> Staff
 
 ***
 
-**Coordination:**
+## Coordination:
+
 - Jessica Lindvall, NBIS Training Coordinator, 🇸🇪 Sweden
 - Grégoire Rossier, SIB Training & PhD Training Network coordinator, 🇨🇭 Switzerland
 
-**Scientific Committee:**
-- Åsa Björklund, National Bioinformatics Infrastructure (NBIS), 🇸🇪 Sweden
-- Paulo Czarnewski, National Bioinformatics Infrastructure (NBIS), 🇸🇪 Sweden
-- Charlotte Sonnenson, Friedrich Miescher Institute, SIB/Basel, 🇨🇭 Switzerland
-- Geert van Geest, Interfaculty Bioinformatics Unit, SIB/UniBern, 🇨🇭 Switzerland
+## Scientific Committee:
 
-**Invited Lecturers:**
-- Alma Andersson, KTH Royal Institute of Technology, Stockholm, 🇸🇪 Sweden
-- Volker Bergen, Institute of Computational Biology, Munich, 🇩🇪 Germany
-- Ricard Argelaguet, European Bioinformatics Institute, EMBL-EBI/Cambridge, 🇬🇧 United Kingdom
-- Panagiotis Papasaikas, Friedrich Miescher Institute, SIB/Basel, 🇨🇭 Switzerland
+- __*Åsa Björklund*__, National Bioinformatics Infrastructure (NBIS), 🇸🇪 Sweden
+- __*Paulo Czarnewski*__, National Bioinformatics Infrastructure (NBIS), 🇸🇪 Sweden
+- __*Charlotte Sonnenson*__, Friedrich Miescher Institute, SIB/Basel, 🇨🇭 Switzerland
+- __*Geert van Geest*__, Interfaculty Bioinformatics Unit, SIB/UniBern, 🇨🇭 Switzerland
+
+## Invited Lecturers:
+
+- __*Alma Andersson*__, KTH Royal Institute of Technology, Stockholm, 🇸🇪 Sweden
+- __*Volker Bergen*__, Institute of Computational Biology, Munich, 🇩🇪 Germany
+- __*Ricard Argelaguet*__, European Bioinformatics Institute, EMBL-EBI/Cambridge, 🇬🇧 United Kingdom
+- __*Panagiotis Papasaikas*__, Friedrich Miescher Institute, SIB/Basel, 🇨🇭 Switzerland
 
 
-**Contributing institutions:**
+## Contributing institutions:
 
 <img border="0" src="logos/nbis_logo_crop.png" height="50">    
 <img border="0" src="logos/sib_logo_hig_crop.jpg" height="50">
 
+<br/>
 <br/>
 
 **Additional information**
