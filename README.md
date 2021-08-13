@@ -97,7 +97,7 @@ At the end of this school, the participants should be able to:
 
 - __*Alma Andersson*__, KTH Royal Institute of Technology, Stockholm, 🇸🇪 Sweden
 - __*Volker Bergen*__, Institute of Computational Biology, Munich, 🇩🇪 Germany
-- __*Ricard Argelaguet*__, European Bioinformatics Institute, EMBL-EBI/Cambridge, 🇬🇧 United Kingdom
+- __*Emma Dann*__, Wellcome Sanger Institute, Cambridge, 🇬🇧 United Kingdom
 - __*Panagiotis Papasaikas*__, Friedrich Miescher Institute, SIB/Basel, 🇨🇭 Switzerland
 
 

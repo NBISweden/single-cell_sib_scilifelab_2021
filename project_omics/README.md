@@ -4,7 +4,7 @@
 
 <br/>
 
-- __*Ricard Argelaguet*__, European Bioinformatics Institute, EMBL-EBI/Cambridge, 🇬🇧 United Kingdom
+- __*Emma Dann*__, Wellcome Sanger Institute, Cambridge, 🇬🇧 United Kingdom
 - __*Charlotte Soneson*__, Friedrich Miescher Institute, SIB/Basel, 🇨🇭 Switzerland
 
 <br/>
