@@ -1,7 +1,10 @@
-# Joint SciLifeLab-SIB Summer School for
-# Advanced topics in Single Cell Omics
 
-29.08.2021 - 03.09.2021 - Rånäs Castle near Stockholm
+# Advanced topics in Single Cell Omics
+Joint SciLifeLab-SIB Summer School
+
+***
+
+29.08.2021 - 03.09.2021 - ONLINE
 
 <br/>
 
@@ -14,6 +17,7 @@ The goal of this joint school is to provide PhD students and postdocs with theor
 - <a href="/single-cell_sib_scilifelab_2021/project_spatial/README.html"><img class="zoom" width="20" height="20" border="0" src="logos/omics_integration.png">  Multi-Omics integration</a>
 - <a href="/single-cell_sib_scilifelab_2021/project_spatial/README.html"><img class="zoom" width="20" height="20" border="0" src="logos/deep_learning.png">  Deep Learning</a>
 
+<br/>
 
 **Audience**
 This school is addressed to participants who are already familiar with the typical steps in single-cell (transcriptomics) analysis, which will not be covered during the event.
@@ -32,10 +36,9 @@ This school is addressed to participants who are already familiar with the typic
 
 ***
 
-This course will take place in person in Rånäs Castle, situated close to Stockholm, with rules in accordance with the COVID-19 situation (masks, distance and hands hygiene).
+This course will take place ONLINE in accordance with the COVID-19 situation.
 
-IMPORTANT: If the situation at the beginning of August showed that it is impossible to organize this event in person, it would be switched to an online event and the registration fee would be reduced to that of regular courses (around 55 euros / day).
-
+IMPORTANT: If the situation at the beginning of August showed that it is impossible to organise this event in person, it would be switched to an online event and the registration fee would be reduced to that of regular courses (around 55 euros / day).
 
 <br/>
 
@@ -74,24 +77,6 @@ At the end of this school, the participants should be able to:
 
 <br/>
 
-
-## <img border="0" src="https://www.svgrepo.com/show/3874/contact-form.svg" width="40" height="40"> Application
-
-The registration fees for academics are 1000 EUR, and 1500 EUR for for-profit companies. A special rate of 500 EUR is applicable to PhD students of the SIB Training Network and to members (PhD students?) of SciLifeLab.
-
-You will be informed by email of your registration confirmation. Upon reception of the confirmation email, participants will be asked to confirm attendance by paying the fees within 5 days.
-
-Applications close on [*DD/MM/YYYY*]. Deadline for free-of-charge cancellation is set to [*DD/MM/YYYY*]. Cancellation after this date will not be reimbursed. Please note that participation in SIB courses is subject to our [general conditions](http://www.sib.swiss/training/terms-and-conditions).
-
-We will recommend 2 ECTS credits for this course.
-
-You are welcome to register to the SIB courses mailing list to be informed of all future courses and workshops, as well as all important deadlines using the form [here](https://lists.sib.swiss/mailman/listinfo/courses).
-
-Please note that participation in SIB courses is subject to our [general conditions](http://www.sib.swiss/training/terms-and-conditions).
-
-
-<br/>
-
 ## <img border="0" src="https://www.svgrepo.com/show/38706/group-of-people.svg" width="40" height="40"> Staff
 
 ***
@@ -116,7 +101,7 @@ Please note that participation in SIB courses is subject to our [general conditi
 **Contributing institutions:**
 
 <img border="0" src="logos/nbis_logo_crop.png" height="50">    
-<img border="0" src="logos/sib_logo_hig_crop.png" height="50">
+<img border="0" src="logos/sib_logo_hig_crop.jpg" height="50">
 
 <br/>
 
