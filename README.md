@@ -7,10 +7,12 @@
 
 In recent years, single-cell transcriptomics has become a widely used technology to study heterogeneous and dynamic biological systems. A large number of new tools and approaches have been developed for analyzing this new type of data.
 The goal of this joint school is to provide PhD students and postdocs with theoretical and mostly hands-on knowledge on selected advanced topics in Single Cell analysis. In particular, the participants will be divided into small groups to develop mini projects. The following topics have been selected:
-- scRNAseq & Spatial Transcriptomics
-- scRNAseq & RNA Velocity and Trajectory
-- Single cell omics integration
-- Deep Learning for scRNAseq analysis
+
+
+- <a href="/single-cell_sib_scilifelab_2021/project_spatial/README.html"><img class="zoom" width="20" height="20" border="0" src="logos/spatial_transcriptomics.png">  Spatial Transcriptomics</a>
+- <a href="/single-cell_sib_scilifelab_2021/project_spatial/README.html"><img class="zoom" width="20" height="20" border="0" src="logos/rna_velocity.png">  RNA Velocity</a>
+- <a href="/single-cell_sib_scilifelab_2021/project_spatial/README.html"><img class="zoom" width="20" height="20" border="0" src="logos/omics_integration.png">  Multi-Omics integration</a>
+- <a href="/single-cell_sib_scilifelab_2021/project_spatial/README.html"><img class="zoom" width="20" height="20" border="0" src="logos/deep_learning.png">  Deep Learning</a>
 
 
 **Audience**
