@@ -4,6 +4,11 @@
 
 <br/>
 
+- __*Ricard Argelaguet*__, European Bioinformatics Institute, EMBL-EBI/Cambridge, 🇬🇧 United Kingdom
+- __*Charlotte Soneson*__, Friedrich Miescher Institute, SIB/Basel, 🇨🇭 Switzerland
+
+<br/>
+
 ### Background
 
 <br/>

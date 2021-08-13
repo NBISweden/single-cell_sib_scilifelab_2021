@@ -2,6 +2,10 @@
 # <img border="0" src="../logos/deep_learning.png" width="40" height="40"> Deep Learning Project Report
 ***
 
+<br/>
+
+- __*Panagiotis Papasaikas*__, Friedrich Miescher Institute, SIB/Basel, 🇨🇭 Switzerland
+- __*Geert van Geest*__, Interfaculty Bioinformatics Unit, SIB/UniBern, 🇨🇭 Switzerland
 
 <br/>
 

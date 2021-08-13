@@ -83,14 +83,14 @@ At the end of this school, the participants should be able to:
 
 ## Coordination:
 
-- Jessica Lindvall, NBIS Training Coordinator, 🇸🇪 Sweden
-- Grégoire Rossier, SIB Training & PhD Training Network coordinator, 🇨🇭 Switzerland
+- __*Jessica Lindvall*__, NBIS Training Coordinator, 🇸🇪 Sweden
+- __*Grégoire Rossier*__, SIB Training & PhD Training Network coordinator, 🇨🇭 Switzerland
 
 ## Scientific Committee:
 
 - __*Åsa Björklund*__, National Bioinformatics Infrastructure (NBIS), 🇸🇪 Sweden
 - __*Paulo Czarnewski*__, National Bioinformatics Infrastructure (NBIS), 🇸🇪 Sweden
-- __*Charlotte Sonnenson*__, Friedrich Miescher Institute, SIB/Basel, 🇨🇭 Switzerland
+- __*Charlotte Soneson*__, Friedrich Miescher Institute, SIB/Basel, 🇨🇭 Switzerland
 - __*Geert van Geest*__, Interfaculty Bioinformatics Unit, SIB/UniBern, 🇨🇭 Switzerland
 
 ## Invited Lecturers:

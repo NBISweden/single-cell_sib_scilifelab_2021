@@ -4,6 +4,11 @@
 
 <br/>
 
+- __*Volker Bergen*__, Institute of Computational Biology, Munich, 🇩🇪 Germany
+- __*Paulo Czarnewski*__, National Bioinformatics Infrastructure (NBIS), 🇸🇪 Sweden
+
+<br/>
+
 ### Background
 The combination of velocities across genes is used to show the direction of movement of an individual cell in a dimensionality-reduced embedding. Incorrect visual directions can potentially arise from biases in the way velocities are projected. Simultaneously, the interpretation of the projected velocities is hampered by the difficulty in identifying individual gene dynamics that give rise to the projections. For instance, projections can be distorted due to multiple dynamic processes that occur simultaneously in a specific regime, such as cell cycle and differentiation. Here,
 we will analyse the impact of embedding choices on the vector field representation in the lower-dimensional space (Topic 1),
