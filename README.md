@@ -113,8 +113,8 @@ Please note that participation in SIB courses is subject to our [general conditi
 
 **Contributing institutions:**
 
-<img border="0" src="logos/nbis_logo.png" height="50">    
-<img border="0" src="logos/unibern_logo.png" height="50">
+<img border="0" src="logos/nbis_logo_crop.png" height="50">    
+<img border="0" src="logos/sib_logo_hig_crop.png" height="50">
 
 <br/>
 
