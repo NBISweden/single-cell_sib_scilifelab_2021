@@ -1,6 +1,7 @@
-
-# <img border="0" src="../logos/rna_velocity.png" width="40" height="40"> Project: RNA velocity Project report
+# <img border="0" src="../logos/rna_velocity.png" width="40" height="40"> Project: RNA velocity Project Report
 ***
+
+<br/>
 
 ### Background
 The combination of velocities across genes is used to show the direction of movement of an individual cell in a dimensionality-reduced embedding. Incorrect visual directions can potentially arise from biases in the way velocities are projected. Simultaneously, the interpretation of the projected velocities is hampered by the difficulty in identifying individual gene dynamics that give rise to the projections. For instance, projections can be distorted due to multiple dynamic processes that occur simultaneously in a specific regime, such as cell cycle and differentiation. Here,
@@ -124,3 +125,10 @@ and systematically identify genes that giving rise to these projection, in order
 8.1.6. There are different ways of computing ‘relevant’ genes in scvelo. Show, which of them best represents the entire vector field.
 
 8.1.7. Find more ways of identifying important genes, e.g., using PCA on the velocity vector field.
+
+
+<br/>
+
+### [Back to Projects](/single-cell_sib_scilifelab_2021/projects.md)
+
+### [Back to main](/single-cell_sib_scilifelab_2021/README.md)

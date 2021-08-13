@@ -8,31 +8,28 @@
 }
 </style>
 
-<div>
-
 <br/>
 
 Since each of the 4 group themes may have completely different softwares, please follow in instructions specific to each one.
 
-
-<div style="width:100%;height:200px;">
-<div style="width:125px;height:100px;padding:30px 30px;font-size:12pt;font-family:Helvetica;float:left;text-align:center;">
-<a href="rna_velocity/README.md"><img class="zoom" border="0" src="logos/spatial_transcriptomics.png"></a><p></p>
+<div style="width:100%;height:300px;">
+<div style="width:150px;height:100px;padding:5px 5px;font-size:12pt;font-family:Helvetica;float:left;text-align:center;">
+<a href="project_spatial/README.md"><img class="zoom" border="0" src="logos/spatial_transcriptomics.png"></a><p></p>
 <p>Spatial<br/>transcriptomics</p>
 </div>
 
-<div style="width:125px;height:100px;padding:30px 30px;font-size:12pt;font-family:Helvetica;float:left;text-align:center;">
-<a href="rna_velocity/README.md"><img class="zoom" border="0" src="logos/rna_velocity.png"></a><p></p>
+<div style="width:150px;height:100px;padding:5px 5px;font-size:12pt;font-family:Helvetica;float:left;text-align:center;">
+<a href="project_velocity/README.md"><img class="zoom" border="0" src="logos/rna_velocity.png"></a><p></p>
 <p>RNA<br/>velocity</p>
 </div>
 
-<div style="width:125px;height:100px;padding:30px 30px;font-size:12pt;font-family:Helvetica;float:left;text-align:center;">
-<a href="rna_velocity/README.md"><img class="zoom" border="0" src="logos/omics_integration.png"></a><p></p>
+<div style="width:150px;height:100px;padding:5px 5px;font-size:12pt;font-family:Helvetica;float:left;text-align:center;">
+<a href="project_omics/README.md"><img class="zoom" border="0" src="logos/omics_integration.png"></a><p></p>
 <p>Omics<br/>integration</p>
 </div>
 
-<div style="width:125px;height:100px;padding:30px 30px;font-size:12pt;font-family:Helvetica;float:left;text-align:center;">
-<a href="rna_velocity/README.md"><img class="zoom" border="0" src="logos/deep_learning.png"></a><p></p>
+<div style="width:150px;height:100px;padding:5px 5px;font-size:12pt;font-family:Helvetica;float:left;text-align:center;">
+<a href="project_dnn/README.md"><img class="zoom" border="0" src="logos/deep_learning.png"></a><p></p>
 <p>Deep<br/>learning</p>
 </div>
 </div>
@@ -97,38 +94,6 @@ Here we have some tips for successfully structuring your project work:
 
 ***
 
-### Project evaluation
-
-By the end of the course each group is expected to have:
-
-- **1 project report file** with all analysis steps and the rationale for the following projects and
-- **1 project presentation file** showing the work done and the results achieved (10 min + 5 min questions)
-
-Those files will be made public and hosted permanently on the course webpage. You can now even look what other groups did, see their report and go through their project.
-
-# <img border="0" src="logos/spatial_transcriptomics.png" width="40" height="40"> Spatial Transcriptomics
-***
-
-
 <br/>
 
-# <img border="0" src="logos/rna_velocity.png" width="40" height="40"> RNA velocity and trajectories
-***
-
-
-<br/>
-
-# <img border="0" src="logos/omics_integration.png" width="40" height="40"> Multi-omics integration
-***
-
-<br/>
-
-# <img border="0" src="logos/deep_learning.png" width="40" height="40"> Deep learning
-***
-
-
-<br/>
-
-### [Back to main](README.md)
-
-</div>
+### [Back to main](/single-cell_sib_scilifelab_2021/README.md)
