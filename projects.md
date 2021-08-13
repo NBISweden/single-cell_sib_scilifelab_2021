@@ -2,9 +2,42 @@
 
 ***
 
+<style>
+.zoom:hover {
+  transform:scale(1.1);
+}
+</style>
+
+<div>
+
 <br/>
 
 Since each of the 4 group themes may have completely different softwares, please follow in instructions specific to each one.
+
+
+<div style="width:100%;height:200px;">
+<div style="width:125px;height:100px;padding:30px 30px;font-size:12pt;font-family:Helvetica;float:left;text-align:center;">
+<a href="rna_velocity/README.md"><img class="zoom" border="0" src="logos/spatial_transcriptomics.png"></a><p></p>
+<p>Spatial<br/>transcriptomics</p>
+</div>
+
+<div style="width:125px;height:100px;padding:30px 30px;font-size:12pt;font-family:Helvetica;float:left;text-align:center;">
+<a href="rna_velocity/README.md"><img class="zoom" border="0" src="logos/rna_velocity.png"></a><p></p>
+<p>RNA<br/>velocity</p>
+</div>
+
+<div style="width:125px;height:100px;padding:30px 30px;font-size:12pt;font-family:Helvetica;float:left;text-align:center;">
+<a href="rna_velocity/README.md"><img class="zoom" border="0" src="logos/omics_integration.png"></a><p></p>
+<p>Omics<br/>integration</p>
+</div>
+
+<div style="width:125px;height:100px;padding:30px 30px;font-size:12pt;font-family:Helvetica;float:left;text-align:center;">
+<a href="rna_velocity/README.md"><img class="zoom" border="0" src="logos/deep_learning.png"></a><p></p>
+<p>Deep<br/>learning</p>
+</div>
+</div>
+
+<br/>
 
 ***
 
@@ -73,93 +106,29 @@ By the end of the course each group is expected to have:
 
 Those files will be made public and hosted permanently on the course webpage. You can now even look what other groups did, see their report and go through their project.
 
-# <img border="0" src="/single-cell_sib_scilifelab_2021/logos/single_cell.png" width="40" height="40"> Spatial Transcriptomics
+# <img border="0" src="logos/spatial_transcriptomics.png" width="40" height="40"> Spatial Transcriptomics
+***
+
+
+<br/>
+
+# <img border="0" src="logos/rna_velocity.png" width="40" height="40"> RNA velocity and trajectories
+***
+
+
+<br/>
+
+# <img border="0" src="logos/omics_integration.png" width="40" height="40"> Multi-omics integration
 ***
 
 <br/>
 
-<details>
-<summary>
-<b>PROJECT 1: Blocking myeloid development during colitis</b>
-</summary>
-
-<br/>
-
-**Background:** Ulcerative colitis (UC) is an inflammatory bowel disease (IBD) driven mainly by colonic innate inflammatory cells such as macrophages, monocytes and neutrophils ( [Czarnewski et al 2019](https://www.nature.com/articles/s41467-019-10769-x), [Skatteborg et al 2020](https://academic.oup.com/ecco-jcc/advance-article-abstract/doi/10.1093/ecco-jcc/jjaa121/5859161?redirectedFrom=fulltext)). A recent study showed that patients that present higher neutrophilic inflammatory signature (known as UC1) become refractory to both anti-TNF and anti-a4b7 integrin therapy ( [Czarnewski et al 2019](https://www.nature.com/articles/s41467-019-10769-x), [Skatteborg et al 2020](https://academic.oup.com/ecco-jcc/advance-article-abstract/doi/10.1093/ecco-jcc/jjaa121/5859161?redirectedFrom=fulltext)), which leads to surgical intervention for removal of the colon. Neutrophils inflammatory cells are short lived and originate from the common myeloid progenitor (CMP) in the bone marrow and requires constant replenishment in order to sustain elevated cell number in the colon. Herein, our main goal is to identify potential gene candidates that can block either pathways of neutrophil differentiation in the bone marrow.
-
-**Main research question:** Which genes specifically drive the differentiation of Neutrophils.
-
-**Importance:** Identifying such genes will allow us to: 1) perform experiment in Tamoxifen-transgenic mice where those cells can be depleted during the course of colitis. 2) find potential drugs that can inhibit those genes/pathways in order to block myeloid cell differentiation during colitis in mice (with priority to already approved drugs).
-
-**Analysis report from group 1:**
-1. [project_report_colitis](single_cell/group_reports/project_report_colitis.html) ([.Rmd](single_cell/group_reports/project_report_colitis.Rmd))
-2. [Presentation](single_cell/group_reports/project_presentation_colitis.pdf)
-
-</details>
-
-<br/>
-
-<details>
-<summary>
-<b>PROJECT 2: Identifying cell and gene candidates in severe COVID-19 patients</b>
-</summary>
-
-<br/>
-
-**Background:** COVID-19 is an infectious disease driven by the virus SARS-CoV-2, which primarily infects lung epithelial cells. However, elderly patients usually develop severe lung inflammation and lung disfunction, ultimately leading to respiratory failure ([Guan et al 2020](https://www.nejm.org/doi/full/10.1056/nejmoa2002032)). The onset of the disease is characterised by a cytokine storm comprising several inflammatory mediators ([Pedersen et al 2020](https://www.jci.org/articles/view/137647)), specially in severe cases of the disease. Many cell types orchestrate the immune response to the virus, but their relative contribution at the single-cell resolution is still unclear. Herein, our main goal is to identify which cell types and gene pathways are altered in the blood of patients with severe COVID-19.
-
-**Main research question:** Which cell types and genes are altered when comparing blood immune cells from healthy versus COVID-19 patients.
-
-**Importance:** Identifying such genes will allow us to: 1) better understand why severe COVID-19 patients develop stronger immune responses; 2) find potential cells for blockage or immune enhancement therapy or; 3) identify pathways that could be targeted pharmacologically.
-
-**Analysis report from group 2:**
-1. [project_report_covid19](single_cell/group_reports/project_report_covid19.html) ([.Rmd](single_cell/group_reports/project_report_covid19.Rmd))
-2. [Presentation_covid19](single_cell/group_reports/project_presentation_covid19.pdf)
-
-
-</details>
-
-<br/>
-
-# <img border="0" src="/single-cell_sib_scilifelab_2021/logos/long_read.png" width="40" height="40"> RNA velocity and trajectories
+# <img border="0" src="logos/deep_learning.png" width="40" height="40"> Deep learning
 ***
 
-
-Please follow the [pre-course instructions](precourse.md) in order to install all necessary software and packages.
-
-<details>
-<summary>Click to expand!</summary>
-
-  TO DO
-
-</details>
-
-<br/>
-
-# <img border="0" src="/single-cell_sib_scilifelab_2021/logos/ribo_profiling.png" width="40" height="40"> Multi-omics integration
-***
-
-<details>
-<summary>Click to expand!</summary>
-
-  TO DO
-
-</details>
-
-<br/>
-
-# <img border="0" src="/single-cell_sib_scilifelab_2021/logos/uv_crosslink_ip.png" width="40" height="40"> Deep learning
-***
-
-<details>
-<summary>Click to expand!</summary>
-
-  TO DO
-
-</details>
-
-<br/>
 
 <br/>
 
 ### [Back to main](README.md)
+
+</div>

@@ -1,127 +1,126 @@
-# Joint SciLifeLab-SIB Summer School for
-# Advanced topics in Single Cell Omics
 
-29.08.2021 - 03.09.2021 - Rånäs Castle near Stockholm
-
-<br/>
-
-In recent years, single-cell transcriptomics has become a widely used technology to study heterogeneous and dynamic biological systems. A large number of new tools and approaches have been developed for analyzing this new type of data.
-The goal of this joint school is to provide PhD students and postdocs with theoretical and mostly hands-on knowledge on selected advanced topics in Single Cell analysis. In particular, the participants will be divided into small groups to develop mini projects. The following topics have been selected:
-- scRNAseq & Spatial Transcriptomics
-- scRNAseq & RNA Velocity and Trajectory
-- Single cell omics integration
-- Deep Learning for scRNAseq analysis
-
-
-**Audience**
-This school is addressed to participants who are already familiar with the typical steps in single-cell (transcriptomics) analysis, which will not be covered during the event.
-
-<br/>
-
-## <img border="0" src="https://www.svgrepo.com/show/20800/event-date-and-time-symbol.svg" width="40" height="40"> Date
-
+# <img border="0" src="../logos/rna_velocity.png" width="40" height="40"> Project: RNA velocity Project report
 ***
 
-29.08.2021 - 03.09.2021
+### Background
+The combination of velocities across genes is used to show the direction of movement of an individual cell in a dimensionality-reduced embedding. Incorrect visual directions can potentially arise from biases in the way velocities are projected. Simultaneously, the interpretation of the projected velocities is hampered by the difficulty in identifying individual gene dynamics that give rise to the projections. For instance, projections can be distorted due to multiple dynamic processes that occur simultaneously in a specific regime, such as cell cycle and differentiation. Here,
+we will analyse the impact of embedding choices on the vector field representation in the lower-dimensional space (Topic 1),
+and systematically identify genes that giving rise to these projection, in order to address one of the major challenges to interpreting RNA velocity results (Topic 2).
+
+- SIB Topic 1: The choice of your embedding matters - its relevance and impact on interpretation of RNA velocity estimates.
+- SIB Topic 2: Identifying genes that give rise to vector field representations, for better interpretation of RNA velocity results.
+
+- Follow the instructions here (https://scvelo.org/installation) to install `scanpy` and `scvelo`.
+- Run the tutorials at https://scvelo.org and make yourself comfortable with the main steps.
 
 <br/>
 
-## <img border="0" src="https://www.svgrepo.com/show/4199/placeholder-on-a-map.svg" width="40" height="40"> Location
+### Milestone 1: Read into AnnData object
 
-***
+1.1. Read the pancreas dataset
 
-This course will take place in person in Rånäs Castle, situated close to Stockholm, with rules in accordance with the COVID-19 situation (masks, distance and hands hygiene).
+1.2. Why do we use an AnnData object?
 
-IMPORTANT: If the situation at the beginning of August showed that it is impossible to organize this event in person, it would be switched to an online event and the registration fee would be reduced to that of regular courses (around 55 euros / day).
+1.3. Where are the un/spliced counts and annotations for observations and variables stored?  
 
-
-<br/>
-
-## <img border="0" src="https://www.svgrepo.com/show/158264/schedule.svg" width="40" height="40"> Programme
-
-***
-
-After a first day about RNA-seq overview, the remainder of the School will focus on group mini-projects.
-
-We will work with 4 topics and there will be 2 groups of 4 participants for each topic. The groups will be composed in advance, based on a survey the applicants will complete. There will be about 2 tutors per project.
-
-The last day, the groups will present their project.
-
-For the full schedule, please go to: **[Schedule](schedule.md)**
+1.4. Describe in form of text the rational for these steps in your markdown report.
 
 <br/>
 
-## <img border="0" src="https://www.svgrepo.com/show/410/list.svg" width="40" height="40"> Learning objectives
+### Milestone 2: Preprocessing
 
-***
+2.1. Why do we need to filter out a number of genes?
 
-At the end of this school, the participants should be able to:
-- have a good understanding of the most common methods of RNA-seq analysis,
-- repeat the same type of analysis achieved during the mini-project,
-- present the mini-project and more globally disseminate their experience to the members of their group.
+2.2. What are meaningful gene selection criteria and why?
 
+2.3. What is the rationale of normalizing the counts?
 
-**Pre-requisites - background knowledge**
-- Previous intermediate experience with single cell RNA-seq analysis
-- Familiar with command line and UNIX language
-- Intermediate/advanced usage of R / Python
+2.4. After gene selection and normalization the data is log-transformed. What is it necessary for?
 
-**Pre-requisites - material & software**
-- The participants must bring a laptop with install permissions (admin). A list of software to be installed in advance will be communicated on due time.
-
+2.5. Show how the PCA embeddings compare when you use log vs. non-log data.
 
 <br/>
 
+### Milestone 3: Neighbor graph, and moments
 
-## <img border="0" src="https://www.svgrepo.com/show/3874/contact-form.svg" width="40" height="40"> Application
+3.1. The PCA representation (computed on the log-normalized data) is used to compute a neighbor graph from cell-to-cell distances. What does this graph represent and what can it be used for?
 
-The registration fees for academics are 1000 EUR, and 1500 EUR for for-profit companies. A special rate of 500 EUR is applicable to PhD students of the SIB Training Network and to members (PhD students?) of SciLifeLab.
+3.2. Now, we use the graph to compute first-order moments, i.e., for each cell, the mean (first-order moments) and variance (second-order moments) of its neighboring cells is computed. This can also be regarded as a knn-imputation of the counts.
 
-You will be informed by email of your registration confirmation. Upon reception of the confirmation email, participants will be asked to confirm attendance by paying the fees within 5 days.
-
-Applications close on [*DD/MM/YYYY*]. Deadline for free-of-charge cancellation is set to [*DD/MM/YYYY*]. Cancellation after this date will not be reimbursed. Please note that participation in SIB courses is subject to our [general conditions](http://www.sib.swiss/training/terms-and-conditions).
-
-We will recommend 2 ECTS credits for this course.
-
-You are welcome to register to the SIB courses mailing list to be informed of all future courses and workshops, as well as all important deadlines using the form [here](https://lists.sib.swiss/mailman/listinfo/courses).
-
-Please note that participation in SIB courses is subject to our [general conditions](http://www.sib.swiss/training/terms-and-conditions).
-
+3.3. Show how the k parameter (number of neighbors) impacts the imputed counts, e.g., by comparing the imputed gene expression of two genes  with different values for k.
 
 <br/>
 
-## <img border="0" src="https://www.svgrepo.com/show/38706/group-of-people.svg" width="40" height="40"> Staff
+### Milestone 4: Velocity estimation
 
-***
+4.1. For velocity estimation, per default the stochastic model is applied. It estimates the steady-state ratio for each gene, and computes velocities as the residuals of the observations from this steady-state line.
 
-**Coordination:**
-- Jessica Lindvall, NBIS Training Coordinator, 🇸🇪 Sweden
-- Grégoire Rossier, SIB Training & PhD Training Network coordinator, 🇨🇭 Switzerland
+4.2. Demonstrate for a few genes, how the steady-state line is fit. Can you show mathematically why velocities are given as the residuals from this line?
 
-**Scientific Committee:**
-- Åsa Björklund, National Bioinformatics Infrastructure (NBIS), 🇸🇪 Sweden
-- Paulo Czarnewski, National Bioinformatics Infrastructure (NBIS), 🇸🇪 Sweden
-- Charlotte Sonnenson, Friedrich Miescher Institute, SIB/Basel, 🇨🇭 Switzerland
-- Geert van Geest, Interfaculty Bioinformatics Unit, SIB/UniBern, 🇨🇭 Switzerland
+4.3. Now, apply the dynamical model instead and show how the steady-state lines differ.
 
-**Invited Lecturers:**
-- Alma Andersson, KTH Royal Institute of Technology, Stockholm, 🇸🇪 Sweden
-- Volker Bergen, Institute of Computational Biology, Munich, 🇩🇪 Germany
-- Ricard Argelaguet, European Bioinformatics Institute, EMBL-EBI/Cambridge, 🇬🇧 United Kingdom
-- Panagiotis Papasaikas, Friedrich Miescher Institute, SIB/Basel, 🇨🇭 Switzerland
+4.4. Now use a few gene phase portraits to demonstrate how inferred up- and down-regulation can be read from these portraits.
 
-
-**Contributing institutions:**
-
-<img border="0" src="logos/nbis_logo.png" height="50">    
-<img border="0" src="logos/unibern_logo.png" height="50">
+4.5. What are transient states as opposed to steady states? How many steady states exist?
 
 <br/>
 
-**Additional information**
+### Milestone 5: Embeddings
 
-For more information, please contact [training@sib.swiss](mailto://training@sib.swiss).
+5.1. Compute various dimensionality reduction methods / embeddings (e.g., tsne, umap, diffmap) and show how they differ and what type of topology they capture (local vs. global similarity).
+
+5.2. As you vary the main parameters (e.g., min_dist in umap), how does that impact the embedding?
+
+5.3. Which of these embeddings would you use for visualising trajectories and why?
 
 <br/>
 
+### Milestone 6: Velocity graph
+
+6.1. The velocity graph summarises all cell-to-cell transitions inferred from velocity. What exactly does the ij-th entry in the graph represent?  
+
+6.2. Can you run a number of cell transitions using the graph to simulate a trajectory starting from a particular cell in one of the embeddings?
+
+6.3. How do the trajectories compare, when run from different starting cells (e.g., cell cycle vs. differentiation)?
+
 <br/>
+
+### Milestone 7: Velocity projection
+
+7.1. Now the high-dimensional velocity vector field is visualized by projection into the two-dimensional embedding. Show how the velocity graph (transition matrix) is being used to project the data. For instance, you can pick one particular cell, and show its potential transitions, and how the actual arrow is derived from these.
+
+7.2. Vary with the n_neighbors parameter and show how that impacts the projected vector field.
+
+7.3. Why is the vector field getting smoother/averaged with a large n_neighbors parameter?
+
+<br/>
+
+### Milestone 8: Topic 1 - Vector field representations depend on the embedding
+
+8.1.1. Now show how the projected vector field is represented in the embedding as you vary some of the parameters from before (such as min_dist for UMAP).
+
+8.1.2. Is there a specific parameter set, where the arrows and the embedding coordinates do not work together?
+
+8.1.3. Which embedding provides the highest resolution into the vector field.
+
+8.1.4. Using the simulated cellular transitions, can you show which embedding specification represent the high-dimensional vector field best?
+
+8.1.5. Can you even systematically quantify, how well the vector field is represented in the embedding?
+
+<br/>
+
+### Milestone 8: Topic 2 - Identification of putative driver genes
+
+8.1.1. Identification of dynamically relevant genes is motivatived in three ways:
+
+8.1.2. We would like to understand, which genes are the ones that drive the vector field representation in the embeeding, i.e., which are most impactful on the projection.
+
+8.1.3. We would like to understand, which gene are transiently expressed, i.e., dynamically activating in the differentiation process.
+
+8.1.4. Finally, we want to know, which genes are actual driver of the underlying biological processes.
+
+8.1.5. Using only a small number of selected genes, show how the velocity projection differs from the projection using all genes. Can you quantify that difference?
+
+8.1.6. There are different ways of computing ‘relevant’ genes in scvelo. Show, which of them best represents the entire vector field.
+
+8.1.7. Find more ways of identifying important genes, e.g., using PCA on the velocity vector field.
