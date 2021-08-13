@@ -101,6 +101,6 @@
 
 <br/>
 
-### [Back to Projects](/single-cell_sib_scilifelab_2021/projects.md)
+### [Back to Projects](/single-cell_sib_scilifelab_2021/projects)
 
-### [Back to main](/single-cell_sib_scilifelab_2021/README.md)
+### [Back to main](/single-cell_sib_scilifelab_2021/README)

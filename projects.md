@@ -14,22 +14,22 @@ Since each of the 4 group themes may have completely different softwares, please
 
 <div style="width:100%;height:300px;">
 <div style="width:150px;height:100px;padding:5px 5px;font-size:12pt;font-family:Helvetica;float:left;text-align:center;">
-<a href="project_spatial/README.md"><img class="zoom" border="0" src="logos/spatial_transcriptomics.png"></a><p></p>
+<a href="/single-cell_sib_scilifelab_2021/project_spatial/README"><img class="zoom" border="0" src="logos/spatial_transcriptomics.png"></a><p></p>
 <p>Spatial<br/>transcriptomics</p>
 </div>
 
 <div style="width:150px;height:100px;padding:5px 5px;font-size:12pt;font-family:Helvetica;float:left;text-align:center;">
-<a href="project_velocity/README.md"><img class="zoom" border="0" src="logos/rna_velocity.png"></a><p></p>
+<a href="/single-cell_sib_scilifelab_2021/project_velocity/README"><img class="zoom" border="0" src="logos/rna_velocity.png"></a><p></p>
 <p>RNA<br/>velocity</p>
 </div>
 
 <div style="width:150px;height:100px;padding:5px 5px;font-size:12pt;font-family:Helvetica;float:left;text-align:center;">
-<a href="project_omics/README.md"><img class="zoom" border="0" src="logos/omics_integration.png"></a><p></p>
+<a href="/single-cell_sib_scilifelab_2021/project_omics/README"><img class="zoom" border="0" src="logos/omics_integration.png"></a><p></p>
 <p>Omics<br/>integration</p>
 </div>
 
 <div style="width:150px;height:100px;padding:5px 5px;font-size:12pt;font-family:Helvetica;float:left;text-align:center;">
-<a href="project_dnn/README.md"><img class="zoom" border="0" src="logos/deep_learning.png"></a><p></p>
+<a href="/single-cell_sib_scilifelab_2021/project_dnn/README"><img class="zoom" border="0" src="logos/deep_learning.png"></a><p></p>
 <p>Deep<br/>learning</p>
 </div>
 </div>
@@ -96,4 +96,4 @@ Here we have some tips for successfully structuring your project work:
 
 <br/>
 
-### [Back to main](/single-cell_sib_scilifelab_2021/README.md)
+### [Back to main](/single-cell_sib_scilifelab_2021/README)
