@@ -4,7 +4,7 @@ Joint SciLifeLab-SIB Summer School
 
 ***
 
-29.08.2021 - 03.09.2021 - ONLINE
+30.08.2021 - 03.09.2021 - ONLINE
 
 <br/>
 
@@ -28,7 +28,7 @@ This school is addressed to participants who are already familiar with the typic
 
 ***
 
-29.08.2021 - 03.09.2021
+30.08.2021 - 03.09.2021
 
 <br/>
 
@@ -38,7 +38,6 @@ This school is addressed to participants who are already familiar with the typic
 
 This course will take place ONLINE in accordance with the COVID-19 situation.
 
-IMPORTANT: If the situation at the beginning of August showed that it is impossible to organise this event in person, it would be switched to an online event and the registration fee would be reduced to that of regular courses (around 55 euros / day).
 
 <br/>
 
@@ -72,7 +71,7 @@ At the end of this school, the participants should be able to:
 - Intermediate/advanced usage of R / Python
 
 **Pre-requisites - material & software**
-- The participants must bring a laptop with install permissions (admin). A list of software to be installed in advance will be communicated on due time.
+- The participants must use a laptop with install permissions (admin). A list of software to be installed in advance will be communicated on due time.
 
 
 <br/>
