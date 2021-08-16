@@ -15,7 +15,7 @@
 
 
 ### Day2 (Tuesday):
-- *Mini projects: Introduction
+*Mini projects: Introduction
 - *Mini projects: work in groups
 - Keynote lecture
 
