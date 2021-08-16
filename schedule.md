@@ -5,35 +5,36 @@
 ***
 
 <br/>
-
-### Day0 (Sunday)
-- Arrival
-- 18.00 Intro lecture  (QC, clustering, …) (example: SIB2020)
-- 19.00 Dinner
+*Italic = Mini projects - work in small groups
 
 ### Day1 (Monday):
-- 2 lectures (1.5  h total time)
-- Exercise for everyone - QC + Clustering + DE detection. (1.5 - 2h)
-- 2 lectures (1.5  h total time)
-- *Intro to projects (15 minutes)
-- *Project work (2 h)
+- Introductory lecture
+- Lectures for topics 1 & 2 (see the Overview paragraph)
+- Exercise for everyone - QC + Clustering + DE detection
+- Lectures for topics 3 & 4
+
 
 ### Day2 (Tuesday):
-- One keynote (1h) - around 11, just before lunch? Sten Linnarsson on HDCA?
-- *Project work (6 h)
+- *Mini projects: Introduction
+- *Mini projects: work in groups
+- Keynote lecture
 
-### Day3 (Wednesday, half day):
-- *Project work (3 h)
-- Social Activity (afternoon)
+
+### Day3 (Wednesday):
+- *Mini projects: work in groups
+- Online social Activity (afternoon)
 
 ### Day4 (Thursday):
-- 2 lectures (1,5 h: extra topic, software, method, etc)
-- *Project work including presentation preparation (5.5 h)
+- *Mini projects: work in groups
+- Two lectures: software, method
+- *Mini projects: presentations preparation
 
-### Day5 (Friday, half day):
-- Project presentations
-- Lunch
-- Ends at 14ish
+
+### Day5 (Friday):
+- *Mini projects: presentations preparation
+- Presentation of the 4 mini projects
+- Conclusion & wrap up
+
 
 
 <br/>
