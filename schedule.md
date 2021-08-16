@@ -6,6 +6,7 @@
 
 <br/>
 * = Mini projects - work in small groups
+<br/>
 
 ### Day1 (Monday):
 * Introductory lecture
