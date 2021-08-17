@@ -16,3 +16,7 @@ include:
   - CONTRIBUTING.md
   - ISSUE_TEMPLATE.md
   - PULL_REQUEST_TEMPLATE.md
+  - project_velocity/README.md
+  - project_spatial/README.md
+  - project_omics/README.md
+  - project_dnn/README.md
