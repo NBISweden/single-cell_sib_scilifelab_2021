@@ -237,6 +237,48 @@ convert_sce_2_anndata(multi_scrna_sce, "RNA", paste0(outdir, "Multiome_RNA_clean
 convert_sce_2_anndata(multi_scatac_sce, "ATAC", paste0(outdir, "Multiome_ATAC_clean_SCE.h5ad"))
 ```
 
+## Subset gene activity matrices
+
+```{r}
+library(data.table)
+scATAC_gene_act <- fread("~/brainchromatin/data_files/tsv/atac_gene_activities.tsv.gz")
+
+scatac_sce_batch <- readRDS("~/mount/gdrive/sc-multiomics-course-2021/processed_data/scATAC_clean_SCE.RDS") 
+scATAC_gene_act <- as.data.frame(scATAC_gene_act)
+## remove duplicate genes
+keep_genes <- names(table(scATAC_gene_act$V1)[table(scATAC_gene_act$V1) == 1])
+scATAC_gene_act <- scATAC_gene_act[scATAC_gene_act$V1 %in% keep_genes,]
+rownames(scATAC_gene_act) <- scATAC_gene_act$V1
+
+## Subset to cells in SCE
+scATAC_gene_act <- scATAC_gene_act[,colnames(scatac_sce_batch)]
+```
+
+```{r}
+Multiome_ATAC_gene_act <- fread("~/brainchromatin/data_files/tsv/multiome_atac_gene_activities.tsv")
+
+multi_scatac_sce <- readRDS("~/mount/gdrive/sc-multiomics-course-2021/processed_data/Multiome_ATAC_clean_SCE.RDS") 
+Multiome_ATAC_gene_act <- as.data.frame(Multiome_ATAC_gene_act)
+## remove duplicate genes
+keep_genes <- names(table(Multiome_ATAC_gene_act$V1)[table(Multiome_ATAC_gene_act$V1) == 1])
+Multiome_ATAC_gene_act <- Multiome_ATAC_gene_act[Multiome_ATAC_gene_act$V1 %in% keep_genes,]
+rownames(Multiome_ATAC_gene_act) <- Multiome_ATAC_gene_act$V1
+
+## Subset to cells in SCE
+Multiome_ATAC_gene_act <- Multiome_ATAC_gene_act[,colnames(multi_scatac_sce)]
+```
+
+
+```{r}
+library(R.utils)
+fwrite(scATAC_gene_act,'../processed_data/scATAC_clean_gene_activities.csv',sep=',')
+gzip('../processed_data/scATAC_clean_gene_activities.csv',destname='../processed_data/scATAC_clean_gene_activities.csv.gz')
+
+fwrite(Multiome_ATAC_gene_act,'../processed_data/Multiome_ATAC_clean_gene_activities.csv',sep=',')
+gzip('../processed_data/Multiome_ATAC_clean_gene_activities.csv',destname='../processed_data/Multiome_ATAC_clean_gene_activities.csv.gz')
+
+```
+
 
 
 
