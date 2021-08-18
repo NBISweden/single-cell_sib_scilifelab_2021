@@ -18,6 +18,7 @@ git clone https://github.com/NBISweden/single-cell_sib_scilifelab_2021.git
 
 - Create a new conda environment and install the required python packages:
 ```
+cd single-cell_sib_scilifelab_2021/project_omics
 conda env create --file sc_sib_scilifelab_2021_multiomics.yml
 ```
 
