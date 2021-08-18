@@ -16,13 +16,13 @@ Clone the code repository locally
 git clone https://github.com/NBISweden/single-cell_sib_scilifelab_2021.git
 ```
 
-- Create a new conda environment and install the required python packages:
+Create a new conda environment and install the required python packages:
 ```
 cd single-cell_sib_scilifelab_2021/project_omics
 conda env create --file sc_sib_scilifelab_2021_multiomics.yml
 ```
 
-- Install some additional R packages. From R:
+Install some additional R packages. From R:
 ```
 if (!requireNamespace("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
@@ -36,7 +36,7 @@ BiocManager::install(c("ensembldbr", "AnnotationDbi", 'EnsDb.Hsapiens.v86',
 install.packages(c('tidyverse', "Seurat", "Signac", "Matrix"))
 ```
 
-- Download the data
+Download the data
 ```
 mkdir processed_data
 ## TBD ##
