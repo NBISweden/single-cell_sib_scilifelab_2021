@@ -28,7 +28,10 @@ if (!requireNamespace("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
 BiocManager::install()
 
-BiocManager::install(c("ensembldbr", "AnnotationDbi", 'EnsDb.Hsapiens.v86', "SingleCellExperiment", "GenomicRanges", "scran", 'BSgenome.Hsapiens.UCSC.hg38', "chromVAR", "MOFA2", "MultiAssayExperiment"))
+BiocManager::install(c("ensembldbr", "AnnotationDbi", 'EnsDb.Hsapiens.v86', 
+    "SingleCellExperiment", "GenomicRanges", "scran", 
+    'BSgenome.Hsapiens.UCSC.hg38', "chromVAR", "MOFA2", 
+    "MultiAssayExperiment"))
 
 install.packages(c('tidyverse', "Seurat", "Signac", "Matrix"))
 ```
