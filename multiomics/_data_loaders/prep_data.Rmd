@@ -252,6 +252,9 @@ rownames(scATAC_gene_act) <- scATAC_gene_act$V1
 
 ## Subset to cells in SCE
 scATAC_gene_act <- scATAC_gene_act[,colnames(scatac_sce_batch)]
+
+scATAC_gene_act[,'gene'] <- rownames(scATAC_gene_act)
+scATAC_gene_act <- scATAC_gene_act[c('gene',str_subset(colnames(scATAC_gene_act), 'gene', negate = TRUE))]
 ```
 
 ```{r}
@@ -266,6 +269,9 @@ rownames(Multiome_ATAC_gene_act) <- Multiome_ATAC_gene_act$V1
 
 ## Subset to cells in SCE
 Multiome_ATAC_gene_act <- Multiome_ATAC_gene_act[,colnames(multi_scatac_sce)]
+
+Multiome_ATAC_gene_act[,'gene'] <- rownames(Multiome_ATAC_gene_act)
+Multiome_ATAC_gene_act <- Multiome_ATAC_gene_act[c('gene',str_subset(colnames(Multiome_ATAC_gene_act), 'gene', negate = TRUE))]
 ```
 
 
@@ -276,6 +282,7 @@ gzip('../processed_data/scATAC_clean_gene_activities.csv',destname='../processed
 
 fwrite(Multiome_ATAC_gene_act,'../processed_data/Multiome_ATAC_clean_gene_activities.csv',sep=',')
 gzip('../processed_data/Multiome_ATAC_clean_gene_activities.csv',destname='../processed_data/Multiome_ATAC_clean_gene_activities.csv.gz')
+
 
 ```
 

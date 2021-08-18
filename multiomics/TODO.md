@@ -17,4 +17,6 @@
 - Software requirements / environment 
 
 ---
--precompute latent dimensions for ATACX
+- precompute latent dimensions for ATACX
+- make clean folder for data sharing
+- remove all zero genes/peaks after subsetting
