@@ -9,6 +9,7 @@
 <br/>
 
 ### Day1 (Monday):
+* Welcome (15')
 * Introductory lecture (Dr Paulo Czarnewski)
 * Lectures for topics 1 & 2 (see the Overview paragraph)
 * Exercise for everyone - QC + Clustering + DE detection
@@ -23,7 +24,7 @@
 
 ### Day3 (Wednesday):
 * *Mini projects: work in groups
-* Online social Activity (afternoon)
+* Online social Activity (90' in the afternoon)
 
 ### Day4 (Thursday):
 * *Mini projects: work in groups
@@ -33,7 +34,7 @@
 
 ### Day5 (Friday):
 * *Mini projects: presentations preparation
-* Presentation of the 4 mini projects
+* Presentation of the 4 mini projects (~20' x8)
 * Conclusion & wrap up
 
 
