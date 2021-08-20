@@ -34,9 +34,3 @@
 * *Mini projects: presentations preparation
 * Presentation of the 4 mini projects (~20' x8)
 * Conclusion & wrap up
-
-
-
-<br/>
-
-### [Back to main](README.md)

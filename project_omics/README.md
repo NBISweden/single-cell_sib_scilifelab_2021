@@ -139,9 +139,3 @@ Here we will be analyzing Human fetal brain cortex data from [Trevino et al. 202
 8.1.4.
 
 8.1.5.
-
-<br/>
-
-### [Back to Projects](/single-cell_sib_scilifelab_2021/projects)
-
-### [Back to main](/single-cell_sib_scilifelab_2021/README)

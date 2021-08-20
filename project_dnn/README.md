@@ -105,9 +105,3 @@
 8.1.4.
 
 8.1.5.
-
-<br/>
-
-### [Back to Projects](/single-cell_sib_scilifelab_2021/projects)
-
-### [Back to main](/single-cell_sib_scilifelab_2021/README)
