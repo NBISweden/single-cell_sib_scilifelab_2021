@@ -106,7 +106,7 @@ pre { /* Code block - determines code spacing between lines */ font-size: 14px; 
 }
 
 .myContent2 {
-  max-width: calc(100% - 240px);
+  width: auto;
   padding: 40px 30px;
   background-color: white;
   min-height:800px;
