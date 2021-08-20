@@ -83,22 +83,23 @@ pre { /* Code block - determines code spacing between lines */ font-size: 14px; 
 
 
 .myheader1 {
-  width: 180px;
+  width: 240px;
   padding: 0px;
   float: left;
   height: 800px;
 }
 
-.myheader2 {
-  width: 180px;
-  padding: 20px 0px;
+.myheader2{
+  width: 240px;
+  padding: 40px 0px;
   text-align: right;
   position: fixed;
   /* position: absolute; */
+
 }
 
 .myContent1 {
-  width: calc(100% - 180px);
+  width: calc(100% - 240px);
   padding: 0px;
   float: left;
   height:100%;
@@ -106,11 +107,9 @@ pre { /* Code block - determines code spacing between lines */ font-size: 14px; 
 
 .myContent2 {
   width: auto;
-  padding: 20px 15px;
+  padding: 40px 30px;
   background-color: white;
   min-height:800px;
-  text-align: justify;
-  text-justify: inter-word;
 }
 
 .profile_picture {
