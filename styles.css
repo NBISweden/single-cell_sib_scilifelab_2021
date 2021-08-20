@@ -101,13 +101,14 @@ pre { /* Code block - determines code spacing between lines */ font-size: 14px; 
 .myContent1 {
   width: calc(100% - 240px);
   padding: 0px;
+  margin: 0px 10px;
   float: left;
   height:100%;
 }
 
 .myContent2 {
   width: 100%;
-  padding: 40px 30px;
+  margin: 40px 10px;
   background-color: white;
   min-height:800px;
 }
