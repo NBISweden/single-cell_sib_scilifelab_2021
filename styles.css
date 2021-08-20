@@ -109,6 +109,7 @@ pre { /* Code block - determines code spacing between lines */ font-size: 14px; 
 .myContent2 {
   width: 100%;
   margin: 40px 10px;
+  padding: 0px;
   background-color: white;
   min-height:800px;
 }
