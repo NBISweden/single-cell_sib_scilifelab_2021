@@ -14,7 +14,12 @@ body { /* Normal  */ font-size: 14px; color: Black; padding: 0px; margin: 0px; b
 
 td {  /* Table  */ font-size: 14px; color: Black; }
 
-p { font-size: 14px; color: Black; }
+p {
+  font-size: 14px;
+  color: Black;
+  text-align: justify;
+  text-justify: inter-word;
+}
 
 div { font-size: 14px; color: Black; line-height: normal;  }
 
@@ -86,14 +91,14 @@ pre { /* Code block - determines code spacing between lines */ font-size: 14px; 
 
 .myheader2 {
   width: 180px;
-  padding: 40px 0px;
+  padding: 20px 0px;
   text-align: right;
   position: fixed;
   /* position: absolute; */
 }
 
 .myContent1 {
-  width: calc(100% - 240px);
+  width: calc(100% - 180px);
   padding: 0px;
   float: left;
   height:100%;
@@ -101,9 +106,11 @@ pre { /* Code block - determines code spacing between lines */ font-size: 14px; 
 
 .myContent2 {
   width: auto;
-  padding: 40px 30px;
+  padding: 20px 15px;
   background-color: white;
   min-height:800px;
+  text-align: justify;
+  text-justify: inter-word;
 }
 
 .profile_picture {
