@@ -1,4 +1,3 @@
-
 # <img border="0" src="../logos/omics_integration.png" width="40" height="40"> Omics Integration Project Report
 ***
 
@@ -28,9 +27,9 @@ if (!requireNamespace("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
 BiocManager::install()
 
-BiocManager::install(c("ensembldbr", "AnnotationDbi", 'EnsDb.Hsapiens.v86', 
-    "SingleCellExperiment", "GenomicRanges", "scran", 
-    'BSgenome.Hsapiens.UCSC.hg38', "chromVAR", "MOFA2", 
+BiocManager::install(c("ensembldbr", "AnnotationDbi", 'EnsDb.Hsapiens.v86',
+    "SingleCellExperiment", "GenomicRanges", "scran",
+    'BSgenome.Hsapiens.UCSC.hg38', "chromVAR", "MOFA2",
     "MultiAssayExperiment"))
 
 install.packages(c('tidyverse', "Seurat", "Signac", "Matrix"))
@@ -42,11 +41,11 @@ mkdir processed_data
 ## TBD ##
 ```
 
-### Background 
+### Background
 
-Corticogenesis is the dynamic process that results in the formation of the cerebral cortex, and is characterized by the generation of excitatory glutamatergic neurons from cortical progenitors, and the differentiation of astrocytes and oligodendrocytes. Dynamic changes in the activity of cis-regulatory DNA elements underlie the complex phenotypic transformations that occur during development. 
+Corticogenesis is the dynamic process that results in the formation of the cerebral cortex, and is characterized by the generation of excitatory glutamatergic neurons from cortical progenitors, and the differentiation of astrocytes and oligodendrocytes. Dynamic changes in the activity of cis-regulatory DNA elements underlie the complex phenotypic transformations that occur during development.
 
-Here we will be analyzing Human fetal brain cortex data from [Trevino et al. 2021](https://www.sciencedirect.com/science/article/abs/pii/S0092867421009429) ([source](https://github.com/GreenleafLab/brainchromatin)) ([OA preprint](https://www.biorxiv.org/content/10.1101/2020.12.29.424636v2.full)) to study the interplay between chromatin accessibility and gene expression in early corticogenesis. 
+Here we will be analyzing Human fetal brain cortex data from [Trevino et al. 2021](https://www.sciencedirect.com/science/article/abs/pii/S0092867421009429) ([source](https://github.com/GreenleafLab/brainchromatin)) ([OA preprint](https://www.biorxiv.org/content/10.1101/2020.12.29.424636v2.full)) to study the interplay between chromatin accessibility and gene expression in early corticogenesis.
 
 
 ### Milestone 1:

@@ -1,5 +1,3 @@
-
-
 # <img border="0" src="https://www.svgrepo.com/show/158264/schedule.svg" width="40" height="40"> Schedule
 
 ***

@@ -20,6 +20,7 @@ div { font-size: 14px; color: Black; line-height: normal;  }
 
 pre { /* Code block - determines code spacing between lines */ font-size: 14px; }
 
+
 .zoom:hover{
   transform: scale(1.05)
 }
@@ -54,11 +55,11 @@ pre { /* Code block - determines code spacing between lines */ font-size: 14px; 
 }
 
 #footer {
-   position:absolute;
-   bottom:0;
-   width:100%;
-   height:20px;   /* Height of the footer */
-   background: #f2f2f2;
+  position:absolute;
+  bottom:0;
+  width:100%;
+  height:20px;   /* Height of the footer */
+  background: #f2f2f2;
 }
 
 .myHighlight:hover {
@@ -83,17 +84,16 @@ pre { /* Code block - determines code spacing between lines */ font-size: 14px; 
   height: 800px;
 }
 
-.myheader2{
+.myheader2 {
   width: 180px;
-  padding: 10px 0px;
+  padding: 40px 0px;
   text-align: right;
   position: fixed;
   /* position: absolute; */
-
 }
 
 .myContent1 {
-  width: calc(100% - 180px);
+  width: calc(100% - 240px);
   padding: 0px;
   float: left;
   height:100%;
@@ -111,7 +111,6 @@ pre { /* Code block - determines code spacing between lines */ font-size: 14px; 
   width: 200;
   height:200
 }
-
 
 @media screen and (max-width: 600px) {
   .menuButton img {

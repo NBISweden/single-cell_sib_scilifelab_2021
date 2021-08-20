@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="styles.css">
 
 # <img border="0" src="../logos/deep_learning.png" width="40" height="40"> Deep Learning Project Report
 ***
