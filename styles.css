@@ -10,7 +10,7 @@ h3 { /* Header 3 */ font-size: 18px; color: Black; font-weight: bold }
 
 code.r{ /* Code block */ font-size: 14px; color: Black; }
 
-body { /* Normal  */ font-size: 14px; color: Black; padding: 0px 0px; margin: 0px; background-color: #F2F2F2 }
+body { /* Normal  */ font-size: 14px; color: Black; padding: 0px; margin: 0px; background-color: #E5E5E5 }
 
 td {  /* Table  */ font-size: 14px; color: Black; }
 
@@ -73,7 +73,6 @@ pre { /* Code block - determines code spacing between lines */ font-size: 14px; 
 .wrapper{
   width: 1100px;
   height: 800px;
-  margin: 0px 0px
 }
 
 
