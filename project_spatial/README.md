@@ -1,4 +1,4 @@
-# <img border="0" src="../logos/spatial_transcriptomics.png" width="40" height="40"> Spatial Transcriptomics Project Report
+# <img border="0" src="../logos/spatial_transcriptomics.png" width="40" height="40"> Spatial Transcriptomics
 ***
 
 <br/>
