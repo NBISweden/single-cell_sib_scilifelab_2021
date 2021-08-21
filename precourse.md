@@ -1,3 +1,8 @@
+---
+layout: default
+title: 'Precourse Material - scRNAseq course'
+---
+
 {::options parse_block_html="true" /}
 
 # <img border="0" src="https://www.svgrepo.com/show/19652/maths-class-materials-cross-of-a-pencil-and-a-ruler.svg" width="40" height="40" style="vertical-align:middle;"> Pre-course Materials
@@ -97,7 +102,9 @@ Start by installing Conda. We suggest installing **Miniconda3** and NOT Anaconda
 
 <details>
   <summary markdown="span">**On Mac OS X**</summary>
-  <img border="0" src="https://logos-download.com/wp-content/uploads/2020/06/Apple_Mac_OS_Logo-700x670.png" width="20" height="20" style="vertical-align:middle;">
+  <br/>
+  <div style="padding: 5px; background-color: #F2F2F2; margin: 0px 10px; border-left: 10px solid #ddd; markdown: span" >
+  <img border="0" src="https://logos-download.com/wp-content/uploads/2020/06/Apple_Mac_OS_Logo-700x670.png" width="40" height="40" style="vertical-align:middle;">
 
 
   First, make sure you have Xcode and CommandLineTools installed and updated to latest version (in AppStore). If you have not already installed CommadLineTools, go to a terminal window and run:
@@ -119,13 +126,16 @@ Start by installing Conda. We suggest installing **Miniconda3** and NOT Anaconda
   conda init
   conda install -n base -c conda-forge mamba
   ```
-
+  </div>
+  <br/>
 </details>
 
 
 <details>
   <summary markdown="span">**On Ubuntu**</summary>
-  <img border="0" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcR2rSSpKVBohI4AXgBaUjFVYqO73ou2l9AOXw&usqp=CAU" width="20" height="20" style="vertical-align:middle;">
+  <br/>
+  <div style="padding: 5px; background-color: #F2F2F2; margin: 0px 10px; border-left: 10px solid #ddd; markdown: span" >
+  <img border="0" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcR2rSSpKVBohI4AXgBaUjFVYqO73ou2l9AOXw&usqp=CAU" width="40" height="40" style="vertical-align:middle;">
 
 
   First download the latest version of Miniconda3 and run it to install.
@@ -141,13 +151,16 @@ Start by installing Conda. We suggest installing **Miniconda3** and NOT Anaconda
   conda init
   conda install -n base -c conda-forge mamba
   ```
-
+  </div>
+  <br/>
 </details>
 
 
 <details>
   <summary markdown="span">**On Windows 10**</summary>
-  <img border="0" src="https://seeklogo.com/images/W/windows-10-icon-logo-5BC5C69712-seeklogo.com.png" width="20" height="20" style="vertical-align:middle;">
+  <br/>
+  <div style="padding: 5px; background-color: #F2F2F2; margin: 0px 10px; border-left: 10px solid #ddd; markdown: span" >
+  <img border="0" src="https://seeklogo.com/images/W/windows-10-icon-logo-5BC5C69712-seeklogo.com.png" width="40" height="40" style="vertical-align:middle;">
 
   Unfortunately, not all packages available on conda are compatible with windows machines. The good news is that Windows 10 offers native linux support via the Windows Subsystem for Linux (WSL2). This allows you to run linux/bash commands from within windows without the need of a virtual machine nor a dual-boot setup (i.e. having 2 operating systems). However, WSL does not offer a complete support for graphical interfaces (such as RStudio in our case), so we need additional steps to make that happen.
 
@@ -189,13 +202,16 @@ It is recommended that you INSTALL the program and not use the portable version.
   ```
 
   8. Close and open all application and Inside MobaXterm, you will probably will see that your WSL is already listed on the left panel as an available connection. Just double-click it and you will be accessing it via MobaXterm.
-
+  </div>
+  <br/>
 </details>
 
 
 <details>
   <summary markdown="span">**On VirtualBox**</summary>
-  <img border="0" src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Virtualbox_logo.png" width="20" height="20" style="vertical-align:middle;">
+  <br/>
+  <div style="padding: 5px; background-color: #F2F2F2; margin: 0px 10px; border-left: 10px solid #ddd; markdown: span" >
+  <img border="0" src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Virtualbox_logo.png" width="40" height="40" style="vertical-align:middle;">
 
   If by any means you see that the installations are not working as it should on your computer, you can try to create a virtual machine to run UBUNTU and install everything there. But please keep this alternative as the last temporary resourse, as we recommend troubleshooting the installation o the up-mentioned methods.
 
@@ -252,7 +268,8 @@ It is recommended that you INSTALL the program and not use the portable version.
   conda activate scRNAseq2021
   rstudio &
   ```
-
+  </div>
+  <br/>
 </details>
 
 <br/>
@@ -330,10 +347,11 @@ conda deactivate
     <img border="0" src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Virtualbox_logo.png" width="20" height="20" style="vertical-align:middle;" >
     **On VirtualBox**
   </summary>
-  <div style="padding: 20px; background-color: #F2F2F2; border: 1px solid #ddd; markdown: span" >
+  <br/>
+  <div style="padding: 5px; background-color: #F2F2F2; margin: 0px 10px; border-left: 10px solid #ddd; markdown: span" >
     **Markdowns**
   </div>
-
+  <br/>
 </details>
 
 TBA
