@@ -91,7 +91,7 @@ pre { /* Code block - determines code spacing between lines */ font-size: 14px; 
 
 .myheader2{
   width: 240px;
-  padding: 40px 0px;
+  padding: 10px 0px;
   text-align: right;
   position: fixed;
   /* position: absolute; */
