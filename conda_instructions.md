@@ -155,10 +155,10 @@ conda deactivate
 
 <br/>
 
-
+***
 
 ## <img border="0" src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Windows_logo_-_2012.svg" width="20" height="20"> Alternative option on Windows (WLS)
-***
+
 
 Unfortunately, not all packages available on conda are compatible with windows machines. The good news is that is changed on windows10, in which they offer native linux support via the Windows Subsystem for Linux (WSL2). This allows you to run linux/bash commands from within windows without the need of a virtual machine nor a dual-boot setup (i.e. having 2 operational systems). However, WSL does not offer a complete support for graphical interfaces (such as RStudio in our case), so we need an additional steps to make that happen.
 
