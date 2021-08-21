@@ -53,7 +53,7 @@ After taking those courses (or any other equivalent course in programming in bas
 ***
 
 
-Make sure that you have [**Slack**](https://slack.com/intl/en-se/downloads) installed because we will use it a lot during the workshop. Communication, troubleshooting and group discussions will happen via **Slack workspace** `NBIS-workshop-RNAseq`. All accepted students will receive an invitation link via email. Please add this workspace to your Slack application on your desktop and do **NOT** use it in the web.
+Make sure that you have **[Slack](https://slack.com/intl/en-se/downloads)** installed because we will use it a lot during the workshop. Communication, troubleshooting and group discussions will happen via **Slack workspace** `single-cellschool2021`. All accepted students will receive an invitation link via email. Please add this workspace to your Slack application on your desktop and do **NOT** use it in the web.
 
 Please join the following channels once you are in the workspace:
 
@@ -67,7 +67,7 @@ Note: Please post your question in the channel and **NOT** directly to the teach
 ### <img border="0" src="https://simg.nicepng.com/png/small/1008-10087079_zoom-icon-zoom-video-conferencing-logo.png" width="20" height="20" style="vertical-align:middle;"> Zoom
 ***
 
-Make sure that you have the latest [**Zoom (version 5.4.0 or above)**](https://zoom.us/download) installed because we will use it a lot during the workshop for the lecture and groups discussions.
+Make sure that you have the latest **[Zoom (version 5.7.0 or above)](https://zoom.us/download)** installed because we will use it a lot during the workshop for the lecture and groups discussions.
 
 Previous Zoom versions will not work. If you already have Zoom installed, you can also update it by clicking in `Check for Updates ...` button in the main top menu.
 
