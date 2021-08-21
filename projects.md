@@ -12,26 +12,36 @@
 
 Since each of the 4 group themes may have completely different softwares, please follow in instructions specific to each one.
 
-<div style="width:100%;height:300px;text-align: center">
+<div style="width:100%;height:150px;text-align: center">
+
+  <a href="/single-cell_sib_scilifelab_2021/project_spatial/README.html">
   <div style="width:150px;height:100px;padding:5px 5px;font-size:12pt;font-family:Helvetica;float:left;text-align:center;">
-  <a href="/single-cell_sib_scilifelab_2021/project_spatial/README.html"><img class="zoom" border="0" width="100px" src="logos/spatial_transcriptomics.png"></a><p></p>
+  <img class="zoom" border="0" height="100px" src="logos/spatial_transcriptomics.png">
   <p style="text-align:center;">Spatial<br/>transcriptomics</p>
   </div>
+  </a>
 
+  <a href="/single-cell_sib_scilifelab_2021/project_velocity/README.html">
   <div style="width:150px;height:100px;padding:5px 5px;font-size:12pt;font-family:Helvetica;float:left;text-align:center;">
-  <a href="/single-cell_sib_scilifelab_2021/project_velocity/README.html"><img class="zoom" border="0" width="100px"  src="logos/rna_velocity.png"></a><p></p>
+  <img class="zoom" border="0" height="100px"  src="logos/rna_velocity.png">
   <p style="text-align:center;">RNA<br/>velocity</p>
   </div>
+  </a>
 
+  <a href="/single-cell_sib_scilifelab_2021/project_omics/README.html">
   <div style="width:150px;height:100px;padding:5px 5px;font-size:12pt;font-family:Helvetica;float:left;text-align:center;">
-  <a href="/single-cell_sib_scilifelab_2021/project_omics/README.html"><img class="zoom" border="0" width="100px"  src="logos/omics_integration.png"></a><p></p>
+  <img class="zoom" border="0" height="100px"  src="logos/omics_integration.png">
   <p style="text-align:center;">Omics<br/>integration</p>
   </div>
+  </a>
 
+  <a href="/single-cell_sib_scilifelab_2021/project_dnn/README.html">
   <div style="width:150px;height:100px;padding:5px 5px;font-size:12pt;font-family:Helvetica;float:left;text-align:center;">
-  <a href="/single-cell_sib_scilifelab_2021/project_dnn/README.html"><img class="zoom" border="0" width="100px" src="logos/deep_learning.png"></a><p></p>
+  <img class="zoom" border="0" height="100px" src="logos/deep_learning.png">
   <p style="text-align:center;">Deep<br/>learning</p>
   </div>
+  </a>
+
 </div>
 
 <br/>
