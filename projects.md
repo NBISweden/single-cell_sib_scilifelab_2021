@@ -15,29 +15,29 @@ Since each of the 4 group themes may have completely different softwares, please
 <div style="width:100%;height:150px;text-align: center">
 
   <a href="/single-cell_sib_scilifelab_2021/project_spatial/README.html">
-  <div style="width:150px;height:100px;padding:5px 5px;font-size:12pt;font-family:Helvetica;float:left;text-align:center;">
-  <img class="zoom" border="0" height="100px" src="logos/spatial_transcriptomics.png">
+  <div class="zoom" style="width:150px;height:100px;padding:5px 5px;font-size:12pt;font-family:Helvetica;float:left;text-align:center;">
+  <img border="0" height="100px" src="logos/spatial_transcriptomics.png">
   Spatial<br/>transcriptomics
   </div>
   </a>
 
   <a href="/single-cell_sib_scilifelab_2021/project_velocity/README.html">
-  <div style="width:150px;height:100px;padding:5px 5px;font-size:12pt;font-family:Helvetica;float:left;text-align:center;">
-  <img class="zoom" border="0" height="100px"  src="logos/rna_velocity.png">
+  <div class="zoom" style="width:150px;height:100px;padding:5px 5px;font-size:12pt;font-family:Helvetica;float:left;text-align:center;">
+  <img border="0" height="100px"  src="logos/rna_velocity.png">
   RNA<br/>velocity
   </div>
   </a>
 
   <a href="/single-cell_sib_scilifelab_2021/project_omics/README.html">
-  <div style="width:150px;height:100px;padding:5px 5px;font-size:12pt;font-family:Helvetica;float:left;text-align:center;">
-  <img class="zoom" border="0" height="100px"  src="logos/omics_integration.png">
+  <div class="zoom" style="width:150px;height:100px;padding:5px 5px;font-size:12pt;font-family:Helvetica;float:left;text-align:center;">
+  <img border="0" height="100px"  src="logos/omics_integration.png">
   Omics<br/>integration
   </div>
   </a>
 
   <a href="/single-cell_sib_scilifelab_2021/project_dnn/README.html">
-  <div style="width:150px;height:100px;padding:5px 5px;font-size:12pt;font-family:Helvetica;float:left;text-align:center;">
-  <img class="zoom" border="0" height="100px" src="logos/deep_learning.png">
+  <div class="zoom" style="width:150px;height:100px;padding:5px 5px;font-size:12pt;font-family:Helvetica;float:left;text-align:center;">
+  <img border="0" height="100px" src="logos/deep_learning.png">
   Deep<br/>learning
   </div>
   </a>
