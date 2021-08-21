@@ -1,7 +1,6 @@
+{::options parse_block_html="true" /}
+
 # <img border="0" src="https://www.svgrepo.com/show/19652/maths-class-materials-cross-of-a-pencil-and-a-ruler.svg" width="40" height="40" style="vertical-align:middle;"> Pre-course Materials
-
-***
-
 {:.no_toc}
 ***
 
@@ -45,7 +44,7 @@ After taking those courses (or any other equivalent course in programming in bas
 
 <br/>
 
-##### <img border="0" src="https://image.flaticon.com/icons/png/512/2111/2111615.png" width="20" height="20" style="vertical-align:middle;"> Slack
+### <img border="0" src="https://image.flaticon.com/icons/png/512/2111/2111615.png" width="20" height="20" style="vertical-align:middle;"> Slack
 ***
 
 
@@ -60,7 +59,7 @@ Note: Please post your question in the channel and **NOT** directly to the teach
 
 <br/>
 
-##### <img border="0" src="https://simg.nicepng.com/png/small/1008-10087079_zoom-icon-zoom-video-conferencing-logo.png" width="20" height="20" style="vertical-align:middle;"> Zoom
+### <img border="0" src="https://simg.nicepng.com/png/small/1008-10087079_zoom-icon-zoom-video-conferencing-logo.png" width="20" height="20" style="vertical-align:middle;"> Zoom
 ***
 
 Make sure that you have the latest [**Zoom (version 5.4.0 or above)**](https://zoom.us/download) installed because we will use it a lot during the workshop for the lecture and groups discussions.
@@ -69,7 +68,7 @@ Previous Zoom versions will not work. If you already have Zoom installed, you ca
 
 <br/>
 
-##### <img border="0" src="https://hackernoon.com/hn-images/1*rW03Wtue71AKfxnx6XN_iQ.png" width="20" height="20" style="vertical-align:middle;"> Conda
+### <img border="0" src="https://hackernoon.com/hn-images/1*rW03Wtue71AKfxnx6XN_iQ.png" width="20" height="20" style="vertical-align:middle;"> Conda
 ***
 
 During this workshop, you will use conda environments to run the exercises. This is because conda environments allow all users to have the same computing environment, i.e. package versions. This enforces reproducibility for you to run this material without the need to re-install or change your local versions. See and graphical example below:
@@ -91,16 +90,14 @@ You can [read more](https://nbis-reproducible-research.readthedocs.io/en/latest/
 
 
 
-**1. Download and install Conda and Mamba**
+#### 1. Download and install Conda and Mamba
 
 Start by installing Conda. We suggest installing **Miniconda3** and NOT Anaconda. After [installing Conda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html).
 
 
 <details>
-  <summary markdown="span">
+  <summary markdown="span">**On Mac OS X**</summary>
   <img border="0" src="https://logos-download.com/wp-content/uploads/2020/06/Apple_Mac_OS_Logo-700x670.png" width="20" height="20" style="vertical-align:middle;">
-  **On Mac OS X**
-  </summary>
 
 
   First, make sure you have Xcode and CommandLineTools installed and updated to latest version (in AppStore). If you have not already installed CommadLineTools, go to a terminal window and run:
@@ -127,10 +124,8 @@ Start by installing Conda. We suggest installing **Miniconda3** and NOT Anaconda
 
 
 <details>
-  <summary markdown="span">
+  <summary markdown="span">**On Ubuntu**</summary>
   <img border="0" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcR2rSSpKVBohI4AXgBaUjFVYqO73ou2l9AOXw&usqp=CAU" width="20" height="20" style="vertical-align:middle;">
-  **On Ubuntu**
-  </summary>
 
 
   First download the latest version of Miniconda3 and run it to install.
@@ -151,11 +146,8 @@ Start by installing Conda. We suggest installing **Miniconda3** and NOT Anaconda
 
 
 <details>
-  <summary markdown="span">
+  <summary markdown="span">**On Windows 10**</summary>
   <img border="0" src="https://seeklogo.com/images/W/windows-10-icon-logo-5BC5C69712-seeklogo.com.png" width="20" height="20" style="vertical-align:middle;">
-  **On Windows 10**
-  </summary>
-
 
   Unfortunately, not all packages available on conda are compatible with windows machines. The good news is that Windows 10 offers native linux support via the Windows Subsystem for Linux (WSL2). This allows you to run linux/bash commands from within windows without the need of a virtual machine nor a dual-boot setup (i.e. having 2 operating systems). However, WSL does not offer a complete support for graphical interfaces (such as RStudio in our case), so we need additional steps to make that happen.
 
@@ -202,11 +194,8 @@ It is recommended that you INSTALL the program and not use the portable version.
 
 
 <details>
-  <summary markdown="span">
+  <summary markdown="span">**On VirtualBox**</summary>
   <img border="0" src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Virtualbox_logo.png" width="20" height="20" style="vertical-align:middle;">
-  **On VirtualBox**
-  </summary>
-
 
   If by any means you see that the installations are not working as it should on your computer, you can try to create a virtual machine to run UBUNTU and install everything there. But please keep this alternative as the last temporary resourse, as we recommend troubleshooting the installation o the up-mentioned methods.
 
@@ -270,7 +259,7 @@ It is recommended that you INSTALL the program and not use the portable version.
 
 
 
-**2. Create a conda environment from file**
+#### 2. Create a conda environment from file
 
 To download the `environment_scRNAseq2021.yml` file using the command on Terminal:
 
@@ -303,7 +292,7 @@ Several messages will show up on your screen and will tell you about the install
 
 
 
-**3. Activate the environment**
+#### 3. Activate the environment
 
 Once the environment is created, we need to activate it in order to use the softwares and packages inside it. To activate an environment type:
 
@@ -321,7 +310,7 @@ rstudio PATH/my_script.Rmd &
 
 
 
-**4. Deactivate the environment**
+#### 4. Deactivate the environment
 
 After you've ran all your analyses, you can deactivate the environment by typing:
 
@@ -335,6 +324,17 @@ conda deactivate
 ##### <img border="0" src="https://www.svgrepo.com/show/20109/database.svg" width="20" height="20"> Dataset
 ***
 
+
+<details>
+  <summary markdown="span">
+    <img border="0" src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Virtualbox_logo.png" width="20" height="20" style="vertical-align:middle;" >
+    **On VirtualBox**
+  </summary>
+  <div style="padding: 20px; background-color: #F2F2F2; border: 1px solid #ddd; markdown: span" >
+    **Markdowns**
+  </div>
+
+</details>
 
 TBA
 
