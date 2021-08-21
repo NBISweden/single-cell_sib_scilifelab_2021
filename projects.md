@@ -1,4 +1,4 @@
-# <img border="0" src="https://www.svgrepo.com/show/1025/task.svg" width="40" height="40"> Projects
+# <img border="0" src="https://www.svgrepo.com/show/1025/task.svg" width="40" height="40" style="vertical-align:middle;"> Projects
 
 ***
 
