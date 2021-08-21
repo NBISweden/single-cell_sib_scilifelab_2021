@@ -1,4 +1,4 @@
-# <img border="0" src="../logos/omics_integration.png" width="40" height="40" style="vertical-align:middle;""> Omics Integration
+# <img border="0" src="../logos/omics_integration.png" width="40" height="40" style="vertical-align:middle;"> Omics Integration
 ***
 
 <br/>
