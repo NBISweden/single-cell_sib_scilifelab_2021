@@ -336,20 +336,6 @@ conda deactivate
 ##### <img border="0" src="https://www.svgrepo.com/show/20109/database.svg" width="20" height="20"> Dataset
 ***
 
-
-<details>
-  <summary markdown="span">
-    <img border="0" src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Virtualbox_logo.png" width="20" height="20" style="vertical-align:middle;" >
-    **On VirtualBox**
-  </summary>
-  <br/>
-  <div style="padding: 5px; background-color: #F2F2F2; margin: 0px 10px; border-left: 10px solid #ddd;" >
-    <span>**Markdown1**</span>
-    **Markdown2**
-  </div>
-  <br/>
-</details>
-
 TBA
 
 <br/>
