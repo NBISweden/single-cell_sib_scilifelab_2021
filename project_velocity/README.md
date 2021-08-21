@@ -1,4 +1,4 @@
-# <img border="0" src="../logos/rna_velocity.png" width="40" height="40"> RNA velocity
+# <img border="0" src="../logos/rna_velocity.png" width="40" height="40" style="vertical-align:middle;"> RNA velocity
 ***
 
 <br/>
