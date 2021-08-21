@@ -16,28 +16,28 @@ Since each of the 4 group themes may have completely different softwares, please
 
   <a href="/single-cell_sib_scilifelab_2021/project_spatial/README.html">
   <div class="zoom" style="width:150px;height:100px;padding:5px 5px;font-size:12pt;font-family:Helvetica;float:left;text-align:center;">
-  <img border="0" height="100px" src="logos/spatial_transcriptomics.png">
+  <img border="0" height="100px" src="logos/spatial_transcriptomics.png"><br/>
   Spatial<br/>transcriptomics
   </div>
   </a>
 
   <a href="/single-cell_sib_scilifelab_2021/project_velocity/README.html">
   <div class="zoom" style="width:150px;height:100px;padding:5px 5px;font-size:12pt;font-family:Helvetica;float:left;text-align:center;">
-  <img border="0" height="100px"  src="logos/rna_velocity.png">
+  <img border="0" height="100px"  src="logos/rna_velocity.png"><br/>
   RNA<br/>velocity
   </div>
   </a>
 
   <a href="/single-cell_sib_scilifelab_2021/project_omics/README.html">
   <div class="zoom" style="width:150px;height:100px;padding:5px 5px;font-size:12pt;font-family:Helvetica;float:left;text-align:center;">
-  <img border="0" height="100px"  src="logos/omics_integration.png">
+  <img border="0" height="100px"  src="logos/omics_integration.png"><br/>
   Omics<br/>integration
   </div>
   </a>
 
   <a href="/single-cell_sib_scilifelab_2021/project_dnn/README.html">
   <div class="zoom" style="width:150px;height:100px;padding:5px 5px;font-size:12pt;font-family:Helvetica;float:left;text-align:center;">
-  <img border="0" height="100px" src="logos/deep_learning.png">
+  <img border="0" height="100px" src="logos/deep_learning.png"><br/>
   Deep<br/>learning
   </div>
   </a>
