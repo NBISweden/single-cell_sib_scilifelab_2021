@@ -48,7 +48,7 @@ Since each of the 4 group themes may have completely different softwares, please
 
 ***
 
-### Learning strategy
+### <img border="0" src="https://static.thenounproject.com/png/4200-200.png" width="40" height="40" style="vertical-align:middle;"> Learning strategy
 
 The proposed educational plan for this course will be done using the Project-Based Learning (PBL) approach. This way, rather than having lectures on a topic and defined set of instructions and pre-given steps to follow (which focus on passive individual learning), you are required to learn the topic in a more **active** and **dynamic** way in order to solve the data analysis tasks as a group. Therefore, each group is provided with:
 
@@ -57,7 +57,7 @@ The proposed educational plan for this course will be done using the Project-Bas
 
 ***
 
-### How to work in groups
+### <img border="0" src="http://cdn.onlinewebfonts.com/svg/img_453102.png" width="40" height="40" style="vertical-align:middle;"> How to work in groups
 
 Each group is required to gather information from the **glossary** or from other **sources** to perform single cell data analysis by filling the report file (using this <img border="0" src="https://static.thenounproject.com/png/67360-200.png" width="10" height="10">[project_report.Rmd](single_cell/code/project_report.Rmd) file), by:
 
@@ -74,7 +74,7 @@ We recommend to save the last 1 hour available to work on the project presentati
 
 ***
 
-### Tips for a good group dynamic
+### <img border="0" src="https://upload.wikimedia.org/wikipedia/commons/8/88/Microsoft_Tips_icon.png" width="40" height="40" style="vertical-align:middle;"> Tips for a good group dynamic
 
 Working in groups is not a simple task, but it is how science is built. The main goal of working in groups is to teach and learn with others. Be kind and patient with your colleagues, help each other so the group reaches a good and fluent dynamic. However, time to work on the project is restricted, so please focus on the tasks at hand and be clear and concise as possible when communicating. Remember: this is a group work and you are evaluated as a group player.
 
