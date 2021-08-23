@@ -7,7 +7,7 @@ Still subject to minor changes...
 <br/>
 
 ### Day1 (Monday):
-* 09h00 – 09h20 : Welcome (organizers)
+* 09h00 – 09h20 : Welcome from the organizers
 * 09h20 – 10h00 : Introductory lecture (Paulo)
 * 10h00 – 10h10 : Break
 * 10h10 – 11h10 : Lecture topic 1
