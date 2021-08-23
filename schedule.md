@@ -2,7 +2,7 @@
 
 ***
 Still subject to minor changes...
-<br/>
+<br/><br/>
 \* = Mini projects - work in small groups
 <br/>
 
