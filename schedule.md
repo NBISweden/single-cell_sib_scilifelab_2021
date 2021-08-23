@@ -18,7 +18,7 @@ Still subject to minor changes...
 * 14h15 – 14h20 : Short break
 * 14h20 – 15h20 : Lecture topic 4
 * 15h20 – 15h30 : Break
-* *15h30 – 17h00 : Warm up session (tutorials) (link)*
+* *15h30 – 17h00 : Warm up session (tutorials)
 
 
 ### Day2 (Tuesday):
