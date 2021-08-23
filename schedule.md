@@ -10,8 +10,9 @@
 * Welcome (15')
 * Introductory lecture (Dr Paulo Czarnewski)
 * Lectures for topics 1 & 2 (see the Overview paragraph)
-* Exercise for everyone - QC + Clustering + DE detection
 * Lectures for topics 3 & 4
+* *Warm up session (tutorial)
+* 
 
 
 ### Day2 (Tuesday):
