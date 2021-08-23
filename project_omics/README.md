@@ -10,36 +10,24 @@
 
 ### Pre-course
 
-Clone the code repository locally
+#### Software requirements 
+
+We will be using an AWS cloud environment, where we have pre-installed useful software and downloaded the data.
+
+Alternatively, you can set up your own working environment locally. To do so:
+
+- clone the course code repository locally
 ```
 git clone https://github.com/NBISweden/single-cell_sib_scilifelab_2021.git
 ```
 
-Create a new conda environment and install the required python packages (if needed [install miniconda](https://conda.io/projects/conda/en/latest/user-guide/install/index.html) first):
+- create a clone of our conda environment (if needed [install miniconda](https://conda.io/projects/conda/en/latest/user-guide/install/index.html) first):
 ```
 cd single-cell_sib_scilifelab_2021/project_omics
-conda env create --file sc_sib_scilifelab_2021_multiomics.yml
+conda env create --file multiomics-environment.yml
 ```
 
-Install some additional R packages. From R:
-```
-if (!requireNamespace("BiocManager", quietly = TRUE))
-    install.packages("BiocManager")
-BiocManager::install()
-
-BiocManager::install(c("ensembldbr", "AnnotationDbi", 'EnsDb.Hsapiens.v86',
-    "SingleCellExperiment", "GenomicRanges", "scran",
-    'BSgenome.Hsapiens.UCSC.hg38', "chromVAR", "MOFA2",
-    "MultiAssayExperiment"))
-
-install.packages(c('tidyverse', "Seurat", "Signac", "Matrix"))
-```
-
-Download the data
-```
-mkdir processed_data
-## TBD ##
-```
+- download the preprocessed data from [GDrive](https://drive.google.com/drive/folders/1YjHfhxk2Z62pTEOTu27G-AgKqQawKEBT?usp=sharing) 
 
 ### Background
 
