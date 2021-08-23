@@ -72,7 +72,7 @@ Previous Zoom versions will not work. If you already have Zoom installed, you ca
 
 During this workshop, you will use conda environments to run the exercises. This is because conda environments allow all users to have the same computing environment, i.e. package versions. This enforces reproducibility for you to run this material without the need to re-install or change your local versions. See and graphical example below:
 
-<img border="0" src="https://nbisweden.github.io/excelerate-scRNAseq/logos/conda_illustration.png" width="400" display: block;>
+<img border="0" src="https://nbisweden.github.io/excelerate-scRNAseq/logos/conda_illustration.png" width="400">
 
 <br/>
 
@@ -250,19 +250,6 @@ It is recommended that you INSTALL the program and not use the portable version.
 
   10. Close Terminal to apply the CONDA updates. Then you can create a course folder, download the environment file and create the environment:
 
-  ```
-  mkdir ~/Desktop/course
-  cd ~/Desktop/course
-  wget https://raw.githubusercontent.com/NBISweden/workshop-scRNAseq/master/labs/environment_scRNAseq2021.yml
-  conda env create -f environment_scRNAseq2021.yml
-  ```
-
-  11. You can then follow the instructions above to activate/deactivate the environment.
-
-  ```
-  conda activate scRNAseq2021
-  rstudio &
-  ```
   </div>
   <br/>
 </details>
