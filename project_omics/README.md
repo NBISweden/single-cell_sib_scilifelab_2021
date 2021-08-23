@@ -29,11 +29,30 @@ conda env create --file multiomics-environment.yml
 
 - download the preprocessed data from [GDrive](https://drive.google.com/drive/folders/1YjHfhxk2Z62pTEOTu27G-AgKqQawKEBT?usp=sharing) 
 
+#### Knowledge requirements
+
+We will have a warm-up session to start exploring our datasets before the project starts. 
+
+You can start familiarizing yourself with certain tools we will be using, trying out the examples in vignettes:
+* TBA
+<!-- * muon:(https://muon-tutorials.readthedocs.io/en/latest/single-cell-rna-atac/index.html)
+* MOFA2 -->
+
 ### Background
 
 Corticogenesis is the dynamic process that results in the formation of the cerebral cortex, and is characterized by the generation of excitatory glutamatergic neurons from cortical progenitors, and the differentiation of astrocytes and oligodendrocytes. Dynamic changes in the activity of cis-regulatory DNA elements underlie the complex phenotypic transformations that occur during development.
 
 Here we will be analyzing Human fetal brain cortex data from [Trevino et al. 2021](https://www.sciencedirect.com/science/article/abs/pii/S0092867421009429) ([source](https://github.com/GreenleafLab/brainchromatin)) ([OA preprint](https://www.biorxiv.org/content/10.1101/2020.12.29.424636v2.full)) to study the interplay between chromatin accessibility and gene expression in early corticogenesis.
+
+Your main goal will be to identify non-coding genomic regions where chromatin accessibility is associated with expression of genes involved in excitatory neuron development.
+
+- Group 1 will address the question with diagonal integration of the unmatched assay data (scRNA-seq data and scATAC-seq data from different cells)
+- Group 2 will address the question with vertical integration of the multiome data (scRNA-seq and scATAC-seq for the same cells)
+
+### Practical information
+
+Each group will have a Jupyter Notebook showing initial exploration of the each omic dataset, with detailed instructions and helper code for the 
+
 
 
 ### Milestone 1:
