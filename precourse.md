@@ -96,7 +96,7 @@ Start by installing Conda. We suggest installing **Miniconda3** and NOT Anaconda
 
 
 <details>
-  <summary markdown="span">**On Mac OS X**</summary>
+  <summary markdown="span"><b>On Mac OS X</b></summary>
   <br/>
   <div style="padding: 5px; background-color: #F2F2F2; margin: 0px 10px; border-left: 10px solid #ddd; markdown: span" >
   <img border="0" src="https://logos-download.com/wp-content/uploads/2020/06/Apple_Mac_OS_Logo-700x670.png" width="40" height="40" style="vertical-align:middle;">
@@ -127,7 +127,7 @@ Start by installing Conda. We suggest installing **Miniconda3** and NOT Anaconda
 
 
 <details>
-  <summary markdown="span">**On Ubuntu**</summary>
+  <summary markdown="span"><b>On Ubuntu</b></summary>
   <br/>
   <div style="padding: 5px; background-color: #F2F2F2; margin: 0px 10px; border-left: 10px solid #ddd; markdown: span" >
   <img border="0" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcR2rSSpKVBohI4AXgBaUjFVYqO73ou2l9AOXw&usqp=CAU" width="40" height="40" style="vertical-align:middle;">
@@ -152,7 +152,7 @@ Start by installing Conda. We suggest installing **Miniconda3** and NOT Anaconda
 
 
 <details>
-  <summary markdown="span">**On Windows 10**</summary>
+  <summary markdown="span"><b>On Windows 10</b></summary>
   <br/>
   <div style="padding: 5px; background-color: #F2F2F2; margin: 0px 10px; border-left: 10px solid #ddd; markdown: span" >
   <img border="0" src="https://seeklogo.com/images/W/windows-10-icon-logo-5BC5C69712-seeklogo.com.png" width="40" height="40" style="vertical-align:middle;">
@@ -203,7 +203,7 @@ It is recommended that you INSTALL the program and not use the portable version.
 
 
 <details>
-  <summary markdown="span"> **On VirtualBox** </summary>
+  <summary markdown="span"> <b>On VirtualBox</b> </summary>
   <br/>
   <div style="padding: 5px; background-color: #F2F2F2; margin: 0px 10px; border-left: 10px solid #ddd; markdown: span" >
   <img border="0" src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Virtualbox_logo.png" width="40" height="40" style="vertical-align:middle;">
