@@ -263,7 +263,7 @@ It is recommended that you INSTALL the program and not use the portable version.
 To download the `environment_scRNAseq2021.yml` file using the command on Terminal:
 
 ```
-curl -o environment_scRNAseq2021.yml https://raw.githubusercontent.com/NBISweden/workshop-scRNAseq/master/labs/environment_scRNAseq2021.yml
+curl -o environment_scRNAseq2021.yml https://raw.githubusercontent.com/NBISweden/single-cell_sib_scilifelab_2021/environment_scRNAseq2021.yml
 ```
 
 After this, you should have a file named `environment_scRNAseq2021.yml` in your directory (it does not matter where). Next, type:
