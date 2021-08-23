@@ -3,7 +3,7 @@
 ***
 Still subject to minor changes...
 <br/>
-"*" = Mini projects - work in small groups
+\* = Mini projects - work in small groups
 <br/>
 
 ### Day1 (Monday):
