@@ -34,7 +34,7 @@ conda env create --file multiomics-environment.yml
 We will have a warm-up session to start exploring our datasets before the project starts. 
 
 You can start familiarizing yourself with certain tools we will be using, trying out the examples in vignettes:
-* TBA
+*  
 <!-- * muon:(https://muon-tutorials.readthedocs.io/en/latest/single-cell-rna-atac/index.html)
 * MOFA2 -->
 
