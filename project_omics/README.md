@@ -56,7 +56,7 @@ In the project folder, you will find a template Jupyter Notebook guiding you thr
 * Group 1: [`multiomics_unmatched.ipynb`](https://github.com/NBISweden/single-cell_sib_scilifelab_2021/blob/omics/project_omics/multiomics_unmatched.ipynb)
 * Group 2: [`multiomics_matched.ipynb`](https://github.com/NBISweden/single-cell_sib_scilifelab_2021/blob/omics/project_omics/multiomics_matched.ipynb)
 
-Because we will need to use both tools in R and in python, we provide an additional notebook illustrating how to use R code in jupyter environment using the [RPy2](https://rpy2.github.io/) framework - [rpy2_interoperability_examples.ipynb](https://github.com/NBISweden/single-cell_sib_scilifelab_2021/blob/omics/project_omics/rpy2_interoperability_examples.ipynb)). 
+Because we will need to use both tools in R and in python, we provide an additional notebook illustrating how to use R code in jupyter environment using the [RPy2](https://rpy2.github.io/) framework - [`rpy2_interoperability_examples.ipynb`](https://github.com/NBISweden/single-cell_sib_scilifelab_2021/blob/omics/project_omics/rpy2_interoperability_examples.ipynb)). 
 
 <!-- 
 ### Milestone 1:
