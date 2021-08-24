@@ -46,15 +46,19 @@ Here we will be analyzing Human fetal brain cortex data from [Trevino et al. 202
 
 Your main goal will be to identify non-coding genomic regions where chromatin accessibility is associated with expression of genes involved in excitatory neuron development.
 
-- Group 1 will address the question with diagonal integration of the unmatched assay data (scRNA-seq data and scATAC-seq data from different cells)
-- Group 2 will address the question with vertical integration of the multiome data (scRNA-seq and scATAC-seq for the same cells)
+* Group 1 will address the question with diagonal integration of the unmatched assay data (scRNA-seq data and scATAC-seq data from different cells)
+* Group 2 will address the question with vertical integration of the multiome data (scRNA-seq and scATAC-seq for the same cells)
 
 ### Practical information
 
-Each group will have a Jupyter Notebook showing initial exploration of the each omic dataset, with detailed instructions and helper code for the 
+In the project folder, you will find a template Jupyter Notebook guiding you through the steps for the integration project:
 
+* Group 1: [`multiomics_unmatched.ipynb`](https://github.com/NBISweden/single-cell_sib_scilifelab_2021/blob/omics/project_omics/multiomics_unmatched.ipynb)
+* Group 2: [`multiomics_matched.ipynb`](https://github.com/NBISweden/single-cell_sib_scilifelab_2021/blob/omics/project_omics/multiomics_matched.ipynb)
 
+Because we will need to use both tools in R and in python, we provide an additional notebook illustrating how to use R code in jupyter environment using the [RPy2](https://rpy2.github.io/) framework - [rpy2_interoperability_examples.ipynb](https://github.com/NBISweden/single-cell_sib_scilifelab_2021/blob/omics/project_omics/rpy2_interoperability_examples.ipynb)). 
 
+<!-- 
 ### Milestone 1:
 
 1.1.
@@ -146,3 +150,4 @@ Each group will have a Jupyter Notebook showing initial exploration of the each 
 8.1.4.
 
 8.1.5.
+ -->
