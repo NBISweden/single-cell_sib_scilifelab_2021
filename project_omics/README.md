@@ -10,36 +10,33 @@
 
 ### Pre-course
 
-Clone the code repository locally
+#### Software requirements 
+
+We will be using an AWS cloud environment, where we have pre-installed useful software and downloaded the data.
+
+Alternatively, you can set up your own working environment locally. To do so:
+
+- clone the course code repository locally
 ```
 git clone https://github.com/NBISweden/single-cell_sib_scilifelab_2021.git
 ```
 
-Create a new conda environment and install the required python packages (if needed [install miniconda](https://conda.io/projects/conda/en/latest/user-guide/install/index.html) first):
+- create a clone of our conda environment (if needed [install miniconda](https://conda.io/projects/conda/en/latest/user-guide/install/index.html) first):
 ```
 cd single-cell_sib_scilifelab_2021/project_omics
-conda env create --file sc_sib_scilifelab_2021_multiomics.yml
+conda env create --file multiomics-environment.yml
 ```
 
-Install some additional R packages. From R:
-```
-if (!requireNamespace("BiocManager", quietly = TRUE))
-    install.packages("BiocManager")
-BiocManager::install()
+- download the preprocessed data from [GDrive](https://drive.google.com/drive/folders/1YjHfhxk2Z62pTEOTu27G-AgKqQawKEBT?usp=sharing) 
 
-BiocManager::install(c("ensembldbr", "AnnotationDbi", 'EnsDb.Hsapiens.v86',
-    "SingleCellExperiment", "GenomicRanges", "scran",
-    'BSgenome.Hsapiens.UCSC.hg38', "chromVAR", "MOFA2",
-    "MultiAssayExperiment"))
+#### Knowledge requirements
 
-install.packages(c('tidyverse', "Seurat", "Signac", "Matrix"))
-```
+We will have a warm-up session to start exploring our datasets before the project starts. 
 
-Download the data
-```
-mkdir processed_data
-## TBD ##
-```
+You can start familiarizing yourself with certain tools we will be using, trying out the examples in vignettes:
+* TBA
+<!-- * muon:(https://muon-tutorials.readthedocs.io/en/latest/single-cell-rna-atac/index.html)
+* MOFA2 -->
 
 ### Background
 
@@ -47,7 +44,21 @@ Corticogenesis is the dynamic process that results in the formation of the cereb
 
 Here we will be analyzing Human fetal brain cortex data from [Trevino et al. 2021](https://www.sciencedirect.com/science/article/abs/pii/S0092867421009429) ([source](https://github.com/GreenleafLab/brainchromatin)) ([OA preprint](https://www.biorxiv.org/content/10.1101/2020.12.29.424636v2.full)) to study the interplay between chromatin accessibility and gene expression in early corticogenesis.
 
+Your main goal will be to identify non-coding genomic regions where chromatin accessibility is associated with expression of genes involved in excitatory neuron development.
 
+* Group 1 will address the question with diagonal integration of the unmatched assay data (scRNA-seq data and scATAC-seq data from different cells)
+* Group 2 will address the question with vertical integration of the multiome data (scRNA-seq and scATAC-seq for the same cells)
+
+### Practical information
+
+In the project folder, you will find a template Jupyter Notebook guiding you through the steps for the integration project:
+
+* Group 1: [`multiomics_unmatched.ipynb`](https://github.com/NBISweden/single-cell_sib_scilifelab_2021/blob/omics/project_omics/multiomics_unmatched.ipynb)
+* Group 2: [`multiomics_matched.ipynb`](https://github.com/NBISweden/single-cell_sib_scilifelab_2021/blob/omics/project_omics/multiomics_matched.ipynb)
+
+Because we will need to use both tools in R and in python, we provide an additional notebook illustrating how to use R code in jupyter environment using the [RPy2](https://rpy2.github.io/) framework - [`rpy2_interoperability_examples.ipynb`](https://github.com/NBISweden/single-cell_sib_scilifelab_2021/blob/omics/project_omics/rpy2_interoperability_examples.ipynb)). 
+
+<!-- 
 ### Milestone 1:
 
 1.1.
@@ -139,3 +150,4 @@ Here we will be analyzing Human fetal brain cortex data from [Trevino et al. 202
 8.1.4.
 
 8.1.5.
+ -->
