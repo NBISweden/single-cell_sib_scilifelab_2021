@@ -33,10 +33,17 @@ conda env create --file multiomics-environment.yml
 
 We will have a warm-up session to start exploring our datasets before the project starts. 
 
-You can start familiarizing yourself with certain tools we will be using, trying out the examples in vignettes:
-*  
-<!-- * muon:(https://muon-tutorials.readthedocs.io/en/latest/single-cell-rna-atac/index.html)
-* MOFA2 -->
+You can start familiarizing yourself with some of the tools we will be using, trying out the examples in vignettes:
+
+* Python framework for multi-modal data analysis - muon ([vignette](https://muon-tutorials.readthedocs.io/en/latest/single-cell-rna-atac/index.html))
+* Dimensionality reduction for co-embedding of matched data:
+  * Multi-Omics Factor Analysis - ([vignette in R](https://raw.githack.com/bioFAM/MOFA2_tutorials/master/R_tutorials/10x_scRNA_scATAC.html))([implementation in muon](https://muon.readthedocs.io/en/latest/omics/multi.html#multi-omics-factor-analysis))
+  * Weighted Nearest Neighbors - ([vignette in R](https://satijalab.org/seurat/articles/weighted_nearest_neighbor_analysis.html#wnn-analysis-of-10x-multiome-rna-atac-1))([implementation in muon](https://muon.readthedocs.io/en/latest/omics/multi.html#weighted-nearest-neighbours))
+* Dimensionality reduction for co-embedding of unmatched data:
+  * Seurat CCA - ([vignette in R](https://satijalab.org/seurat/articles/atacseq_integration_vignette.html))
+* Tools for scATAC analysis
+  * Motif enrichment analysis - ChromVAR ([vignette](https://greenleaflab.github.io/chromVAR/articles/Introduction.html))
+  * Working with BED like genomic locations - GenomicRanges ([vignette](https://bioconductor.org/packages/release/bioc/vignettes/GenomicRanges/inst/doc/GenomicRangesIntroduction.html))  
 
 ### Background
 
@@ -53,10 +60,10 @@ Your main goal will be to identify non-coding genomic regions where chromatin ac
 
 In the project folder, you will find a template Jupyter Notebook guiding you through the steps for the integration project:
 
-* Group 1: [`multiomics_unmatched.ipynb`](https://github.com/NBISweden/single-cell_sib_scilifelab_2021/blob/omics/project_omics/multiomics_unmatched.ipynb)
-* Group 2: [`multiomics_matched.ipynb`](https://github.com/NBISweden/single-cell_sib_scilifelab_2021/blob/omics/project_omics/multiomics_matched.ipynb)
+* Group 1: [`multiomics_unmatched.ipynb`](https://github.com/NBISweden/single-cell_sib_scilifelab_2021/blob/main/project_omics/multiomics_unmatched.ipynb)
+* Group 2: [`multiomics_matched.ipynb`](https://github.com/NBISweden/single-cell_sib_scilifelab_2021/blob/main/project_omics/multiomics_matched.ipynb)
 
-Because we will need to use both tools in R and in python, we provide an additional notebook illustrating how to use R code in jupyter environment using the [RPy2](https://rpy2.github.io/) framework - [`rpy2_interoperability_examples.ipynb`](https://github.com/NBISweden/single-cell_sib_scilifelab_2021/blob/omics/project_omics/rpy2_interoperability_examples.ipynb)). 
+Because we will need to use both tools in R and in python, we provide an additional notebook illustrating how to use R code in jupyter environment using the [RPy2](https://rpy2.github.io/) framework - [`rpy2_interoperability_examples.ipynb`](https://github.com/NBISweden/single-cell_sib_scilifelab_2021/blob/main/project_omics/rpy2_interoperability_examples.ipynb)). 
 
 <!-- 
 ### Milestone 1:
