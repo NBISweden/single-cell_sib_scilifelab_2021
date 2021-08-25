@@ -26,7 +26,7 @@ Still subject to minor changes...
 * *09h20 – 12h15 : Groups project (including a break)
 * 12h15 – 13h15 : Lunch break
 * *13h15 – 16h00 : Groups project (including a break)
-* 16h00 – 17h00 : Keynote lecture (Dr Valentine Svensson)
+* 16h00 – 17h00 : Keynote lecture "Improving communication of scRNA-seq results using common units" (Dr Valentine Svensson)
 
 
 ### Day3 (Wednesday):
