@@ -43,7 +43,7 @@ Although we will make an effort to cover material required to follow the course,
 
 To review some of these concepts you can refer to some of this introductory material:
 
-* Introductory material on ANNs and Deep LearningL
+* Introductory material on ANNs and Deep Learning:
 
 ([Deep Learning TDS](https://towardsdatascience.com/simply-deep-learning-an-effortless-introduction-45591a1c4abb))
 
@@ -61,7 +61,7 @@ For the purposes of this course focus on lectures 8.1-8.7, 9.1-9.7, 17.1-17.4
 
 
 
-### Tentative schedule
+### Schedule
 
 For the complete course schedule please refer to:
 
