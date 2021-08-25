@@ -10,6 +10,7 @@ Please follow the instructions below for installations prior to the workshop:
 - Knowledge Requirements
 - Slack
 - Zoom
+- AWS instance
 - Conda
 - Dataset
 - Code
@@ -65,6 +66,12 @@ Make sure that you have the latest **[Zoom (version 5.7.0 or above)](https://zoo
 Previous Zoom versions will not work. If you already have Zoom installed, you can also update it by clicking in `Check for Updates ...` button in the main top menu.
 
 <br/>
+
+***
+
+## <img border="0" src="https://1x5o5mujiug388ttap1p8s17-wpengine.netdna-ssl.com/wp-content/uploads/2020/12/AWS-logo-2.jpg" width="20" height="20" style="vertical-align:middle;"> AWS instance
+
+You will be provided access to a cloud instance containing all necessary installations and computational infrastructure at the start of the course. To work on the cloud instance the only program you need will be a modern browser (i.e. Firefox, Edge, Chrome, Safari). You will connect either through Rstudio server or Jupyter. If you would like to work locally, read the instructions below (due to specific requirements the instructions below will **not** be sufficient for the projects on multi-omics and deep learning)
 
 ***
 
