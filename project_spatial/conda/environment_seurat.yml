@@ -1,0 +1,29 @@
+name: seurat_spatial
+channels:
+ - conda-forge
+ - bioconda
+ - defaults
+ - anaconda
+dependencies:
+ - r-base
+ - rstudio
+ - bioconductor-scater
+ - bioconductor-scran
+ - bioconductor-singlecellexperiment
+ - bioconductor-rhdf5
+ - bioconductor-biomart
+ - bioconductor-org.hs.eg.db
+ - bioconductor-scdblfinder
+ - bioconductor-batchelor
+ - r-pheatmap
+ - r-harmony
+ - r-igraph
+ - r-seurat>=3.1.2
+ - r-umap
+ - r-hdf5r
+ - r-venn
+ - wget
+ - compilers
+
+
+
