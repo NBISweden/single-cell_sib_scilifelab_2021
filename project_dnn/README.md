@@ -43,7 +43,7 @@ Although we will make an effort to cover material required to follow the course,
 
 To review some of these concepts you can refer to some of this introductory material:
 
-* Introductory material on ANNs and Deep Learning
+* Introductory material on ANNs and Deep LearningL
 
 ([Deep Learning TDS](https://towardsdatascience.com/simply-deep-learning-an-effortless-introduction-45591a1c4abb))
 
@@ -56,6 +56,7 @@ To review some of these concepts you can refer to some of this introductory mate
 * Short introductory video lectures by Andrew Ng (highly recommended). 
 This is a full intro course to Machine Learning.
 For the purposes of this course focus on lectures 8.1-8.7, 9.1-9.7, 17.1-17.4
+
 ([Andrew Ng Lectures](https://www.youtube.com/playlist?list=PLLssT5z_DsK-h9vYZkQkYNWcItqhlRJLN))
 
 
