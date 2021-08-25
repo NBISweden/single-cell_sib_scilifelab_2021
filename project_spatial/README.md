@@ -41,18 +41,25 @@ In this project you will work with mouse brain sections from [Hasel et al.](http
 
 #### Topic 2: Annotating celltypes in visium data using single cell data
 
-In this project you will focus on the integration of single cell data with spatial data throug varios methos. 
+In this project you will focus on the integration of single cell data with spatial data in the Visceral cortex  which can be downloaded [here](fill in link).  
 
 
 ### Practical information
 
 We have provided conda recipies for some of the most common tools that you may want to use in the projects in this [folder](https://github.com/NBISweden/single-cell_sib_scilifelab_2021/tree/main/project_spatial/conda/)
 
-If you are not familiar with conda, please have a look at the [Precourse material](../precourse)
+If you are not familiar with conda, please have a look at the [Precourse material](../precourse). There are separate environments for R or python and we suggest you use whatever language you feel most comfortable with. 
 
 Please refer to our [Tips and tricks](tips) where we try to list common issues with some of the most common tools.
 
 <br/>
+
+### Milestone 0: Spatial tutorials
+
+Start by having a look at the [Tutorials](https://nbisweden.github.io/workshop-scRNAseq/exercises) for analysis of ST data and integration with SC data using Seurat, Scran or Squidpy.
+
+Select wichever pipeline you feel is most relevant for you to use.
+
 
 ### Milestone 1: Load data
 
@@ -89,8 +96,6 @@ Please refer to our [Tips and tricks](tips) where we try to list common issues w
 <br/>
 
 
-
-
 ### Milestone 4 (Task 1): Integration
 
 4.1 Look at the dimensionality reduction and clustering in step 3. Do you see any batch effects? What would be the best way to remove that effect do you think?
@@ -115,12 +120,28 @@ Please refer to our [Tips and tricks](tips) where we try to list common issues w
 
 <br/>
 
+### Milestone 5 (Task 1): Cluster sections individually
 
-SPLIT INTO ONE SECTION PER TASK INSTEAD?
+5.1 Instead of working with all sections combined, instead run the analysis one section at a time.
+
+5.2 How well does the clustering on section level agree with the clustering after integration? If they do not agree, how can you explain the differences?
 
 
 ### Milestone 5 (Task 2): Load SC data
 
+5.1 Perform clustering and QC of the data and compare to the annotations provided by the paper.
+
+5.2 Perform Differential Expression analysis, this may be a relevant gene set to use for aligning the SC data to the ST data.
+
+<br/>
+
+### Milestone 6 (Task 1): Image features
+
+6.1 Use a tool that can calculate image features
+
+6.2 Use the image features to cluster the sections. How does it compare to the expression based clusters?
+
+6.3 Do you see more/less batch effects in clustering based on image features? What could the reasons be?
 
 <br/>
 
@@ -133,17 +154,6 @@ SPLIT INTO ONE SECTION PER TASK INSTEAD?
 6.3 Run the methods you selected.
 
 6.4 Compare the results, what are main similiarities/differeces between the tools?
-
-<br/>
-
-### Milestone 6 (Task 1): Image features
-
-6.1 Use a tool that can calculate image features
-
-6.2 Use the image features to cluster the sections. How does it compare to the expression based clusters?
-
-6.3 Do you see more/less batch effects in clustering based on image features? What could the reasons be?
-
 
 <br/>
 

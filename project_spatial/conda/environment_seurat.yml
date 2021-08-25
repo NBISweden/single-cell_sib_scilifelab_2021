@@ -10,6 +10,7 @@ dependencies:
  - bioconductor-scater
  - bioconductor-scran
  - bioconductor-singlecellexperiment
+ - bioconductor-spatialexperiment
  - bioconductor-rhdf5
  - bioconductor-biomart
  - bioconductor-org.hs.eg.db
@@ -24,6 +25,10 @@ dependencies:
  - r-venn
  - wget
  - compilers
+ - r-ggplot2
+ - r-dplyr
+ - r-tidyverse
+ 
 
 
 
