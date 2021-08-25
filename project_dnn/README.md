@@ -44,9 +44,13 @@ Although we will make an effort to cover material required to follow the course,
 To review some of these concepts you can refer to some of this introductory material:
 
 * Introductory material on ANNs and Deep Learning
+
 ([Deep Learning TDS](https://towardsdatascience.com/simply-deep-learning-an-effortless-introduction-45591a1c4abb))
+
 ([Deep Learning OREILLY](https://www.oreilly.com/library/view/deep-learning/9781491924570/ch01.html))
+
 ([ANNs TDS](https://towardsdatascience.com/basic-concepts-of-neural-networks-1a18a7aa2bd2))
+
 ([ANN Sci2lab](https://sci2lab.github.io/ml_tutorial/neural_network/))
 
 * Short introductory video lectures by Andrew Ng (highly recommended). 
