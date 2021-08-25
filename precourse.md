@@ -77,7 +77,7 @@ You will be provided access to a cloud instance containing all necessary install
 
 ## <img border="0" src="https://hackernoon.com/hn-images/1*rW03Wtue71AKfxnx6XN_iQ.png" width="20" height="20" style="vertical-align:middle;"> Conda
 
-During this workshop, you will use conda environments to run the exercises. This is because conda environments allow all users to have the same computing environment, i.e. package versions. This enforces reproducibility for you to run this material without the need to re-install or change your local versions. See and graphical example below:
+During this workshop, you can use conda environments to run the exercises (see **AWS instance** if you want to use the cloud-based solution). This is because conda environments allow all users to have the same computing environment, i.e. package versions. This enforces reproducibility for you to run this material without the need to re-install or change your local versions. See and graphical example below:
 
 <img border="0" src="https://nbisweden.github.io/excelerate-scRNAseq/logos/conda_illustration.png" width="400">
 
