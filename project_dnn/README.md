@@ -53,9 +53,9 @@ To review some of these concepts you can refer to some of this introductory mate
 
 ([ANN Sci2lab](https://sci2lab.github.io/ml_tutorial/neural_network/))
 
-* Short introductory video lectures by Andrew Ng (highly recommended). 
+* Short introductory video lectures (~5'-10' each) by Andrew Ng and Stanford University (highly recommended). 
 This is a full intro course to Machine Learning.
-For the purposes of this course focus on lectures 8.1-8.7, 9.1-9.7, 17.1-17.4
+For the purposes of this course focus on lectures 8.1-8.7, 9.1-9.7, 10.3-10.7, 17.1-17.4
 
 ([Andrew Ng Lectures](https://www.youtube.com/playlist?list=PLLssT5z_DsK-h9vYZkQkYNWcItqhlRJLN))
 
