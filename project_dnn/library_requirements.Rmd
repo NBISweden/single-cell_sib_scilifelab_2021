@@ -1,0 +1,83 @@
+---
+title: "Libraries for AWS instance setup"
+author: "Panagiotis Papasaikas"
+date: "2021-08-29"
+output:
+  html_document:
+    css: styles.css
+    keep_md: true
+    toc: true
+    toc_depth: 2
+    toc_float: false
+    theme: sandstone
+    highlight: tango
+#bibliography: DGNs.bib
+editor_options: 
+  chunk_output_type: inline
+---
+
+
+```{r setup, include=FALSE, class.source = "rchunk"}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, eval = TRUE)
+options(width = 80)
+```
+
+
+
+```{r libload}
+suppressPackageStartupMessages({
+library(reticulate)
+library(keras)
+library(tensorflow)
+library(Matrix)
+library(SingleCellExperiment)
+library(Rtsne)
+library(rsvd)
+library(RColorBrewer)
+library(gridExtra)
+library(scater)
+library(scran)
+library(umap)
+library(tibble)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(cowplot)
+library(reshape2)
+library(swissknife)
+library(BiocParallel)
+library(BiocSingular)
+library(batchelor)
+library(ComplexHeatmap)
+library(tximeta)
+library(GenomicFeatures)
+library(AnnotationDbi)
+library(org.Mm.eg.db)
+library(rtracklayer)
+})
+```
+
+
+
+
+
+
+```{python libload, class.source="pythonchunk"}
+import keras
+import tensorflow
+import numpy
+import scipy
+import pandas
+import matplotlib
+import pydotplus
+import sklearn
+import scanpy
+import os
+import gseapy
+import seaborn
+import anndata
+```
+
+
+
+
