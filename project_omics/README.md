@@ -29,6 +29,11 @@ conda env create --file multiomics-environment.yml
 
 - download the preprocessed data from [GDrive](https://drive.google.com/drive/folders/1YjHfhxk2Z62pTEOTu27G-AgKqQawKEBT?usp=sharing) 
 
+- open the Jupyter notebooks
+```
+jupyter notebook ./multiomics_unmatched.ipynb
+```
+
 #### Knowledge requirements
 
 We will have a warm-up session to start exploring our datasets before the project starts. 
