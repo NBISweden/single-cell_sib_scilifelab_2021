@@ -1,5 +1,4 @@
-
-# <img border="0" src="../logos/spatial_transcriptomics.png" width="40" height="40"> Spatial Transcriptomics Project Report
+# <img border="0" src="../logos/spatial_transcriptomics.png" width="40" height="40" style="vertical-align:middle;"> Spatial Transcriptomics
 ***
 
 <br/>
@@ -167,6 +166,3 @@ If time allows we have listed a few additional things you could try out if time 
 
 <br/>
 
-### [Back to Projects](/single-cell_sib_scilifelab_2021/projects)
-
-### [Back to main](/single-cell_sib_scilifelab_2021/README)

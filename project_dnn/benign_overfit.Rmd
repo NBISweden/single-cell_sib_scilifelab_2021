@@ -1,0 +1,324 @@
+---
+title: "Overparameterization and benign overfitting"
+author: "Panagiotis Papasaikas"
+date: "2021-08-20"
+output:
+    html_document:
+    css: styles.css
+keep_md: true
+toc: true
+toc_depth: 2
+toc_float: false
+theme: sandstone
+highlight: tango
+editor_options: 
+    chunk_output_type: inline
+---
+    
+    
+```{r setup, include=FALSE, class.source = "rchunk"}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, eval = TRUE)
+options(width = 80)
+```
+
+
+
+```{r libload}
+suppressPackageStartupMessages({
+
+system("pipenv --python 3.8")
+venv <- system("pipenv --venv", inter = TRUE)
+reticulate::use_virtualenv(venv, required = TRUE)
+
+reticulate::py_config()
+library(keras)
+K <- backend() # manual add-on
+library(tensorflow)
+tf$version$VERSION
+library(ggplot2)
+library(gridExtra)
+
+#Check device usage:
+tf$compat$v1$Session( config=tf$compat$v1$ConfigProto(log_device_placement=TRUE)  )
+tf$compat$v1$keras$backend$get_session()
+
+setwd("/tungstenfs/groups/gbioinfo/papapana/DEEP_LEARNING")
+
+})
+```
+
+# Generate simulated data
+
+2000 x 2048 (weak) predictors  generating  a single scalar response 
+
+```{r fig.width=12, fig.height=6}
+nsamples=8000 #2000
+set.seed(1)
+Y <- rnorm(nsamples, 5,1)
+X <- Y + rnorm(nsamples, 0,1) # X -> Y
+
+# Validation Set
+set.seed(2)
+Yv <- rnorm(nsamples, 5,1)
+X1 <- Yv + rnorm(nsamples, 0, 1) 
+
+npred <- 2048
+Xp <- matrix(0,nsamples,npred)
+Xv <- Xp
+for(i in 1:npred){
+set.seed(npred+i)
+Xp[,i] <- X + rnorm(nsamples,0,2) # X -> Xp1, Xp2, ..., Xp2048  
+Xv[,i] <- X1 + rnorm(nsamples,0,2)
+}
+
+par(mfrow=c(1,2))
+plot(X,Y, col='#56B4E9',pch=19, cex=0.5,main="X=Y+e, e~N(0,1)")
+text(7,3,labels=paste("R = ", round(cor(X, Y),2))  )
+plot(Xp[,1],Y, col='#56B4E9',pch=19, main="weak predictor 1" , cex=0.5)
+text(7,3,labels=paste("R = ", round(cor(Xp[,1], Y),2))  )
+```
+
+# Linear regression
+
+```{r fig.width=14, fig.height=7}
+par(mfrow=c(4,2))
+usep <- c(250,500,1000,1950)
+p <- list()
+
+dat <- matrix(ncol=5, nrow=length(usep)*nsamples,dimnames = list(NULL,c("Y","Yp","Yv","Yvp","nf")))
+for (i in 1:4){
+nf <- usep[i]
+fit <- lm(Y~.,as.data.frame(Xp[,1:nf])  )
+Yp <- predict(fit,newdata=as.data.frame(Xp[,1:nf]) )
+Yvp <- predict(fit,newdata=as.data.frame(Xv[,1:nf]) )
+dat[((i-1)*nsamples+1):(i*nsamples),] <- cbind(Y,Yp,Yv,Yvp,nf)
+}
+p1 <- ggplot(data = data.frame(dat), aes(x = Y, y = Yp, color='#56B4E9')) + geom_point() + ggtitle("Training fit")
+p1 <- p1 + facet_wrap(~nf, scales = "free", labeller = label_bquote("Npred "==.(nf))) + theme(legend.position = "none")
+
+p2 <- ggplot(data = data.frame(dat), aes(x = Yv, y = Yvp, color='#56B4E9')) + geom_point() + ggtitle("Validation fit")
+p2 <- p2 + facet_wrap(~nf, scales = "free", labeller = label_bquote("Npred "==.(nf))) + theme(legend.position = "none")
+
+grid.arrange(p1, p2, nrow = 1)
+
+```
+
+
+
+
+
+# Define NN Models:
+```{r}
+reg_loss <- function(x, x_decoded_mean ){
+  loss_mean_squared_error(x, x_decoded_mean)
+}
+opt <-  optimizer_adam(lr=0.0001,amsgrad = TRUE)# 
+
+############## Regressor 1: 4 layers, ~1M params#######################
+nfeat <- 2048
+drop_rate <- 0.0
+Regressor1 <- keras_model_sequential()
+Regressor1 %>%
+    layer_dense(units = nfeat/4, input_shape = c(nfeat),activation="elu") %>%  
+    layer_dropout(rate = drop_rate) %>%
+    layer_dense(units= nfeat/16,activation="elu") %>% 
+    layer_dropout(rate = drop_rate) %>%
+    layer_dense( nfeat/64, activation = "elu") %>%  
+    layer_dropout(rate = drop_rate) %>%
+    layer_dense( 4, activation = "elu") %>%  
+    layer_dropout(rate = drop_rate) %>%
+    layer_dense( 1, activation = "relu") 
+
+nparams <- length(Regressor1$weights[[1]])
+Regressor1 %>% compile(loss=reg_loss, optimizer = opt)
+
+############## Regressor 2: 2 layers, ~33K params#######################
+nfeat <- 1024
+drop_rate <- 0.0
+Regressor2 <- keras_model_sequential()
+Regressor2 %>%
+    layer_dense(units = 32, input_shape = c(nfeat),activation="elu") %>%  
+    layer_dropout(rate = drop_rate) %>%
+    layer_dense( 4, activation = "elu") %>%  
+    layer_dropout(rate = drop_rate) %>%
+    layer_dense( 1, activation = "relu") 
+
+nparams <- length(Regressor2$weights[[1]])
+Regressor2 %>% compile(loss=reg_loss, optimizer = opt)
+
+
+#############Regressor 3: 2 layers 8K parameters ###############
+nfeat <- 1024
+drop_rate <- 0.0
+Regressor3 <- keras_model_sequential()
+Regressor3 %>%
+  layer_dense(units =8, input_shape = c(nfeat),activation="elu") %>%  
+  layer_dropout(rate = drop_rate) %>%
+  layer_dense( 2, activation = "elu") %>%  
+  layer_dropout(rate = drop_rate) %>%
+  layer_dense( 1, activation = "relu") 
+
+nparams <- length(Regressor3$weights[[1]])
+Regressor3 %>% compile(loss=reg_loss, optimizer = opt)
+
+############### Regressor 4: 1 layer, 524288 #########
+nfeat <- 2048
+drop_rate <- 0.0
+Regressor4 <- keras_model_sequential()
+Regressor4 %>%
+  layer_dense(units = 256, input_shape = c(nfeat),activation="elu") %>%
+  layer_dropout(rate = drop_rate) %>%
+  layer_dense( 1, activation = "relu") 
+
+nparams <- length(Regressor4$weights[[1]])
+Regressor4 %>% compile(loss=reg_loss, optimizer = opt)
+
+
+
+############### Regressor TEST #########
+
+nfeat <- 2048
+drop_rate <- 0.0
+Regressor1 <- keras_model_sequential()
+Regressor1 %>%
+    layer_dense(units = nfeat, input_shape = c(nfeat),activation="elu") %>%  
+    layer_dropout(rate = drop_rate) %>%
+    layer_dense(units= nfeat,activation="elu") %>% 
+    layer_dropout(rate = drop_rate) %>%
+    layer_dense(units= nfeat,activation="elu") %>% 
+    layer_dropout(rate = drop_rate) %>%
+    layer_dense(units= nfeat,activation="elu") %>% 
+    layer_dropout(rate = drop_rate) %>%
+    layer_dense(units= nfeat/2,activation="elu") %>% 
+    layer_dropout(rate = drop_rate) %>%
+    layer_dense(units= nfeat/4,activation="elu") %>% 
+    layer_dropout(rate = drop_rate) %>%
+    layer_dense( nfeat/16, activation = "elu") %>%  
+    layer_dropout(rate = drop_rate) %>%
+    layer_dense( 4, activation = "elu") %>%  
+    layer_dropout(rate = drop_rate) %>%
+    layer_dense( 1, activation = "relu") 
+
+
+Regressor1 %>% compile(loss=reg_loss, optimizer = opt)
+
+
+nparams <- Regressor1$count_params()
+Regressor1$summary()
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+# Training
+```{r,fig.show='hide',results='hide'}
+Regressor <- Regressor1
+
+##### Learning rate scheduler:
+burn_in.nepochs <- 50
+burn_in_lr <- 5e-4 / (nparams / 1000) #5e-4
+main_lr <- 1e-2  / (nparams / 1000)   #1e-2 - 1e-3
+lr_schedule <- function(epoch, current_lr) {
+    if (epoch <= burn_in.nepochs ) lr <- burn_in_lr
+    else {lr <- main_lr} 
+    return(lr)
+}
+lr_sch <- callback_learning_rate_scheduler(lr_schedule)
+
+
+
+X <- Xp[,1:nfeat]
+Xval <- Xv[,1:nfeat]
+
+batch_size <- 128
+nepochs=10
+###### Training:
+history <- Regressor %>% fit(
+    x=X,
+    y=Y, 
+    shuffle = TRUE, 
+    epochs = nepochs,
+    batch_size = batch_size,
+    validation_data=list(Xval,Yv),
+    callbacks = list(lr_sch)
+)
+
+#saveRDS(history, file="Regressor4_history.rds")
+#save_model_weights_hdf5(Regressor, "Regressor4_weights.hdf5")  
+```
+
+
+
+# Summarize NN results
+```{r fig.width=8, fig.height=4}
+X <- Xp[,1:2048]
+Xval <- Xv[,1:2048]
+Regressor1 %>% load_model_weights_hdf5("Regressor1_weights.hdf5")
+Y_p <- predict(Regressor1, X)
+Y_vp <- predict(Regressor1, Xval)
+dat1<- data.frame(cbind(Y,as.vector(Y_p))); colnames(dat1) <- c("Y","Y_p")
+p1 <- ggplot(data = dat1, aes(x = Y, y = Y_p, color='#56B4E9')) + geom_point() + ggtitle("Training fit") +  theme(legend.position = "none") 
+p1 <- p1 + annotate(x=7, y=2, label=paste("R = ", round(cor(dat1$Y, dat1$Y_p),2)), geom="text", size=5)
+dat2<- data.frame(cbind(Yv,Y_vp)); colnames(dat2) <- c("Yv","Y_vp")
+p2 <- ggplot(data = dat2, aes(x = Yv, y = Y_vp, color='#56B4E9')) + geom_point() + ggtitle("Validation fit") +  theme(legend.position = "none")
+p2 <- p2 + annotate(x=7, y=2, label=paste("R = ", round(cor(dat2$Yv, dat2$Y_vp),2)), geom="text", size=5)
+gridExtra::grid.arrange(p1,p2,nrow=1, top="Regressor1 (4HL, p=1M)")
+
+X <- Xp[,1:1024]
+Xval <- Xv[,1:1024]
+Regressor2 %>% load_model_weights_hdf5("Regressor2_weights.hdf5")
+Y_p <- predict(Regressor2, X)
+Y_vp <- predict(Regressor2, Xval)
+dat1<- data.frame(cbind(Y,as.vector(Y_p))); colnames(dat1) <- c("Y","Y_p")
+p1 <- ggplot(data = dat1, aes(x = Y, y = Y_p, color='#56B4E9')) + geom_point() + ggtitle("Training fit") +  theme(legend.position = "none") 
+p1 <- p1 + annotate(x=7, y=2, label=paste("R = ", round(cor(dat1$Y, dat1$Y_p),2)), geom="text", size=5)
+dat2<- data.frame(cbind(Yv,Y_vp)); colnames(dat2) <- c("Yv","Y_vp")
+p2 <- ggplot(data = dat2, aes(x = Yv, y = Y_vp, color='#56B4E9')) + geom_point() + ggtitle("Validation fit") +  theme(legend.position = "none")
+p2 <- p2 + annotate(x=7, y=2, label=paste("R = ", round(cor(dat2$Yv, dat2$Y_vp),2)), geom="text", size=5)
+gridExtra::grid.arrange(p1,p2,nrow=1, top="Regressor2 (2HL, p=33K)")
+
+
+X <- Xp[,1:1024]
+Xval <- Xv[,1:1024]
+Regressor3 %>% load_model_weights_hdf5("Regressor3_weights.hdf5")
+Y_p <- predict(Regressor3, X)
+Y_vp <- predict(Regressor3, Xval)
+dat1<- data.frame(cbind(Y,as.vector(Y_p))); colnames(dat1) <- c("Y","Y_p")
+p1 <- ggplot(data = dat1, aes(x = Y, y = Y_p, color='#56B4E9')) + geom_point() + ggtitle("Training fit") +  theme(legend.position = "none") 
+p1 <- p1 + annotate(x=7, y=2, label=paste("R = ", round(cor(dat1$Y, dat1$Y_p),2)), geom="text", size=5)
+dat2<- data.frame(cbind(Yv,Y_vp)); colnames(dat2) <- c("Yv","Y_vp")
+p2 <- ggplot(data = dat2, aes(x = Yv, y = Y_vp, color='#56B4E9')) + geom_point() + ggtitle("Validation fit") +  theme(legend.position = "none")
+p2 <- p2 + annotate(x=7, y=2, label=paste("R = ", round(cor(dat2$Yv, dat2$Y_vp),2)), geom="text", size=5)
+gridExtra::grid.arrange(p1,p2,nrow=1, top="Regressor3 (2HL, p=8K)")
+
+
+
+X <- Xp[,1:2048]
+Xval <- Xv[,1:2048]
+Regressor4 %>% load_model_weights_hdf5("Regressor4_weights.hdf5")
+Y_p <- predict(Regressor4, X)
+Y_vp <- predict(Regressor4, Xval)
+dat1<- data.frame(cbind(Y,as.vector(Y_p))); colnames(dat1) <- c("Y","Y_p")
+p1 <- ggplot(data = dat1, aes(x = Y, y = Y_p, color='#56B4E9')) + geom_point() + ggtitle("Training fit") +  theme(legend.position = "none") 
+p1 <- p1 + annotate(x=7, y=2, label=paste("R = ", round(cor(dat1$Y, dat1$Y_p),2)), geom="text", size=5)
+dat2<- data.frame(cbind(Yv,Y_vp)); colnames(dat2) <- c("Yv","Y_vp")
+p2 <- ggplot(data = dat2, aes(x = Yv, y = Y_vp, color='#56B4E9')) + geom_point() + ggtitle("Validation fit") +  theme(legend.position = "none")
+p2 <- p2 + annotate(x=7, y=2, label=paste("R = ", round(cor(dat2$Yv, dat2$Y_vp),2)), geom="text", size=5)
+gridExtra::grid.arrange(p1,p2,nrow=1, top="Regressor4 (2HL, p=0.5M)")
+
+
+```
+
+
+
+

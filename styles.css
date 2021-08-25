@@ -1,0 +1,146 @@
+
+
+h1.title { font-size: 32px; color: Black; }
+
+h1 { /* Header 1 */ font-size: 32px; color: Black; font-weight: bold }
+
+h2 { /* Header 2 */ font-size: 24px; color: Black; font-weight: bold }
+
+h3 { /* Header 3 */ font-size: 18px; color: Black; font-weight: bold }
+
+code.r{ /* Code block */ font-size: 14px; color: Black; }
+
+body { /* Normal  */ font-size: 14px; color: Black; padding: 0px; margin: 0px; background-color: #E5E5E5 }
+
+td {  /* Table  */ font-size: 14px; color: Black; }
+
+p {
+  font-size: 14px;
+  color: Black;
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+div { font-size: 14px; color: Black; line-height: normal;  }
+
+pre { /* Code block - determines code spacing between lines */ font-size: 14px; }
+
+
+.zoom:hover{
+  transform: scale(1.05)
+}
+
+.menuButton {
+  background-color: #E5E5E5;
+  width:100%;
+  border: none;
+  color: #666666;
+  font-weight: bold;
+  padding: 10px 15px;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 0px;
+  cursor: pointer;
+  text-align: right;
+}
+
+.button {
+  background-color: #E5E5E5;
+  border: none;
+  color: #666666;
+  font-weight: bold;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 0px;
+  cursor: pointer;
+}
+
+#footer {
+  position:absolute;
+  bottom:0;
+  width:100%;
+  height:20px;   /* Height of the footer */
+  background: #f2f2f2;
+}
+
+.myHighlight:hover {
+  background-color: #F2F2F2;
+}
+
+.active {
+  background-color: White;
+  color: Black;
+}
+
+.wrapper{
+  width: 1100px;
+  height: 800px;
+}
+
+
+.myheader1 {
+  width: 240px;
+  padding: 0px;
+  float: left;
+  height: 800px;
+}
+
+.myheader2{
+  width: 240px;
+  padding: 10px 0px;
+  text-align: right;
+  position: fixed;
+  /* position: absolute; */
+
+}
+
+.myContent1 {
+  width: calc(100% - 240px);
+  padding: 0px;
+  background-color: white;
+  float: left;
+  height:100%;
+}
+
+.myContent2 {
+  width: auto;
+  padding: 40px 30px;
+  background-color: white;
+  /* float: left; */
+  min-height:800px;
+}
+
+.profile_picture {
+  border-radius: 50%;
+  width: 200;
+  height:200
+}
+
+@media screen and (max-width: 600px) {
+  .menuButton img {
+    width: 30px ;
+    height: 30px ;
+  }
+  .menuButton {
+    font-size: 0px;
+    padding: 15px 15px;
+  }
+  .menuButton h1 {
+    font-size: 0px;
+  }
+  .myheader1 {
+    width: 60px;
+  }
+  .myheader2{
+    padding: 20px 0px;
+    width: 60px;
+  }
+  .myContent1 {
+    width: calc(100% - 60px);
+  }
+
+}

@@ -1,4 +1,4 @@
-# <img border="0" src="https://www.svgrepo.com/show/1025/task.svg" width="40" height="40"> Projects
+# <img border="0" src="https://www.svgrepo.com/show/1025/task.svg" width="40" height="40" style="vertical-align:middle;"> Projects
 
 ***
 
@@ -12,42 +12,54 @@
 
 Since each of the 4 group themes may have completely different softwares, please follow in instructions specific to each one.
 
-<div style="width:100%;height:300px;">
-<div style="width:150px;height:100px;padding:5px 5px;font-size:12pt;font-family:Helvetica;float:left;text-align:center;">
-<a href="/single-cell_sib_scilifelab_2021/project_spatial/README.html"><img class="zoom" border="0" src="logos/spatial_transcriptomics.png"></a><p></p>
-<p>Spatial<br/>transcriptomics</p>
-</div>
+<div style="width:100%;height:150px;text-align: center">
 
-<div style="width:150px;height:100px;padding:5px 5px;font-size:12pt;font-family:Helvetica;float:left;text-align:center;">
-<a href="/single-cell_sib_scilifelab_2021/project_velocity/README.html"><img class="zoom" border="0" src="logos/rna_velocity.png"></a><p></p>
-<p>RNA<br/>velocity</p>
-</div>
+  <a href="/single-cell_sib_scilifelab_2021/project_spatial/README.html">
+  <div class="zoom" style="width:150px;height:100px;padding:5px 5px;font-size:12pt;font-family:Helvetica;float:left;text-align:center;">
+  <img border="0" height="100px" src="logos/spatial_transcriptomics.png"><br/>
+  Spatial<br/>transcriptomics
+  </div>
+  </a>
 
-<div style="width:150px;height:100px;padding:5px 5px;font-size:12pt;font-family:Helvetica;float:left;text-align:center;">
-<a href="/single-cell_sib_scilifelab_2021/project_omics/README.html"><img class="zoom" border="0" src="logos/omics_integration.png"></a><p></p>
-<p>Omics<br/>integration</p>
-</div>
+  <a href="/single-cell_sib_scilifelab_2021/project_velocity/README.html">
+  <div class="zoom" style="width:150px;height:100px;padding:5px 5px;font-size:12pt;font-family:Helvetica;float:left;text-align:center;">
+  <img border="0" height="100px"  src="logos/rna_velocity.png"><br/>
+  RNA<br/>velocity
+  </div>
+  </a>
 
-<div style="width:150px;height:100px;padding:5px 5px;font-size:12pt;font-family:Helvetica;float:left;text-align:center;">
-<a href="/single-cell_sib_scilifelab_2021/project_dnn/README.html"><img class="zoom" border="0" src="logos/deep_learning.png"></a><p></p>
-<p>Deep<br/>learning</p>
-</div>
+  <a href="/single-cell_sib_scilifelab_2021/project_omics/README.html">
+  <div class="zoom" style="width:150px;height:100px;padding:5px 5px;font-size:12pt;font-family:Helvetica;float:left;text-align:center;">
+  <img border="0" height="100px"  src="logos/omics_integration.png"><br/>
+  Omics<br/>integration
+  </div>
+  </a>
+
+  <a href="/single-cell_sib_scilifelab_2021/project_dnn/README.html">
+  <div class="zoom" style="width:150px;height:100px;padding:5px 5px;font-size:12pt;font-family:Helvetica;float:left;text-align:center;">
+  <img border="0" height="100px" src="logos/deep_learning.png"><br/>
+  Deep<br/>learning
+  </div>
+  </a>
+
 </div>
 
 <br/>
 
 ***
 
-### Learning strategy
+### <img border="0" src="https://static.thenounproject.com/png/4200-200.png" width="40" height="40" style="vertical-align:middle;"> Learning strategy
 
 The proposed educational plan for this course will be done using the Project-Based Learning (PBL) approach. This way, rather than having lectures on a topic and defined set of instructions and pre-given steps to follow (which focus on passive individual learning), you are required to learn the topic in a more **active** and **dynamic** way in order to solve the data analysis tasks as a group. Therefore, each group is provided with:
 
 1. The <img border="0" src="https://static.thenounproject.com/png/67360-200.png" width="10" height="10">[report file](project_velocity/README.md) containing a list of instructions and questions giving the overall direction and order of the steps needed to be done (read below how to use it).
 2. A <img border="0" src="https://d1nhio0ox7pgb.cloudfront.net/_img/o_collection_png/green_dark_grey/512x512/plain/dictionary.png" width="10" height="10">[glossary of terms](single_cell/glossary/glossary_of_terms_single_cell.html) which contains detailed information about many of the steps and provides further references on the topics.
 
+<br/>
+
 ***
 
-### How to work in groups
+### <img border="0" src="http://cdn.onlinewebfonts.com/svg/img_453102.png" width="40" height="40" style="vertical-align:middle;"> How to work in groups
 
 Each group is required to gather information from the **glossary** or from other **sources** to perform single cell data analysis by filling the report file (using this <img border="0" src="https://static.thenounproject.com/png/67360-200.png" width="10" height="10">[project_report.Rmd](single_cell/code/project_report.Rmd) file), by:
 
@@ -62,9 +74,11 @@ You are encouraged to use any other additional website / article in your report.
 
 We recommend to save the last 1 hour available to work on the project presentations. To save time, please create a google-slide presentation and divide the tasks, so everyone can contribute to building the presentation simultaneously.
 
+<br/>
+
 ***
 
-### Tips for a good group dynamic
+### <img border="0" src="https://upload.wikimedia.org/wikipedia/commons/8/88/Microsoft_Tips_icon.png" width="40" height="40" style="vertical-align:middle;"> Tips for a good group dynamic
 
 Working in groups is not a simple task, but it is how science is built. The main goal of working in groups is to teach and learn with others. Be kind and patient with your colleagues, help each other so the group reaches a good and fluent dynamic. However, time to work on the project is restricted, so please focus on the tasks at hand and be clear and concise as possible when communicating. Remember: this is a group work and you are evaluated as a group player.
 
@@ -92,8 +106,6 @@ Here we have some tips for successfully structuring your project work:
 6. Once the task is completed and attached to the report, the GUIDE can share the updated report with the group.
 7. By the end of each group session, it is beneficial that group has the latest version of the report, so you can always start from the last step.
 
-***
-
 <br/>
 
-### [Back to main](/single-cell_sib_scilifelab_2021/README)
+***

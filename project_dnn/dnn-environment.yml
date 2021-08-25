@@ -1,0 +1,8 @@
+name: sc2021-dnn
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+
+  - pip:
+ 

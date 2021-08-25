@@ -1,5 +1,4 @@
-
-# <img border="0" src="../logos/rna_velocity.png" width="40" height="40"> RNA velocity Project Report
+# <img border="0" src="../logos/rna_velocity.png" width="40" height="40" style="vertical-align:middle;"> RNA velocity
 ***
 
 <br/>
@@ -131,10 +130,3 @@ and systematically identify genes that giving rise to these projection, in order
 8.1.6. There are different ways of computing ‘relevant’ genes in scvelo. Show, which of them best represents the entire vector field.
 
 8.1.7. Find more ways of identifying important genes, e.g., using PCA on the velocity vector field.
-
-
-<br/>
-
-### [Back to Projects](/single-cell_sib_scilifelab_2021/projects)
-
-### [Back to main](/single-cell_sib_scilifelab_2021/README)

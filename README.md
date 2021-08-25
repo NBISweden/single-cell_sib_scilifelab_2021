@@ -24,7 +24,7 @@ This school is addressed to participants who are already familiar with the typic
 
 <br/>
 
-# <img border="0" src="https://www.svgrepo.com/show/20800/event-date-and-time-symbol.svg" width="40" height="40"> Date
+# <img border="0" src="https://www.svgrepo.com/show/20800/event-date-and-time-symbol.svg" width="40" height="40" style="vertical-align:middle;"> Date
 
 ***
 
@@ -32,7 +32,7 @@ This school is addressed to participants who are already familiar with the typic
 
 <br/>
 
-# <img border="0" src="https://www.svgrepo.com/show/4199/placeholder-on-a-map.svg" width="40" height="40"> Location
+# <img border="0" src="https://www.svgrepo.com/show/4199/placeholder-on-a-map.svg" width="40" height="40" style="vertical-align:middle;"> Location
 
 ***
 
@@ -41,7 +41,7 @@ This course will take place ONLINE in accordance with the COVID-19 situation.
 
 <br/>
 
-# <img border="0" src="https://www.svgrepo.com/show/158264/schedule.svg" width="40" height="40"> Programme
+# <img border="0" src="https://www.svgrepo.com/show/158264/schedule.svg" width="40" height="40" style="vertical-align:middle;"> Programme
 
 ***
 
@@ -55,7 +55,7 @@ For the full schedule, please go to: **[Schedule](schedule.md)**
 
 <br/>
 
-# <img border="0" src="https://www.svgrepo.com/show/410/list.svg" width="40" height="40"> Learning objectives
+# <img border="0" src="https://www.svgrepo.com/show/410/list.svg" width="40" height="40" style="vertical-align:middle;"> Learning objectives
 
 ***
 
@@ -76,7 +76,7 @@ At the end of this school, the participants should be able to:
 
 <br/>
 
-# <img border="0" src="https://www.svgrepo.com/show/38706/group-of-people.svg" width="40" height="40"> Staff
+# <img border="0" src="https://www.svgrepo.com/show/38706/group-of-people.svg" width="40" height="40" style="vertical-align:middle;"> Staff
 
 ***
 
@@ -100,18 +100,9 @@ At the end of this school, the participants should be able to:
 - __*Panagiotis Papasaikas*__, Friedrich Miescher Institute, SIB/Basel, 🇨🇭 Switzerland
 
 
-## Contributing institutions:
-
-<img border="0" src="logos/nbis_logo_crop.png" height="50">    
-<img border="0" src="logos/sib_logo_hig_crop.jpg" height="50">
-
 <br/>
 <br/>
 
 **Additional information**
 
 For more information, please contact [training@sib.swiss](mailto://training@sib.swiss).
-
-<br/>
-
-<br/>

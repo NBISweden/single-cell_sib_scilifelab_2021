@@ -1,108 +1,108 @@
 <!doctype html>
 <html>
-  <head>
-    <style type="text/css">
-      h1.title { font-size: 40px; color: DarkRed; }
-      h1 { /* Header 1 */ font-size: 40px; color: DarkRed;  }
-      h2 { /* Header 2 */ font-size: 16px; }
-      h3 { /* Header 3 */ font-size: 18px; }
-      code.r{ /* Code block */ font-size: 12px; }
-      body{ /* Normal  */ font-size: 12px; }
-      td {  /* Table  */ font-size: 12px; }
-      pre { /* Code block - determines code spacing between lines */ font-size: 12px; }
-    </style>
+<head>
+  <title>Advanced Single-cell Omics</title>
 
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
 
+  <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+  <link rel="stylesheet" href="/single-cell_sib_scilifelab_2021/styles.css">
 
+  <meta name="viewport" content="width=device-width">
+</head>
+<body>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <div class="wrapper">
 
+    <div class="myheader1" id="topmenu" >
+      <header class="myheader2" >
+        <a href="/single-cell_sib_scilifelab_2021/README.html">
+          <button class="menuButton myHighlight" style="text-align: center" >
+            <img border="0" src="/single-cell_sib_scilifelab_2021/logos/logo_nbis.png" width="100px">
+            <img border="0" src="/single-cell_sib_scilifelab_2021/logos/logo_sib.png" width="100px">
+            <!-- <h1 style="text-align:center; margin: 0px; border: 0px">Main</h1> -->
+          </button>
+        </a>
 
-    <title>Advanced Single-cell Omics</title>
-    <!--
-    <title>{{ site.title | default: site.github.repository_name }} by {{ site.github.owner_name }}</title>
-    -->
-    <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
-    <meta name="viewport" content="width=device-width">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-
-  </head>
-  <body>
-
-    <style> .wrapper{ width: 100%; padding: 0px} </style>
-    <div class="wrapper">
-      <style> header{ width: 15%; padding: 0px; text-align: right;} </style>
-      <header>
-
-        <br/>
-        <img src="/single-cell_sib_scilifelab_2021/logos/nbis_logo_crop.png" width="80">
-        <br/>
-        <img src="/single-cell_sib_scilifelab_2021/logos/sib_logo_hig_crop.jpg" width="80">
-<!--
-        <br/>
-        <br/>
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXrM7nmHWY7IctvH_9tb8YpqNbbSjaFxHkyMmZFaYkehgGER8X" height="40">
--->
-        <br/>
+        <a href="/single-cell_sib_scilifelab_2021/schedule.html">
+          <button class="menuButton myHighlight" >
+            Schedule&nbsp;&nbsp;
+            <img border="0" src="https://www.svgrepo.com/show/158264/schedule.svg" width="30" height="30" style="vertical-align:middle;">
+          </button>
+        </a>
+        <a href="/single-cell_sib_scilifelab_2021/precourse.html">
+          <button class="menuButton myHighlight" >
+            Pre-course&nbsp;&nbsp;
+            <img border="0" src="https://www.svgrepo.com/show/19652/maths-class-materials-cross-of-a-pencil-and-a-ruler.svg" width="30" height="30" style="vertical-align:middle;">
+          </button>
+        </a>
         <hr>
-        <a href="/single-cell_sib_scilifelab_2021/README.html">Main Page&nbsp;&nbsp;<img border="0" src="https://cdn2.iconfinder.com/data/icons/inverticons-stroke-vol-1/32/home_house_building_main_page-512.png" width="20" height="20"></a>
-        <br/>
-        <a href="/single-cell_sib_scilifelab_2021/schedule.html">Schedule&nbsp;&nbsp;<img border="0" src="https://www.svgrepo.com/show/158264/schedule.svg" width="20" height="20"></a>
-        <br/>
-        <a href="/single-cell_sib_scilifelab_2021/precourse.html">Pre-course&nbsp;&nbsp;<img border="0" src="https://www.svgrepo.com/show/19652/maths-class-materials-cross-of-a-pencil-and-a-ruler.svg" width="20" height="20"></a>
-        <br/>
-        <a href="/single-cell_sib_scilifelab_2021/faq.html">FAQ&nbsp;&nbsp;<img border="0" src="https://www.svgrepo.com/show/83019/faq-button.svg" width="20" height="20"></a>
-        <br/>
-        <br/>
+        <a href="/single-cell_sib_scilifelab_2021/projects.html">
+          <button class="menuButton myHighlight" >
+            Projects&nbsp;&nbsp;
+            <img border="0" src="https://www.svgrepo.com/show/1025/task.svg" width="30" height="30" style="vertical-align:middle;">
+          </button>
+        </a>
+        <a href="/single-cell_sib_scilifelab_2021/project_spatial/README.html">
+          <button class="menuButton myHighlight" >
+            Spatial&nbsp;&nbsp;
+            <img border="0" src="/single-cell_sib_scilifelab_2021/logos/spatial_transcriptomics.png" width="30" height="30" style="vertical-align:middle;">
+          </button>
+        </a>
+        <a href="/single-cell_sib_scilifelab_2021/project_velocity/README.html">
+          <button class="menuButton myHighlight" >
+            RNA Velocity&nbsp;&nbsp;
+            <img border="0" src="/single-cell_sib_scilifelab_2021/logos/rna_velocity.png" width="30" height="30" style="vertical-align:middle;">
+          </button>
+        </a>
+        <a href="/single-cell_sib_scilifelab_2021/project_omics/README.html">
+          <button class="menuButton myHighlight" >
+            Multi-Omics&nbsp;&nbsp;
+            <img border="0" src="/single-cell_sib_scilifelab_2021/logos/omics_integration.png" width="30" height="30" style="vertical-align:middle;">
+          </button>
+        </a>
+        <a href="/single-cell_sib_scilifelab_2021/project_dnn/README.html">
+          <button class="menuButton myHighlight" >
+            Deep Learning&nbsp;&nbsp;
+            <img border="0" src="/single-cell_sib_scilifelab_2021/logos/deep_learning.png" width="30" height="30" style="vertical-align:middle;">
+          </button>
+        </a>
         <hr>
-        <a href="/single-cell_sib_scilifelab_2021/projects.html">Projects&nbsp;&nbsp;<img border="0" src="https://www.svgrepo.com/show/1025/task.svg" width="20" height="20"></a>
-        <br/>
-        <a href="/single-cell_sib_scilifelab_2021/project_spatial/README.html">Spatial Transcriptomics&nbsp;&nbsp;<img border="0" src="/single-cell_sib_scilifelab_2021/logos/spatial_transcriptomics.png" width="20" height="20"></a>
-        <br/>
-        <a href="/single-cell_sib_scilifelab_2021/project_velocity/README.html">RNA Velocity&nbsp;&nbsp;<img border="0" src="/single-cell_sib_scilifelab_2021/logos/rna_velocity.png" width="20" height="20"></a>
-        <br/>
-        <a href="/single-cell_sib_scilifelab_2021/project_omics/README.html">Multi-Omics integration&nbsp;&nbsp;<img border="0" src="/single-cell_sib_scilifelab_2021/logos/omics_integration.png" width="20" height="20"></a>
-        <br/>
-        <a href="/single-cell_sib_scilifelab_2021/project_dnn/README.html">Deep Learning&nbsp;&nbsp;<img border="0" src="/single-cell_sib_scilifelab_2021/logos/deep_learning.png" width="20" height="20"></a>
-        <br/>
-        <br/>
-        <hr>
-
-
-
-<!--
-         <br>
-        <a href="/single-cell_sib_scilifelab_2021/session-dimensionality-reduction/lecture_dimensionality_reduction.pdf">Dim_red</a>
-        <br>
-        <a href="/single-cell_sib_scilifelab_2021/session-dimensionality-reduction/seurat/seurat_02_dim_reduction_compiled.html">QC_seurat</a>
-        <br>
-        <a href="/single-cell_sib_scilifelab_2021/session-dimensionality-reduction/scater/scater_02_dim_reduction_compiled.html">QC_scater</a>
-        <br>
--->
-
-        {% if site.github.is_project_page %}
-          <p class="view"><a href="{{ site.github.repository_url }}">View on GitHub&nbsp;&nbsp;<img border="0" src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" width="20" height="20">{{ github_name }}</a></p>
-        {% endif %}
-
-        <br/>
-
-        <p><small>Theme: <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+        <a href="/single-cell_sib_scilifelab_2021/faq.html">
+          <button class="menuButton myHighlight" >
+            FAQ&nbsp;&nbsp;
+            <img border="0" src="https://www.svgrepo.com/show/83019/faq-button.svg" width="30" height="30" style="vertical-align:middle;">
+          </button>
+        </a>
+        <a href="{{ site.github.repository_url }}" target="_blank">
+          <button class="menuButton myHighlight" style="width:100%; text-align: right">
+            GitHub&nbsp;&nbsp;
+            <img border="0" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Octicons-mark-github.svg/2048px-Octicons-mark-github.svg.png" width="30" height="30" style="vertical-align:middle;">&nbsp;&nbsp;
+          </button>
+        </a>
       </header>
 
-      <style> section{ width: 80%; padding: 0px; } </style>
-      <section>
-
-      {{ content }}
-
-      </section>
-
-      <footer>
-
-      </footer>
     </div>
-    <script src="{{ '/assets/js/scale.fix.js' | relative_url }}"></script>
-  </body>
+    <div class="myContent1">
+      <!-- <section class="myContent2"> -->
+        <div class="myContent2">
+          {{ content }}
+          <br/>
+          <a href="/single-cell_sib_scilifelab_2021/README.html">
+            <button class="button zoom myHighlight">⬅︎ &nbsp; Back to main</button>
+          </a>
+          <br/>
+        </div>
+      <!-- </section> -->
+    </div>
+
+  </div>
+  <script src="/single-cell_sib_scilifelab_2021/scripts.js" type="text/javascript"></script>
+  <footer>
+
+  </footer>
+</div>
+<script src="{{ '/assets/js/scale.fix.js' | relative_url }}"></script>
+</body>
 </html>
