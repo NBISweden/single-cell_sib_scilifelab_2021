@@ -8,7 +8,7 @@ Still subject to minor changes...
 
 ### Day1 (Monday):
 * 09h00 – 09h20 : Welcome from the organizers
-* 09h20 – 10h00 : Introductory lecture (Paulo)
+* 09h20 – 10h00 : Introductory lecture (Dr Paulo Czarnewski)
 * 10h00 – 10h10 : Break
 * 10h10 – 11h10 : Lecture topic 1
 * 11h10 – 11h15 : Short break
@@ -26,7 +26,7 @@ Still subject to minor changes...
 * *09h20 – 12h15 : Groups project (including a break)
 * 12h15 – 13h15 : Lunch break
 * *13h15 – 16h00 : Groups project (including a break)
-* 16h00 – 17h00 : Keynote lecture
+* 16h00 – 17h00 : Keynote lecture (Dr Valentine Svensson)
 
 
 ### Day3 (Wednesday):
