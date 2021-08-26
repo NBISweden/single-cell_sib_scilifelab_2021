@@ -21,13 +21,13 @@ expression profile of a spot represents a _mix_ of transcripts originating from
 all cells contributing to said spot. Despite several cells contributing to each
 spot, ST data - just as SC data - is still quite sparse. The major difference
 between SC and Visum data, aside from the latter not operating at single cell
-resolution, data is that each observation (spot) has spatial information associated
+resolution, is that each observation (spot) has spatial information associated
 with it, i.e., we know where in the tissue the captured transcripts come from.
 
 As mentioned, there are far more spatial transcriptomics techniques than just
 Visium, and new ones are continuously published, hence it's fair to say that
 this is a rapidly evolving field. Simultaneous to this introduction of new
-experimental techniques, we've seen a surge in new computational tools and
+experimental techniques, we've seen a surge in new **computational tools** and
 methods for analysis of ST data. In this course we aim to make you familiar with
 a few of them.
 
@@ -68,8 +68,29 @@ curl https://cell2location.cog.sanger.ac.uk/tutorial/mouse_brain_visium_wo_cloup
 
 #### Topic 2: Annotating celltypes in visium data using single cell data
 
-In this project you will focus on the integration of single cell data with spatial data in the Visceral cortex  which can be downloaded [here](fill in link).  
+In this project you will focus on the integration of single cell data with
+spatial data from the [primary visual
+cortex](https://en.wikipedia.org/wiki/Visual_cortex#Primary_visual_cortex_(V1))
+(VISp) region, a well-studied part of the cortex. What makes this structure
+interesting to study from a spatial perspective is that it exhibits a form of
+_layering_ where different types of neurons are arranged in six laminar
+layers (Layer I to VI), see image below:
 
+<img src="images/visp-marked.png" width="500" align="center">
+
+If your are unfamiliar with the mouse brain or just want some guidance when
+orienting your tissues, we highly recommend the Allen Brain Atlas' interactive
+reference, which you may find
+<a href="https://atlas.brain-map.org/atlas?atlas=602630314#atlas=602630314&plate=576987171&structure=593&x=7641.83349609375&y=3001.0000610351562&zoom=-3&resolution=10.00&z=3" target="_blank">here</a>.
+
+The single cell data we'll be using was originally published by [Tasic et al.](https://www.nature.com/articles/s41586-018-0654-5) and can be accessed
+[here](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE115746). In order
+to save you some time, we've generated a "ready-to-use" `h5ad` file for you, containing both the count and meta data,
+which you can download [here](https://kth.box.com/s/vshl0q5cpily4iajk853emx7sbnnkh2i). If you are interested, the script we used to
+create this `h5ad` file is located in `scripts/sc_make_h5ad.py`. `h5ad` files can
+easily be loaded in `python` using the `anndata` or `scanpy` packages, there's
+also support for these files in `R` for example using the `readH5AD` function
+from the `zellkonverter` package.
 
 ### Practical information
 
