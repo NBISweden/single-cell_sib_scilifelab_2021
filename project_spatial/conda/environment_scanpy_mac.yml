@@ -10,8 +10,9 @@ dependencies:
  - compilers
  - pip=20.2.2
  - pandas=1.1.0
- - numpy=1.19.1
 # - cudatoolkit=9.0
+ - numpy=1.21.2
+ - numba=0.52.0
  - pytorch=1.4.0
  - torchvision
  - scipy=1.5.2
@@ -25,8 +26,8 @@ dependencies:
    - scanpy>=1.6.0
    - comet_ml
    - scikit-learn
-   - tangram-sc
-   - squidpy==1.1.0
+   - tangram-sc==0.4.0
+   - squidpy==1.1.1
    - scanorama
    - umap-learn
 
