@@ -43,6 +43,7 @@ conda env create --file multiomics-environment.yml
 jupyter notebook ./multiomics_unmatched.ipynb
 ```
 
+
 #### Knowledge requirements
 
 We will have a warm-up session to start exploring our datasets before the project starts. 
@@ -57,20 +58,32 @@ You can start familiarizing yourself with some of the tools we will be using, tr
   * Seurat CCA - ([vignette in R](https://satijalab.org/seurat/articles/atacseq_integration_vignette.html))
 * Tools for scATAC analysis
   * Motif enrichment analysis - ChromVAR ([vignette](https://greenleaflab.github.io/chromVAR/articles/Introduction.html))
-  * Working with BED like genomic locations - GenomicRanges ([vignette](https://bioconductor.org/packages/release/bioc/vignettes/GenomicRanges/inst/doc/GenomicRangesIntroduction.html))  
+  * Working with BED like genomic locations - GenomicRanges ([vignette](https://bioconductor.org/packages/release/bioc/vignettes/GenomicRanges/inst/doc/GenomicRangesIntroduction.html))
+  * Extracting Ensembl gene annotations ([vignette](https://bioconductor.org/packages/release/bioc/vignettes/ensembldb/inst/doc/ensembldb.html#1_Introduction))
 
-### Background
+### Dataset background
 
 Corticogenesis is the dynamic process that results in the formation of the cerebral cortex, and is characterized by the generation of excitatory glutamatergic neurons from cortical progenitors, and the differentiation of astrocytes and oligodendrocytes. Dynamic changes in the activity of cis-regulatory DNA elements underlie the complex phenotypic transformations that occur during development.
 
 Here we will be analyzing Human fetal brain cortex data from [Trevino et al. 2021](https://www.sciencedirect.com/science/article/abs/pii/S0092867421009429) ([source](https://github.com/GreenleafLab/brainchromatin)) ([OA preprint](https://www.biorxiv.org/content/10.1101/2020.12.29.424636v2.full)) to study the interplay between chromatin accessibility and gene expression in early corticogenesis.
 
+You will find the preprocessed datasets in the `/data/multiomics/` directory on the AWS server (or alternatively, [on Google Drive](https://drive.google.com/drive/folders/1YjHfhxk2Z62pTEOTu27G-AgKqQawKEBT?usp=sharing))
+
+* `gr1_unmatched_diagonal` contains data from unmatched scRNA-seq (19373 cells x 33197 genes) and scATAC-seq (6423 cells x 657930 peaks) assays.  
+* `gr2_matched_vertical` contains data from matched scRNA-seq (8981 cells x 34104 genes) and scATAC-seq (8981 cells x 467315 peaks) assays.
+
+You will find the same datasets saved both in anndata format for use in python (`*.h5ad`) and in SingleCellExperiment format for use in R (`*.RDS`). 
+
+For each scATAC dataset we have also provide precomputed "gene activities", counting ATAC fragments over gene bodies and promoters, as implemented by the `Signac` function [`GeneActivity`](https://satijalab.org/signac/reference/geneactivity) (authors of this dataset did not share raw data because of patent privacy).
+
+In the template notebooks we demonstrate how to preprocess and merge the single modality objects in MuData objects from the python package `muon`.
+
+### Practical information
+
 Your main goal will be to identify non-coding genomic regions where chromatin accessibility is associated with expression of genes involved in excitatory neuron development.
 
 * Group 1 will address the question with diagonal integration of the unmatched assay data (scRNA-seq data and scATAC-seq data from different cells)
 * Group 2 will address the question with vertical integration of the multiome data (scRNA-seq and scATAC-seq for the same cells)
-
-### Practical information
 
 In the project folder, you will find a template Jupyter Notebook guiding you through the steps for the integration project:
 
