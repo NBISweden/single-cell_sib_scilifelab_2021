@@ -10,11 +10,22 @@
 
 ### Pre-course
 
-#### Software requirements 
+#### Software and data set-up 
 
-We will be using an AWS cloud environment, where we have pre-installed useful software and downloaded the data.
+**With AWS:** 
 
-Alternatively, you can set up your own working environment locally. To do so:
+- TBA
+
+- clone the course code repository locally
+```
+git clone https://github.com/NBISweden/single-cell_sib_scilifelab_2021.git
+```
+
+- Open the Jupyter notebooks from the JupyterHub GUI
+
+**Without AWS:** if you prefer you can set up your own working environment locally
+
+- Download the preprocessed data from [GDrive](https://drive.google.com/drive/folders/1YjHfhxk2Z62pTEOTu27G-AgKqQawKEBT?usp=sharing) 
 
 - clone the course code repository locally
 ```
@@ -27,9 +38,7 @@ cd single-cell_sib_scilifelab_2021/project_omics
 conda env create --file multiomics-environment.yml
 ```
 
-- download the preprocessed data from [GDrive](https://drive.google.com/drive/folders/1YjHfhxk2Z62pTEOTu27G-AgKqQawKEBT?usp=sharing) 
-
-- open the Jupyter notebooks
+- open the Jupyter notebooks from the terminal:
 ```
 jupyter notebook ./multiomics_unmatched.ipynb
 ```
