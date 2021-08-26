@@ -28,6 +28,7 @@ dependencies:
  - r-ggplot2
  - r-dplyr
  - r-tidyverse
+ - r-remotes
  
 
 
