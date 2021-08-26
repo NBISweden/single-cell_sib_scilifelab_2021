@@ -74,7 +74,7 @@ You will find the preprocessed datasets in the `/data/multiomics/` directory on 
 
 You will find the same datasets saved both in anndata format for use in python (`*.h5ad`) and in SingleCellExperiment format for use in R (`*.RDS`). 
 
-For each scATAC dataset we have also provide precomputed "gene activities", counting ATAC fragments over gene bodies and promoters, as implemented by the `Signac` function [`GeneActivity`](https://satijalab.org/signac/reference/geneactivity) (authors of this dataset did not share raw data because of patent privacy).
+For each scATAC dataset we have also provide precomputed "gene activities", counting ATAC fragments over gene bodies and promoters, as implemented by the `Signac` function [`GeneActivity`](https://satijalab.org/signac/reference/geneactivity) (authors of this dataset did not share raw data because of patient privacy).
 
 In the template notebooks we demonstrate how to preprocess and merge the single modality objects in MuData objects from the python package `muon`.
 
