@@ -71,7 +71,44 @@ Previous Zoom versions will not work. If you already have Zoom installed, you ca
 
 ## <img border="0" src="https://1x5o5mujiug388ttap1p8s17-wpengine.netdna-ssl.com/wp-content/uploads/2020/12/AWS-logo-2.jpg" width="20" height="20" style="vertical-align:middle;"> AWS instance
 
-You will be provided access to a cloud instance containing all necessary installations and computational infrastructure at the start of the course. To work on the cloud instance the only program you need will be a modern browser (i.e. Firefox, Edge, Chrome, Safari). You will connect either through Rstudio server or Jupyter. If you would like to work locally, read the instructions below (due to specific requirements the instructions below will **not** be sufficient for the projects on multi-omics and deep learning)
+You will be provided access to a cloud instance containing all necessary installations and computational infrastructure at the start of the course. To work on the cloud instance the only program you need will be a modern browser (i.e. Firefox, Edge, Chrome, Safari). You will connect either through **Rstudio server** or **Jupyter lab**. If you would like to work on your own computer, read the instructions on [installing dependencies with `conda` locally](#Conda) below (due to specific requirements the instructions below will **not** be sufficient for the projects on multi-omics and deep learning).
+
+### Login
+
+You will be provided individual login details at the start of the course. 
+
+### Setup
+
+You will have access to three important directories, that can be approached with the terminal (both Rstudio and jupyter notebook contain an interface to run commands on the terminal):
+
+- Your home directory (at `~`): only visible for you and readable and writeable
+- A group work directory (at `/group_work`): visible for everybody, and readable and writable for everybody. If you are using this for your group work, make a subdirectory that belong to your group
+- A data directory (at `/data`): visible for everybody and only readable. This directory contains data that is used for the exercises. 
+
+All directories are available from both the jupyter notebook and rstudio interfaces.
+
+You are limited to using 4 CPU and 16 GB of RAM. There is no swap, so if you exceed that limit your environment will crash and restart automatically. In this case, data in memory might be lost, data stored on disk will remain. 
+
+We will close down the cloud instance during the night. Everything that is in the working memory will be lost. Therefore, make sure that by the end of the day you store everything that you want to keep on disk. 
+
+### Rstudio server 
+
+The Rstudio server contains an interface for most r-based analyses (e.g. based on R markdown (`.Rmd`) files). You can install additional packages from CRAN or bioconductor like you are used to do. There is also a possibility to use python packages with `reticulate`. The environment managing software `conda` is **not** available for rstudio server, so if you are installing python packages use a `virtualenv`. You can e.g. install `scanorama` like this:
+
+```R
+library(reticulate)
+system('pipenv --python 3.8')
+venv <- system("pipenv --venv", inter = TRUE)
+reticulate::use_virtualenv(venv, required = TRUE)
+py_install('scanorama', method = 'virtualenv')
+```
+
+After this, you can install additional python packages in this virtual environment by calling only `py_install`. 
+
+
+### Jupyter notebook
+
+With the jupyter notebook interface you can do most of the python-based analyses (e.g. based on python notebook (`.ipynb`) files). The software is installed in a `conda` environment. The environment for the general exercises is called `scRNASeq2021`. You can use this environment in a python notebook by selecting the right kernel. You can add installations to the environment by using the terminal (e.g. with `conda install mypackage`). You can also create new environments.   
 
 ***
 
