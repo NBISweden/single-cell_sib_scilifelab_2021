@@ -1,0 +1,36 @@
+name: scanpy_spatial
+channels:
+ - pytorch
+ - conda-forge
+ - bioconda
+ - defaults
+ - anaconda
+dependencies:
+ - python=3.8.5
+ - compilers
+ - pip=20.2.2
+ - pandas=1.1.0
+# - cudatoolkit=9.0
+ - numpy=1.21.2
+ - numba=0.52.0
+ - pytorch=1.4.0
+ - torchvision
+ - scipy=1.5.2
+ - matplotlib-base=3.3.1
+ - seaborn=0.11.1
+ - jupyterlab=2.2.6
+ - nb_conda=2.2.1
+ - leidenalg
+ - igraph
+ - pip:
+   - scanpy>=1.6.0
+   - comet_ml
+   - scikit-learn
+   - tangram-sc==0.4.0
+   - squidpy==1.1.1
+   - scanorama
+   - umap-learn
+
+
+
+
