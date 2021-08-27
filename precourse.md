@@ -71,7 +71,7 @@ Previous Zoom versions will not work. If you already have Zoom installed, you ca
 
 ## <img border="0" src="https://1x5o5mujiug388ttap1p8s17-wpengine.netdna-ssl.com/wp-content/uploads/2020/12/AWS-logo-2.jpg" width="20" height="20" style="vertical-align:middle;"> AWS instance
 
-You will be provided access to a cloud instance containing all necessary installations and computational infrastructure at the start of the course. To work on the cloud instance the only program you need will be a modern browser (i.e. Firefox, Edge, Chrome, Safari). You will connect either through **Rstudio server** or **Jupyter lab**. If you would like to work on your own computer, read the instructions on [installing dependencies with `conda` locally](#Conda) below (due to specific requirements the instructions below will **not** be sufficient for the projects on multi-omics and deep learning).
+You will be provided access to a cloud instance containing all necessary installations and computational infrastructure at the start of the course. To work on the cloud instance the only program you need will be a modern browser (i.e. Firefox, Edge, Chrome, Safari). You will connect either through **Rstudio server** or **Jupyter lab**. If you would like to work on your own computer, read the instructions on [installing dependencies with `conda` locally](#-conda) below (due to specific requirements the instructions below will **not** be sufficient for the projects on multi-omics and deep learning).
 
 ### Login
 
