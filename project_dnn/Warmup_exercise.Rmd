@@ -41,6 +41,25 @@ evalSolution <- TRUE
 ```
 
 
+## Load required libraries
+```{r}
+suppressPackageStartupMessages({
+  library(SingleCellExperiment)
+  library(scater)
+  library(ggplot2)
+  library(scran)
+  library(batchelor)
+  library(BiocSingular)
+  library(BiocNeighbors)
+  library(Rtsne)
+  library(rsvd)
+  library(tidyr) 
+  library(dplyr)
+  library(igraph)
+})
+```
+
+
 # Why single-cell assays?
 
 * Limited input material (e.g early development, circulating tumor cells, ...)
@@ -52,7 +71,7 @@ evalSolution <- TRUE
   + Discriminate between changes in overall (bulk) gene expression due to changes in cell type composition, and changes due to changes in expression levels within a given cell type
 
 ```{r, echo=FALSE, out.width = "1000px"}
-knitr::include_graphics("figures/08/Why_single_cell_sub.png")
+knitr::include_graphics("Figures/Why_single_cell_sub.png")
 ```
 (Image credit: 10x Genomics: Getting started with single cell gene expression)
 
@@ -77,7 +96,7 @@ knitr::include_graphics("figures/08/Why_single_cell_sub.png")
 
 ## Example read structure (10x Genomics Chromium v3)
 
-![](figures/08/10x_3p_v3.png)
+![](Figures/10x_3p_v3.png)
 (Image credit: 10x Genomics)
 
 * The _sample index_ identifies the library (in case of multiplexing)
@@ -102,26 +121,27 @@ Data from plate-based protocols such as Smart-Seq2 are more similar to bulk data
 * The `SingleCellExperiment` object is an extension of the `SummarizedExperiment` object
 * The main difference is that a `SingleCellExperiment` object can also store reduced dimension representations (PCA, tSNE, UMAP)
 
-![](figures/08/SCE.jpg)
+![](Figures/SCE.jpg)
 (Original image credit: Jim Hester / https://bioconductor.org/packages/release/bioc/vignettes/SummarizedExperiment/inst/doc/SummarizedExperiment.html)
 
 # Example data
 
-# Load the pre-processed dataset
+# Load the  dataset
 
 The dataset that we will use is a composite dataset of three independent
-10x runs originating from three different labs. It consists of 9288 mammary 
+10x runs originating from three different labs. It consists of mammary 
 epithelial cells, sequenced using 10x Genomics technology, which has already
 been pre-filtered to include only cells that are assigned unambiguously
 to one of three major  cell types:
 luminal progenitors, luminal mature and basal.
+
 
 Next, we load the preprocessed dataset and have a first look at the 
 composition of the dataset:
 
 ```{r, message = FALSE, warning = FALSE}
 ## Download the data and set row names to gene symbols whenever possible
-sce <- readRDS(gzcon(url("https://ivanek.github.io/analysisOfGenomicsDataWithR/data/09/SCE_MammaryEpithelial_x3.rds?raw=true")))
+sce <- readRDS(gzcon(url("https://ppapasaikas.github.io/SC_datasets/Data/SCE_MammaryGland_prefiltered.rds?raw=true")))
 rownames(sce) <- scater::uniquifyFeatureNames(
   ID = rownames(sce), 
   names = as.character(rowData(sce)$gene.symbols)
@@ -134,41 +154,10 @@ sce <- sce[, sample(1:ncol(sce), n )  ]
 table(colData(sce)$study , colData(sce)$cell.class)
 ```
 
-******
-```{r}
-suppressPackageStartupMessages({
-  library(SingleCellExperiment)
-  library(scater)
-  library(ggplot2)
-  library(scran)
-  library(batchelor)
-  library(BiocSingular)
-  library(BiocNeighbors)
-  library(Rtsne)
-  library(rsvd)
-  library(tidyr) 
-  library(dplyr)
-  library(igraph)
-})
-```
-### Exercise
 
-The loaded object has no column names. Set the column names to the cell barcode. 
-First check that they are all unique. What would you do if they were not (and 
-why might that happen)?
 
-```{r, message = FALSE, echo = evalSolution, eval = evalSolution}
-all(gsub("-1", "", sce$Barcode) == sce$Sequence)
-any(duplicated(sce$Sequence))
-```
 
-```{r, message = FALSE, echo = evalSolution, eval = TRUE}
-colnames(sce) <- sce$Sequence
-```
-
-******
-
-We can see that `sce` is indeed a `SingleCellExperiment` object, and that the structure is similar to that of a `SummarizedExperiment` object.
+We can see that `sce` is indeed a `SingleCellExperiment` object.
 
 ```{r}
 sce
@@ -177,8 +166,6 @@ sce
 Accessing the assay data, row and column annotations is done in the same way as for `SummarizedExperiment` objects. There is also an additional `counts()` accessor for the `counts` assay.
 
 ******
-
-### Exercise
 
 Check that the `counts()` accessor returns the same matrix as you would get 
 if you access the counts assay using `assay()` or `assays()`. 
@@ -190,8 +177,6 @@ identical(assays(sce)[["counts"]], counts(sce))
 ```
 
 ******
-
-### Exercise
 
 How many genes are quantified in this experiment? What is the exact number of 
 cells in the object?
@@ -234,7 +219,7 @@ counts(sce)[1:10, 1:10]
 We already noted a couple of differences between scRNA-seq data and bulk data: the former typically contains many more observations, and the count matrix is much more sparse. The low amount of starting material for scRNA-seq experiments also results in a high sampling noise, and a lower correlation among cells than among bulk RNA-seq samples. This can be seen in a scatter plot of the observed counts for two randomly selected cells in our example data set:
 
 ```{r}
-## Scatter plot of two cells with similar library sizes
+## Scatter plot of two sparse cells with similar library sizes
 idx <- order(abs(colSums(counts(sce)) - 
                    median(colSums(counts(sce)))))[1:2]
 colSums(counts(sce))[idx]
@@ -271,14 +256,14 @@ and the fraction of cells where it is detected.
 plot(rowSums(counts(sce)), rowMeans(counts(sce) == 0), log = "x")
 ```
 
-To simplify further QC, we use the Bioconductor package `scater` to calculate a number of summary QC statistics, both for the cells and for the genes. By providing a subset of genes (here, mitochondrial genes), we can calculate the fraction of counts falling in these genes.
+To simplify further QC, we use the Bioconductor package `scater` to calculate a number of summary QC statistics, both for the cells and for the genes. By providing a subset of genes (here, ribosomal protein genes), we can calculate the fraction of counts falling in these genes.
 
 ```{r, message = FALSE, warning = FALSE}
 library(scater)
-mt <- rownames(sce)[grep("^Mt", rowData(sce)$gene.symbols)]
-mt
+Rpg <- rownames(sce)[grep("^Rp[ls]", rowData(sce)$gene.symbols)]
+Rpg
 sce <- addPerFeatureQC(sce)
-sce <- addPerCellQC(sce, subsets = list(MT = mt))
+sce <- addPerCellQC(sce, subsets = list(RPG = Rpg))
 ```
 
 This adds a number of columns to the `rowData` and `colData` slots of the `SingleCellExperiment` object:
@@ -311,14 +296,9 @@ plot(sce$sum, sce$detected)
 Finally, we can look at the set of genes accounting for the majority of the counts in the data set. 
 
 ```{r}
-#scater::plotHighestExprs(sce, n = 15)
+scater::plotHighestExprs(sce, n = 10)
 ```
 
-The proportion of counts assigned to mitochondrial genes is another useful indicator of cell quality, since high numbers of such reads can be associated to cell damage.
-
-```{r}
-hist(sce$subsets_MT_percent, breaks = 30)
-```
 
 # Filtering
 
@@ -327,20 +307,20 @@ Now that we have calculated the QC metrics, we will use them to filter out low-q
 Here, we will exclude cells according to two criteria:
 
 * few detected genes
-* high fraction of mitochondrial genes
+* very high fraction of ribosomal protein genes
 
-For each of these criteria, we exclude cells that are more than 4 median absolute deviations (MAD) from the median across cells, in the direction indicating low quality. 
+For each of these criteria, we exclude cells that are more than 2 and 1 median absolute deviations (MAD) correspondingly from the median across cells, in the direction indicating low quality. 
 
 ```{r}
 low_detected <- isOutlier(sce$detected, type = "lower", 
-                          log = TRUE, nmads = 4)
-high_mt <- isOutlier(sce$subsets_MT_percent, type = "higher",
-                     log = FALSE, nmads = 4)
+                          log = TRUE, nmads = 2)
+high_rpg <- isOutlier(sce$subsets_RPG_percent, type = "higher",
+                     log = FALSE, nmads = 1)
 
 plot(rank(-sce$detected), sce$detected, col = low_detected + 1)
 
-plot(rank(sce$subsets_MT_percent), sce$subsets_MT_percent,
-     col = high_mt + 1)
+plot(rank(sce$subsets_RPG_percent), sce$subsets_RPG_percent,
+     col = high_rpg + 1)
 ```
 
 ******
@@ -351,7 +331,7 @@ Filter out the cells identified as being of low quality according to the
 thresholds defined above. How many cells are left?
 
 ```{r, message = FALSE, echo = evalSolution, eval = TRUE}
-sce$retain <- !low_detected & !high_mt
+sce$retain <- !low_detected & !high_rpg
 sce <- sce[, sce$retain]
 ```
 
@@ -399,22 +379,49 @@ plot(fit.trend$mean, fit.trend$var, xlab = "Mean of log-expression",
      ylab = "Variance of log-expression")
 curve(fit.trend$trend(x), col = "dodgerblue", add = TRUE, lwd = 2)
 
-## Poisson assumption
-dec.pois <- modelGeneVarByPoisson(sce)
-plot(dec.pois$mean, dec.pois$total, xlab = "Mean of log-expression",
-     ylab = "Variance of log-expression")
-curve(metadata(dec.pois)$trend(x), col = "dodgerblue", add = TRUE)
+
+
+assay(sce, "normcounts") = sweep(counts(sce), 2, sizeFactors(sce, "UMI"), FUN = "/")
+assay(sce, "lognorm") = log2(normcounts(sce)+1)
+
+use.data = normcounts(sce)
+# Genes that are detected in at least one cell:
+DetectedGenes = which(rowSums(use.data) > 0)
+# calculate the genes' mean expresion and coefficient of variation(with pseudocounts):
+mean_GE = rowMeans(use.data[DetectedGenes, ] + 1/ncol(use.data))
+gene_cv = apply(use.data[DetectedGenes, ], 1, function(x) sd(x)/mean(x + 1/length(x)))
+# Log transform:
+X1 = log2(mean_GE)
+Y1 = log2(gene_cv + 1/ncol(use.data))
+# linear fit of log(cv) as a function of log(gene expression):
+m = lm(Y1[DetectedGenes] ~ X1[DetectedGenes])
+# scatterplot of log(cv) as a function of log(mean expression)
+plot(X1[DetectedGenes], Y1[DetectedGenes], xlab = "log2(mean gene expression)", ylab = "log2(coefficent of variation)", 
+    main = "mean-variance trend", pch = ".", cex = 2, col = "#000000")
+# Add regression line
+abline(coef(m)[1], coef(m)[2], col = "red", lwd = 2, lty = 2)
+# Slope in m-v trend according to poisson distribution:
+abline(0, -0.5, col = "grey", lwd = 2, lty = 2)
+
+
+
 ```
 
-In each case, the biological variance of a gene can be estimated as the difference between the total variance and the modelled technical variance. This value can be used to rank the genes, and to select a set of "highly variable" genes to use as the basis of further downstream analysis. Here, we select the top 1,000 genes based on the trend fit, and add these to the `metadata` of the `SingleCellExperiment` object. 
+In each case, the biological variance of a gene can be estimated as the difference between the total variance and the modeled technical variance. This value can be used to rank the genes, and to select a set of "highly variable" genes to use as the basis of further downstream analysis. Here, we select the top 1,000 genes based on the trend fit, and add these to the `metadata` of the `SingleCellExperiment` object. 
 
 ```{r}
 head(dec.trend[order(dec.trend$bio, decreasing = TRUE), ])
-head(dec.pois[order(dec.pois$bio, decreasing = TRUE), ])
-
+#head(dec.pois[order(dec.pois$bio, decreasing = TRUE), ])
 hvg.var <- getTopHVGs(dec.trend, n = 1000)
 head(hvg.var)
 metadata(sce)$hvgs <- hvg.var
+# Add overdispersed genes in mean variance trend plot:
+plot(X1[DetectedGenes], Y1[DetectedGenes], xlab = "log2(mean gene expression)", ylab = "log2(coefficent of variation)", 
+    main = "mean-variance trend", pch = ".", cex = 2, col = "#000000")
+abline(coef(m)[1], coef(m)[2], col = "red", lwd = 2, lty = 2)
+abline(0, -0.5, col = "grey", lwd = 2, lty = 2)
+points(X1[hvg.var],  Y1[hvg.var], col="green",cex=0.3)
+points(X1[Rpg],  Y1[Rpg], col="blue",cex=0.3)
 ```
 
 # Data visualization
@@ -438,7 +445,15 @@ set.seed(123)
 sce <- runTSNE(sce, dimred = "PCA")
 reducedDimNames(sce)
 plotReducedDim(sce, "TSNE", colour_by = "detected")
+plotReducedDim(sce, "TSNE", colour_by = "study")
+plotReducedDim(sce, "TSNE", colour_by = "cell.class")
 ```
+
+What do you observe? Do the projections reflect mostly originating batch or biological heteregoneity?
+
+We can see the impact of the batch in the TSNE projections generated
+without taking any steps for integrating the datasets.
+
 
 We can often identify specific cell types and gain some understanding of the data directly from the visualization (other types of cell type identification, e.g. via cell type clustering, will be discussed in the next lecture). Typically, this would be done by colouring the cells according to the expression level of known marker genes for certain cell types.
 
@@ -447,6 +462,171 @@ We can often identify specific cell types and gain some understanding of the dat
 plotReducedDim(sce, "TSNE", colour_by = "Csn3")
 ## Color by expression of a marker (Trf)
 plotReducedDim(sce, "TSNE", colour_by = "Trf")
+```
+
+
+# Batch effect correction
+
+Batch effect refers to techinal sources of variation introduced to the data during handling/preparation/processing when these are prepared in different batches. This variance distorts the measurements we obtain resulting in the artefactual separation of similar cells across batches:
+
+
+![](Figures/batch_effects.png)
+
+In the case of single cell sequencing batch effects issues are especially severe because:
+
+- They are much more exaggerated due to the small starting sample and the larger number of / more complicated steps involved in scRNA sequencing.
+- They are often confounded (i.e mixed-up) with biological variance since batches are often not identical in composition and
+- The batch distortion can be different both on each gene but also on distinct cell types within the same batch.
+
+Our goals when applying batch correction methods are the following:
+
+- To erase the batch-originating variance. Practically this means that similar cell types should be intermixed across batches after correction.
+- To preserve meaninful heterogeneity in the data. This means that distinct cell types are not mixed in the corrected data.
+- To introduce no artefactual variance. In practice this means that similar cells within batches are not getting separated. 
+
+## Batch effect correction using fast-MNN
+
+Now we will use the matching mutual nearest neighbors technique first proposed by (Haghverdi et al. 2018).
+This method attempts to identify similar cells across batches after projecting them in a space of reduced dimensions.
+
+![](Figures/fastMNN.png)
+
+
+Because the correction does not apply a uniform shift across the whole batch, but rather is adjusted to specific cells, it is both
+a more efficient eraser of batch-orignating variance and less prone to overcorrection. However it also operates on a set of assumptions,
+mainly that:
+
+- There is at least a cell population that is common across all pairs of batches.
+- The batch effect variation is almost orthogonal to the biological variation (no high level of confounding) or at least its effects are smaller than the
+biological variation effect between different cell types.
+
+The function that implements this is fastMNN() from the batchelor package.
+```{r}
+d <- 32
+FMNN.out <-  batchelor::fastMNN( assays(sce)[["lognorm"]][hvg.var,],  batch=sce$study , d=d ) 
+# Notice that the object returned is a single cell experiment.
+reducedDim (sce, "PCA.FMNN" ) <- reducedDim(FMNN.out, "corrected") 
+reducedDim( sce, "TSNE.FMNN" ) <- Rtsne( reducedDim(sce, "PCA.FMNN"), perplexity = 30, initial_dims=64, pca=FALSE,num_threads=32,theta=0.25)$Y
+cowplot::plot_grid(scater::plotReducedDim(sce, colour_by = "study", dimred="TSNE.FMNN" ),
+                   scater::plotReducedDim(sce, colour_by = "cell.class", dimred="TSNE.FMNN")
+                   )
+```
+
+# Clustering
+
+Clustering refers to the task of identifying cell subpopulations with similar expression profiles. The underlying assumption is that
+these clusters should reflect distinct biological subtypes and is therefore a useful way to summarize the biological heterogeneity of our
+dataset. 
+It is important to keep in mind that defining the desired resolution of the clustering procedure (i.e the ideal number of clusters) is 
+often subjective and context-dependent. 
+In downstream analysis one can extract more biological insights for the identified groupings by identify "marker genes" that chraracterize them.
+
+
+## Graph based clustering
+
+Graph-based approaches model cell populations as nodes on a network and try to identify well connected node communities (cell groupings).
+Graph (network) construction is based on drawing edges (connections) between nodes (cells)  according to some predefined measure of node to node similarity. 
+A wide range of community-detection algorithms is then available to partition the resulting graph in communities of cells that are better
+connected to each other then to the rest of the cells.
+
+Graph-based approaches have become extremely popular in the context of scRNA sequencing analysis because they tend to be robust to unwanted variance that produces continuous distortions to the signal (such as sampling variance), they make no assumptions on the shape or the distribution of cells within clusters and they are scalable.
+
+We will now build a Shared Nearest Neighbor Graph (SNN graph) using `r Biocpkg("scran")`. In such a graph two cells are connected only if at least one of their `k` nearest neighbors is common.
+
+We will then identify clusters using a community detection method from the package `r CRANpkg("igraph")`.
+
+```{r,  fig.width = 12, fig.height = 6,  warning=FALSE}
+
+# Create a graph of shared nearest neighbors: Two cells are connected iff 
+g <- scran::buildSNNGraph(sce, k=25, use.dimred = 'PCA') # Build SNN graph
+clust <- igraph::cluster_louvain(g)$membership # use the louvain method for community detection
+table(clust)
+
+sce$clust <- factor(clust) 
+cowplot::plot_grid(scater::plotTSNE(sce, colour_by = "study"),
+                   scater::plotTSNE(sce, colour_by = "cell.class"),
+                   scater::plotTSNE(sce, colour_by = "clust")
+                   )
+```               
+                   
+
+
+# Identification of marker genes
+
+As mentioned above, after clustering one can further characterize the derived cell subopulations by identifying genes that are differentially expressed in each cluster.
+In the case that those genes are over-expressed in a cluster, they are also referred to as marker genes. Although this is the typical type of differential expression analysis 
+in SC RNASeq datasets it is worth mentioning that the character of the data allows us to compare gene expression in cell subpopulations from other points of view.
+For example one can study in more detail, apart from the mean gene expression,additional characteristics of the gene expression distribution distinct subpopulations,  such as its variance, skewness or multimodality:
+
+![](Figures/DE.png)
+It is worth noting that these are parameters that are not accessible for study in typical bulk RNAseq datasets. 
+
+A related issue is how we come up with the definition of distinct subpopulations in our experiment. We saw above how we can leverage information coming from the data themselves to define subpopulations using clustering approaches. This comes at the expense of being somewhat circular in our analyses (we define clusters using the data and then go back to the same data to perform DE analyses!).
+
+However, the groupings on which we perform DE analysis need not be the results of clustering. They could also come from assignment of cell types using prior information (e.g in cases where the cells have been sorted). Actually, in the examples that will follow we will perform DE analysis on groups defined by the known biological labels of our dataset.
+
+Although SC-specific methods exist for differential gene expression analysis, in practice methods developed for mulk RNAseq or simple statistical tests such as the t-test or its non-parametric counterpart the Wilcoxon test perform as well and often better (see Soneson et al. 2018)!
+
+
+Before we move on with the analysis of marker genes we should note that there are additional facets of "differential" analyses that can be performed when one is faced with multi-sample SC datasets. In such multi-sample datasets, similar cell populations are derived from somewhat different contexts (e.g different individuals, treatments, gene perturbations). In that case one might want to compare cell type composition between different conditions ("differential abundance analysis"), or to perform differential expression analysis of the *same* cell type across the different conditions ("differential state analysis").
+
+For example in the case of our example dataset one could ask what are the differences in the proportion of luminal mature cells in the three samples, or what are the differences in gene expression in the luminal mature cell subtype across the three samples. 
+These questions, although they can be very interesting, are beyond the scope of this course and we refer the students to the relevant section of the 
+osca bioconductor resource: ["Multi-sample comparisons"](https://osca.bioconductor.org/multi-sample-comparisons.html).
+
+
+
+Here we will use the `r Biocpkg("scran")` package in order to idetify marker genes and visualize their expression.
+
+
+```{r,  fig.width = 12, fig.height = 6}
+sce.vis <- sce[,sce$study=="vis"] # Extract the cells from one specific study
+
+markers_all <- scran::findMarkers(
+  sce.vis, groups = sce.vis$cell.class, 
+  test.type = "wilcox", assay.type="lognorm",
+  pval.type = "all", direction = "up"
+)
+```
+
+
+The `findMarkers function` expects as input normalized log-expression values.
+
+The choice of `pval.type` determines whether the highly ranked  genes are those that are DE between the current group and:
+
+- any other group ("any")
+This approach does not explicitly favour genes that are uniquely expressed in a cluster. Rather, it focuses on combinations of
+genes that - together - drive separation of a cluster from the others. This is more general and robust but tends to yield a less
+focused marker set.
+- all other groups ("all")
+This yields a highly focused marker set that concisely captures the differences between clusters. 
+However, it can be too stringent if the cluster's separation is driven by combinations of gene expression.
+- some other groups ("some")
+This is a compromise between "all" and "any". The aim is to provide a more focused marker set without being overly stringent
+
+
+Let's now visualize some of the identified markers:
+
+
+```{r}
+head(markers_all[[1]])
+
+
+# Violi plots of expression for a set of features on defined groups
+scater::plotExpression(sce.vis, features = c("Csn3", "Trf"), 
+                       x = "cell.class")
+
+
+#Colour a projection according to an identified marker gene:
+cowplot::plot_grid(scater::plotTSNE(sce.vis, colour_by = "Csn3"),
+                   scater::plotTSNE(sce.vis, colour_by = "cell.class"))
+
+
+#Heatmap for the top two marker genes per cell group:
+scater::plotHeatmap(sce.vis, features = unique(unlist(lapply(markers_all, function(w) rownames(w)[1:2]))),
+                    columns = colnames(sce.vis)[order(sce.vis$cell.class)],
+                    colour_columns_by = "cell.class", cluster_cols = FALSE,
+                    show_colnames = FALSE, cluster_rows = FALSE)
 
 ```
 
@@ -519,6 +699,23 @@ In this lesson we have used Bioconductor packages for the analysis, and represen
   + <http://www.nature.com/nrg/journal/v16/n12/full/nrg3980.html?foxtrotcallback=true>
   + <http://databio.org/single_cell_epigenomics.html>
 -->
+
+
+
+# References
+
+1. Lun ATL, Bach K and Marioni JC (2016). Pooling across cells to normalize single-cell RNA sequencing data with many zero counts. Genome Biol. 17:75
+
+2. Haghverdi L, Lun ATL, Morgan MD, Marioni JC (2018). Batch effects in single-cell RNA-sequencing data are corrected by matching mutual nearest neighbors. Nat. Biotechnol. 36(5):421
+
+3. Ritchie ME, Phipson B, Wu D, Hu Y, Law CW, Shi W, Smyth GK (2015). limma powers differential expression analyses for RNA-sequencing and microarray studies. Nucleic Acids Research, 43(7), e47.
+
+4. Leek JT, Johnson WE, Parker HS, Fertig EJ, Jaffe AE, Storey JD, Zhang Y, Torres LC (2019). sva: Surrogate Variable Analysis. R package version 3.32.1
+ 
+5. Soneson C, Robinson MD (2018). Bias, robustness and scalability in single-cell differential expression analysis. Nat Methods, 15(4):255-261 
+
+
+
 
 # Session info
 

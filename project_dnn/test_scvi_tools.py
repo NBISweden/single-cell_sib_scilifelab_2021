@@ -30,7 +30,14 @@ scvi.data.setup_anndata(
 
 model = scvi.model.SCVI(adata)
 model
-model.train(n_epochs=40)
+model.train(max_epochs=40)
+
+
+
+
+trainer.train(n_epochs=10, lr=lr)
+
+
 latent = model.get_latent_representation()
 adata.obsm["X_scVI"] = latent
 
@@ -60,7 +67,5 @@ sc.pl.umap(
     ncols=2,
     frameon=False,
 )
-
-
 
 
