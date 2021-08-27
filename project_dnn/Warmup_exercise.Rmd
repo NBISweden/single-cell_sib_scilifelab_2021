@@ -1,7 +1,7 @@
 ---
-title: "Introduction to single-cell RNA sequencing"
-author: "Panagiotis Papasaikas"
-date: "2021-08-26"
+title: "Basic steps in RNA sequencing analysis"
+author: "Panagiotis Papasaikas, Charlotte Soneson"
+date: "2021-08-28"
 csl: springer-basic-brackets-no-et-al.csl
 output: 
   html_document:
