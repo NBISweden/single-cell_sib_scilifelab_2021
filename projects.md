@@ -50,10 +50,10 @@ Since each of the 4 group themes may have completely different softwares, please
 
 ### <img border="0" src="https://static.thenounproject.com/png/4200-200.png" width="40" height="40" style="vertical-align:middle;"> Learning strategy
 
-The proposed educational plan for this course will be done using the Project-Based Learning (PBL) approach. This way, rather than having lectures on a topic and defined set of instructions and pre-given steps to follow (which focus on passive individual learning), you are required to learn the topic in a more **active** and **dynamic** way in order to solve the data analysis tasks as a group. Therefore, each group is provided with:
+The proposed educational plan for this course will be done using the Project-Based Learning (PBL) approach. This way, rather than having lectures on a topic and defined set of instructions and pre-given steps to follow (which focus on passive individual learning), you are required to learn the topic in a more **active** and **dynamic** way in order to solve the data analysis tasks as a group. <!--Therefore, each group is provided with: -->
 
-1. The <img border="0" src="https://static.thenounproject.com/png/67360-200.png" width="10" height="10">[report file](project_velocity/README.md) containing a list of instructions and questions giving the overall direction and order of the steps needed to be done (read below how to use it).
-2. A <img border="0" src="https://d1nhio0ox7pgb.cloudfront.net/_img/o_collection_png/green_dark_grey/512x512/plain/dictionary.png" width="10" height="10">[glossary of terms](single_cell/glossary/glossary_of_terms_single_cell.html) which contains detailed information about many of the steps and provides further references on the topics.
+<!-- 1. The <img border="0" src="https://static.thenounproject.com/png/67360-200.png" width="10" height="10">[report file](project_velocity/README.md) containing a list of instructions and questions giving the overall direction and order of the steps needed to be done (read below how to use it). -->
+<!-- 2. A <img border="0" src="https://d1nhio0ox7pgb.cloudfront.net/_img/o_collection_png/green_dark_grey/512x512/plain/dictionary.png" width="10" height="10">[glossary of terms](single_cell/glossary/glossary_of_terms_single_cell.html) which contains detailed information about many of the steps and provides further references on the topics. -->
 
 <br/>
 
@@ -61,10 +61,10 @@ The proposed educational plan for this course will be done using the Project-Bas
 
 ### <img border="0" src="http://cdn.onlinewebfonts.com/svg/img_453102.png" width="40" height="40" style="vertical-align:middle;"> How to work in groups
 
-Each group is required to gather information from the **glossary** or from other **sources** to perform single cell data analysis by filling the report file (using this <img border="0" src="https://static.thenounproject.com/png/67360-200.png" width="10" height="10">[project_report.Rmd](single_cell/code/project_report.Rmd) file), by:
+Each group is required to gather information from <!-- the **glossary** or from--> other **sources** to perform single cell data analysis by filling the report file (using this <img border="0" src="https://static.thenounproject.com/png/67360-200.png" width="10" height="10">[project_report.Rmd](single_cell/code/project_report.Rmd) file), by:
 
 1. Reading the instructions/questions on the **project report** for a certain task.
-2. Searching the **glossary** or **other sources** for guidance.
+2. Searching <!--the **glossary** or--> **other sources** for guidance.
 3. Discussing with your colleges which step needs to be done or included.
 4. Dividing tasks among your group colleagues (each one can test parts of the code and then send the result to the one responsible for the report).
 5. Replacing the instructions with a text explaining the rationale for this step.

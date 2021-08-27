@@ -10,6 +10,7 @@ Please follow the instructions below for installations prior to the workshop:
 - Knowledge Requirements
 - Slack
 - Zoom
+- AWS instance
 - Conda
 - Dataset
 - Code
@@ -68,9 +69,15 @@ Previous Zoom versions will not work. If you already have Zoom installed, you ca
 
 ***
 
+## <img border="0" src="https://1x5o5mujiug388ttap1p8s17-wpengine.netdna-ssl.com/wp-content/uploads/2020/12/AWS-logo-2.jpg" width="20" height="20" style="vertical-align:middle;"> AWS instance
+
+You will be provided access to a cloud instance containing all necessary installations and computational infrastructure at the start of the course. To work on the cloud instance the only program you need will be a modern browser (i.e. Firefox, Edge, Chrome, Safari). You will connect either through Rstudio server or Jupyter. If you would like to work locally, read the instructions below (due to specific requirements the instructions below will **not** be sufficient for the projects on multi-omics and deep learning)
+
+***
+
 ## <img border="0" src="https://hackernoon.com/hn-images/1*rW03Wtue71AKfxnx6XN_iQ.png" width="20" height="20" style="vertical-align:middle;"> Conda
 
-During this workshop, you will use conda environments to run the exercises. This is because conda environments allow all users to have the same computing environment, i.e. package versions. This enforces reproducibility for you to run this material without the need to re-install or change your local versions. See and graphical example below:
+During this workshop, you can use conda environments to run the exercises (see **AWS instance** if you want to use the cloud-based solution). This is because conda environments allow all users to have the same computing environment, i.e. package versions. This enforces reproducibility for you to run this material without the need to re-install or change your local versions. See and graphical example below:
 
 <img border="0" src="https://nbisweden.github.io/excelerate-scRNAseq/logos/conda_illustration.png" width="400">
 
