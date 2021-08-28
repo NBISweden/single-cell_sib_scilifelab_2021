@@ -73,15 +73,11 @@ First we need to load the `keras` library:
 
 ```{r libload}
 suppressPackageStartupMessages({
-## check if Python is available and has already been initialized
-#reticulate::py_available()
-## dicsover Python that provides "keras" 
-#reticulate::py_discover_config(required_module = "keras")
-
-## For setup on a renku environment:  
-reticulate::use_virtualenv("/opt/conda")
-
-reticulate::py_config()
+system("pipenv --python 3.8")
+venv <- system("pipenv --venv", inter = TRUE)
+reticulate::use_virtualenv(venv, required = TRUE)
+library(tensorflow)
+install_tensorflow(version= '2.2.0-gpu')
 library(keras)
 })
 ```
