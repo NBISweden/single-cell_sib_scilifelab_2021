@@ -1,5 +1,5 @@
 ---
-title: "Basic steps in RNA sequencing analysis"
+title: "Basic steps in scRNA sequencing analysis"
 author: "Panagiotis Papasaikas, Charlotte Soneson"
 date: "2021-08-28"
 csl: springer-basic-brackets-no-et-al.csl
@@ -50,12 +50,12 @@ suppressPackageStartupMessages({
   library(scran)
   library(batchelor)
   library(BiocSingular)
-  library(BiocNeighbors)
+  #library(BiocNeighbors)
   library(Rtsne)
   library(rsvd)
   library(tidyr) 
   library(dplyr)
-  library(igraph)
+  #library(igraph)
 })
 ```
 
@@ -539,7 +539,13 @@ We will then identify clusters using a community detection method from the packa
 
 # Create a graph of shared nearest neighbors: Two cells are connected iff 
 g <- scran::buildSNNGraph(sce, k=25, use.dimred = 'PCA') # Build SNN graph
-clust <- igraph::cluster_louvain(g)$membership # use the louvain method for community detection
+#clust <- igraph::cluster_louvain(g)$membership # use the louvain graph method for community detection
+## Or using kMeans
+set.seed(42)
+clust.kmeans <- kmeans(reducedDim(sce, "PCA")[,1:10], centers=9,nstart = 100) 
+clust <- clust.kmeans$cluster
+
+
 table(clust)
 
 sce$clust <- factor(clust) 
