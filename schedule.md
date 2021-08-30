@@ -12,7 +12,7 @@ Still subject to minor changes...
 * 10h00 – 10h10 : Break
 * 10h10 – 11h10 : [Spatial transcriptomics](https://nbisweden.github.io/single-cell_sib_scilifelab_2021/lectures/spatial_transcriptomics.pdf) (Alma Andersson)
 * 11h10 – 11h15 : Short break
-* 11h15 – 12h15 : [RNA velocity lecture]()(Volker Bergen)
+* 11h15 – 12h15 : [RNA velocity lecture](https://nbisweden.github.io/single-cell_sib_scilifelab_2021/lectures/rna_velocity.pdf) (Volker Bergen)
 * 12h15 – 13h15 : Lunch break
 * 13h15 – 14h15 : [Multi-omics integration lecture](https://nbisweden.github.io/single-cell_sib_scilifelab_2021/lectures/multi_omics.pdf) (Emma Dann)
 * 14h15 – 14h20 : Short break
