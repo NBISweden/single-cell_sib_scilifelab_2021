@@ -16,8 +16,9 @@ and systematically identify genes that giving rise to these projection, in order
 - SIB Topic 1: The choice of your embedding matters - its relevance and impact on interpretation of RNA velocity estimates.
 - SIB Topic 2: Identifying genes that give rise to vector field representations, for better interpretation of RNA velocity results.
 
-- Follow the instructions here (https://scvelo.org/installation) to install `scanpy` and `scvelo`.
-- Run the tutorials at https://scvelo.org and make yourself comfortable with the main steps.
+- Follow the instructions here [https://scvelo.org/installation](https://scvelo.org/installation) to install `scanpy` and `scvelo`.
+- Run the tutorials at [https://scvelo.org](https://scvelo.org) and make yourself comfortable with the main steps.
+- Single cell anlaysis pipeline: [https://nbisweden.github.io/workshop-scRNAseq/exercises](https://nbisweden.github.io/workshop-scRNAseq/exercises)
 
 <br/>
 
@@ -30,6 +31,8 @@ La Manno *et al.* (2018), RNA velocity of single cells, [Nature](https://doi.org
 Bergen *et al.* (2020), Generalizing RNA velocity to transient cell states through dynamical modeling, [Nature Biotech](https://doi.org/10.1038/s41587-020-0591-3).
 
 Bergen *et al.* (2021), RNA velocity - current challenges and future perspectives, [MSB](https://doi.org/10.15252/msb.202110282).
+
+Coenen and Pearce (2021), Understanding UMAP, [GitHub](https://pair-code.github.io/understanding-umap/).
 
 <br/>
 
