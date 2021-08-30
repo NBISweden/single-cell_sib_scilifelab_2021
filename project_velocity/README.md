@@ -138,13 +138,13 @@ Possible metrics could, e.g., be correlation of embedded velocities with pseudo 
 
 ### Bonus Tasks - Topic 1: 
 
-9.1.1 Can you find other ways to projecting the data (e.g., parametric UMAP)?
+9.1.1. Can you find other ways to projecting the data (e.g., parametric UMAP)?
 
-9.1.2 Metrics: correlation with pseudo time / latent time, compactness of transitions, weighted correlation of trasition probabilities in embedding. 
+9.1.2. Metrics: correlation with pseudo time / latent time, compactness of transitions, weighted correlation of trasition probabilities in embedding. 
 
-9.1.3 How ‘far’ are the transitions reaching, how gene-specific / cell-specific, how does that correlate with velocity? 
+9.1.3. How ‘far’ are the transitions reaching, how gene-specific / cell-specific, how does that correlate with velocity? 
 
-9.1.4 Where does the displacement ‘land’ (by its closest sampled neighbors or parametric projection), and how does that vary with delta t.
+9.1.4. Where does the displacement ‘land’ (by its closest sampled neighbors or parametric projection), and how does that vary with delta t.
 
 <br/>
 
