@@ -21,6 +21,18 @@ and systematically identify genes that giving rise to these projection, in order
 
 <br/>
 
+### Recommended literature
+
+Luecken and Theis (2019), Current best practices in single-cell RNA-seq analysis: a tutorial, [MSB](https://doi.org/10.15252/msb.20188746).
+
+La Manno *et al.* (2018), RNA velocity of single cells, [Nature](https://doi.org/10.1038/s41586-018-0414-6).
+
+Bergen *et al.* (2020), Generalizing RNA velocity to transient cell states through dynamical modeling, [Nature Biotech](https://doi.org/10.1038/s41587-020-0591-3).
+
+Bergen *et al.* (2021), RNA velocity - current challenges and future perspectives, [MSB](https://doi.org/10.15252/msb.202110282).
+
+<br/>
+
 ### Milestone 1: Read into AnnData object
 
 1.1. Read the pancreas dataset
