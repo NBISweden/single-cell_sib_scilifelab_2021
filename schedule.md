@@ -14,7 +14,7 @@ Still subject to minor changes...
 * 11h10 – 11h15 : Short break
 * 11h15 – 12h15 : [RNA velocity lecture]()(Volker Bergen)
 * 12h15 – 13h15 : Lunch break
-* 13h15 – 14h15 : [Multi-omics integration lecture](https://nbisweden.github.io/single-cell_sib_scilifelab_2021/lectures/multi-omics.pdf) (Emma Dann)
+* 13h15 – 14h15 : [Multi-omics integration lecture](https://nbisweden.github.io/single-cell_sib_scilifelab_2021/lectures/multi_omics.pdf) (Emma Dann)
 * 14h15 – 14h20 : Short break
 * 14h20 – 15h20 : [Deep learning lecture](https://nbisweden.github.io/single-cell_sib_scilifelab_2021/lectures/deep_learning.pdf) (Panagiotis Papasaikas)
 * 15h20 – 15h30 : Break
