@@ -8,7 +8,7 @@ Still subject to minor changes...
 
 ### Day1 (Monday):
 * 09h00 – 09h20 : Welcome from the organizers
-* 09h20 – 10h00 : Introductory lecture (Dr Paulo Czarnewski)
+* 09h20 – 10h00 : [Introductory lecture](https://nbisweden.github.io/single-cell_sib_scilifelab_2021/lectures/single_cell.pdf) (Dr Paulo Czarnewski)
 * 10h00 – 10h10 : Break
 * 10h10 – 11h10 : Lecture topic 1
 * 11h10 – 11h15 : Short break
@@ -35,7 +35,7 @@ Still subject to minor changes...
 * *13h15 – 14h45 : Groups project (including a break)
 * 14h45 – 15h00 : Break
 * 15h00 – 16h30 : Social activity Race Around the World
-* 16h30 – 17h30 : Informal mixology tutorial 
+* 16h30 – 17h30 : Informal mixology tutorial
 
 
 ### Day4 (Thursday):
@@ -54,4 +54,3 @@ Still subject to minor changes...
 * 13h30 – 14h20 : Presentation topic 3
 * 14h20 – 15h10 : Presentation topic 4
 * 15h10 – 15h30 : Conclusion
-
