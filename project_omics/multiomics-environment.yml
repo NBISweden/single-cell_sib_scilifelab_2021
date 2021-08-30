@@ -17,6 +17,7 @@ dependencies:
   - r-seurat
   - r-signac
   - notebook
+  - pip
   - pip:
     - muon==0.1.0
     - mofapy2==0.6.4
