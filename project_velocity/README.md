@@ -32,6 +32,8 @@ Bergen *et al.* (2020), Generalizing RNA velocity to transient cell states throu
 
 Bergen *et al.* (2021), RNA velocity - current challenges and future perspectives, [MSB](https://doi.org/10.15252/msb.202110282).
 
+Coenen and Pearce (2021), Understanding UMAP, [GitHub](https://pair-code.github.io/understanding-umap/).
+
 <br/>
 
 ### Milestone 1: Read into AnnData object
