@@ -16,7 +16,7 @@ Still subject to minor changes...
 * 12h15 – 13h15 : Lunch break
 * 13h15 – 14h15 : Lecture topic 3
 * 14h15 – 14h20 : Short break
-* 14h20 – 15h20 : Lecture topic 4
+* 14h20 – 15h20 : [Deep learning lecture](https://nbisweden.github.io/single-cell_sib_scilifelab_2021/lectures/deep_learning.pdf) (Dr Panagiotis Papasaikas)
 * 15h20 – 15h30 : Break
 * *15h30 – 17h00 : Warm up session (tutorials)
 
