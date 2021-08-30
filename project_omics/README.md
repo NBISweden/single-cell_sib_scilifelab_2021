@@ -32,13 +32,20 @@ git clone https://github.com/NBISweden/single-cell_sib_scilifelab_2021.git
 git clone https://github.com/NBISweden/single-cell_sib_scilifelab_2021.git
 ```
 
-- create a clone of our conda environment (if needed [install miniconda](https://conda.io/projects/conda/en/latest/user-guide/install/index.html) first):
+- create a clone of our conda environment named `sc2021-multiomics` (if needed [install miniconda](https://conda.io/projects/conda/en/latest/user-guide/install/index.html) first):
 ```
 cd single-cell_sib_scilifelab_2021/project_omics
 conda env create --file multiomics-environment.yml
 ```
 
-- open the Jupyter notebooks from the terminal:
+- activate the newly created conda environment
+```
+conda activate sc2021-multiomics
+```
+
+You may have to repeat the activation after a new login or after deactivating the environment with `conda deactivate`.
+
+- open the Jupyter notebooks from the terminal (make sure the conda enviroment is active which is indicated by `(sc2021-multiomics) ` at the beginning of the command line prompt):
 ```
 jupyter notebook ./multiomics_unmatched.ipynb
 ```
