@@ -24,3 +24,23 @@ data <- LoadH5Seurat("VISp-sc_data.h5seurat")
 
 ```
 
+
+
+## Scanpy hints
+
+### Loading data
+
+A good idea is to specify `library_id` when you load visium data so that you have easy to interpret names of your images that matches `library_id` in the metadata (`adata.obs`):
+
+```
+adata = sc.read_visium("../data/mouse_brain_visium_wo_cloupe_data/rawdata/ST8059049/", library_id = "ST8059049")
+```
+
+### Barplots
+
+Matplotlib (https://matplotlib.org/) has some conventient functions for plotting, for instance you can plot sample distribution per cluster with:
+
+```
+tmp = pd.crosstab(adata.obs['clusters'],adata.obs['library_id'], normalize='index')
+tmp.plot.bar(stacked=True).legend(loc='upper right')
+```

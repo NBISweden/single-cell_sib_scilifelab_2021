@@ -52,7 +52,7 @@ Select wichever pipeline you feel is most relevant for you to use.
 
 ###  Milestone 4: Integration
 
-4.1 Look at the dimensionality reduction and clustering in step 3. Do you see any batch effects? What would be the best way to remove that effect do you think?
+4.1 Look at the dimensionality reduction and clustering in step 3. Do you see any batch effects per section? The sections are from 2 different mice, 3 and 2 consecutive sections per mouse, do you see any batch effects per animal? What would be the best way to remove that effect do you think?
 
 4.2 Select integration features, how is this done best do you think? Discuss with your group and test a few different methods.
 
