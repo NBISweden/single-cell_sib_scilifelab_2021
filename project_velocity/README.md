@@ -16,8 +16,23 @@ and systematically identify genes that giving rise to these projection, in order
 - SIB Topic 1: The choice of your embedding matters - its relevance and impact on interpretation of RNA velocity estimates.
 - SIB Topic 2: Identifying genes that give rise to vector field representations, for better interpretation of RNA velocity results.
 
-- Follow the instructions here (https://scvelo.org/installation) to install `scanpy` and `scvelo`.
-- Run the tutorials at https://scvelo.org and make yourself comfortable with the main steps.
+- Follow the instructions here [https://scvelo.org/installation](https://scvelo.org/installation) to install `scanpy` and `scvelo`.
+- Run the tutorials at [https://scvelo.org](https://scvelo.org) and make yourself comfortable with the main steps.
+- Single cell anlaysis pipeline: [https://nbisweden.github.io/workshop-scRNAseq/exercises](https://nbisweden.github.io/workshop-scRNAseq/exercises)
+
+<br/>
+
+### Recommended literature
+
+Luecken and Theis (2019), Current best practices in single-cell RNA-seq analysis: a tutorial, [MSB](https://doi.org/10.15252/msb.20188746).
+
+La Manno *et al.* (2018), RNA velocity of single cells, [Nature](https://doi.org/10.1038/s41586-018-0414-6).
+
+Bergen *et al.* (2020), Generalizing RNA velocity to transient cell states through dynamical modeling, [Nature Biotech](https://doi.org/10.1038/s41587-020-0591-3).
+
+Bergen *et al.* (2021), RNA velocity - current challenges and future perspectives, [MSB](https://doi.org/10.15252/msb.202110282).
+
+Coenen and Pearce (2021), Understanding UMAP, [GitHub](https://pair-code.github.io/understanding-umap/).
 
 <br/>
 
@@ -111,22 +126,49 @@ and systematically identify genes that giving rise to these projection, in order
 
 8.1.4. Using the simulated cellular transitions, can you show which embedding specification represent the high-dimensional vector field best?
 
-8.1.5. Can you even systematically quantify, how well the vector field is represented in the embedding?
+8.1.5. Can you even systematically quantify, how well the vector field is represented in the embedding? 
+Possible metrics could, e.g., be correlation of embedded velocities with pseudo time / latent time, 'compactness' of transitions, correlation of transitions in the embedding weighted by their probabilities.
 
 <br/>
 
 ### Milestone 8: Topic 2 - Identification of putative driver genes
 
-8.1.1. Identification of dynamically relevant genes is motivatived in three ways:
+8.1.1. Identification of dynamically relevant genes is motivated in three ways:
 
 8.1.2. We would like to understand, which genes are the ones that drive the vector field representation in the embeeding, i.e., which are most impactful on the projection.
 
 8.1.3. We would like to understand, which gene are transiently expressed, i.e., dynamically activating in the differentiation process.
 
-8.1.4. Finally, we want to know, which genes are actual driver of the underlying biological processes.
+8.1.4. Finally, we want to know which genes are actual driver of the underlying biological processes.
 
 8.1.5. Using only a small number of selected genes, show how the velocity projection differs from the projection using all genes. Can you quantify that difference?
 
 8.1.6. There are different ways of computing ‘relevant’ genes in scvelo. Show, which of them best represents the entire vector field.
 
-8.1.7. Find more ways of identifying important genes, e.g., using PCA on the velocity vector field.
+8.1.7. Which genes are supporting / contradicting the embedded trajectories? How does the projection differ, as you subset to these genes or exclude these genes? 
+
+8.1.8. Find more ways of identifying important genes, e.g., using PCA on the velocity vector field.
+
+<br/>
+
+### Bonus Tasks - Topic 1: 
+
+9.1.1. Can you find other ways to projecting the data (e.g., parametric UMAP)?
+
+9.1.2. Metrics: correlation with pseudo time / latent time, compactness of transitions, weighted correlation of trasition probabilities in embedding. 
+
+9.1.3. How ‘far’ are the transitions reaching, how gene-specific / cell-specific, how does that correlate with velocity? 
+
+9.1.4. Where does the displacement ‘land’ (by its closest sampled neighbors or parametric projection), and how does that vary with delta t.
+
+<br/>
+
+### Bonus Tasks - Topic 2: 
+
+9.1.1. How ‘far’ are the transitions reaching, how gene-specific / cell-specific, how does that correlate with velocity? 
+
+9.1.2. Can you predict the embedded arrows from high-dim velocities (e.g., using random forest or logistic regression) in order obtain weights as a means of interpreting gene's weights as their impact on the projection? 
+
+9.1.3. Can you think of ways to disentangle or decompose different processes that simultaneously occur (e.g., cell cycle vs. differentiation)?
+
+<br/>

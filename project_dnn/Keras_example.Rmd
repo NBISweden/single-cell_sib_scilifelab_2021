@@ -23,10 +23,7 @@ options(width = 80)
 
 
 # Summary
-Here we will illustrate how to install `keras` and the required **R** and **Python** package dependencies.
-
-Next we will demonstrate the implementation of a simple Multilayer Perceptron (MLP) model with
-both R and Python `keras` including **model definition**, **compilation** and **training**.
+Here we will demonstrate the implementation of a simple Multilayer Perceptron (MLP) model with both R and Python `keras` including **model definition**, **compilation** and **training**.
 
 Finally we will quickly contrast the **sequential** vs the **functional** `keras` APIs for model definition.
 
@@ -39,24 +36,6 @@ For extensive documentation on the R `keras` installation see:
 ["Install Keras and the TensorFlow backend"](https://tensorflow.rstudio.com/reference/keras/install_keras/)
 
 
-!!! **Do not execute the following code. This is only for demontration purposes ** !!
-```{r eval=FALSE}
-install.packages("keras")
-install_keras(method="conda", tensorflow="2.1.1") #
-
-#installation with GPU support:
-install_keras(method="conda", tensorflow="gpu") # OR
-install_keras(method="conda", tensorflow="2.1.1-gpu")
-# (NOTE: only do this if you have an NVIDIA GPU + CUDA!)
-```
-
-Note: 
-If you wish to add additional `PyPI` packages to your *Keras* / *TensorFlow* environment you can either specify the packages in the `extra_packages` argument of `install_keras()`, or alternatively install them into an existing environment using the `reticulate::py_install()` function, eg:
-
-!!! **Do not execute the following code. This is only for demontration purposes ** !!
-```{r eval=FALSE}
-reticulate::py_install(c('pandas','numpy'))
-```
 
 
 
@@ -71,7 +50,7 @@ reticulate::py_install(c('pandas','numpy'))
 At this point all our **R** and `keras` package requirements are in place so we are ready to build a first `keras` model!
 First we need to load the `keras` library:
 
-```{r libload}
+```{r libload, eval=FALSE}
 suppressPackageStartupMessages({
 system("pipenv --python 3.8")
 venv <- system("pipenv --venv", inter = TRUE)
@@ -82,12 +61,33 @@ library(keras)
 })
 ```
 
+```{r, include=FALSE}
+#Specific setup for xenon6 execution :
+reticulate::use_virtualenv("/tungstenfs/groups/gbioinfo/sharedSoft/virtualenvs/r-4.1-bioc-3.13-reticulate-keras-2.4.0-tensorflow-2.4.0-gpu/")
+
+Sys.setenv("CUDA_VISIBLE_DEVICES" = "1" ) # Define visible  GPU devices
+ngpus=length(strsplit(Sys.getenv("CUDA_VISIBLE_DEVICES"),",")[[1]])
+reticulate::py_config()
+library(keras)
+K <- backend() # manual add-on
+library(tensorflow)
+tf$version$VERSION
+library(ggplot2)
+library(gridExtra)
+
+#Check device usage:
+tf$compat$v1$Session( config=tf$compat$v1$ConfigProto(log_device_placement=TRUE)  )
+tf$compat$v1$keras$backend$get_session()
+
+
+```
+
 
 
 
 
 ## Preparing the data:
-![](/work/adv_scrnaseq_2020/adv_scrnaseq_2020/DGNs/figures/MNIST.png)
+![](Figures/MNIST.png)
 ```{r MLP}
 #loading the keras inbuilt mnist dataset
 data<-dataset_mnist()
@@ -104,7 +104,7 @@ rm(data)
 train_x <- array(train_x, dim = c(dim(train_x)[1], prod(dim(train_x)[-1]))) / 255
 test_x <- array(test_x, dim = c(dim(test_x)[1], prod(dim(test_x)[-1]))) / 255
 
-#converting the target variable to one hot encoded vectors using keras inbuilt function
+#converting the target variable to one hot encoded vectors using a keras inbuilt function
 train_y <- to_categorical(train_y,10)
 test_y <- to_categorical(test_y,10)
 ```
@@ -132,7 +132,7 @@ layer_dense(units = 10,activation = 'softmax')
 summary(model)
 ```
 
-![](/work/adv_scrnaseq_2020/adv_scrnaseq_2020/DGNs/figures/MLP_model.png)
+![](Figures/MLP_model.png)
 
 ## Compilation
 We are now going to compile the specified model. There are two required arguments that need to be specified 
@@ -176,7 +176,7 @@ plot(history)
 We now demonstrate the implementation of the exact same model in **Python** `keras`.
 As you will see everything from model definition to compilation and training looks extremely similar.
 
-```{python, class.source="pythonchunk"}
+```{python, class.source="pythonchunk", eval=FALSE}
 #importing the required libraries for the MLP model
 import keras
 from keras.models import Sequential

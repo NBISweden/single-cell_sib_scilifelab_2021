@@ -77,8 +77,8 @@ spatial data from the [primary visual
 cortex](https://en.wikipedia.org/wiki/Visual_cortex#Primary_visual_cortex_(V1))
 (VISp) region, a well-studied part of the cortex. What makes this structure
 interesting to study from a spatial perspective is that it exhibits a form of
-_layering_ where different types of neurons are arranged in six laminar
-layers (Layer I to VI), see image below:
+_layering_ where different types of neurons are arranged in six laminar layers
+(Layer I to VI), see image below:
 
 <img src="images/visp-marked.png" width="500" align="center">
 
@@ -90,7 +90,7 @@ reference, which you may find
 The single cell data we'll be using was originally published by [Tasic et al.](https://www.nature.com/articles/s41586-018-0654-5) and can be accessed
 [here](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE115746). In order
 to save you some time, we've generated a "ready-to-use" `h5ad` file for you, containing both the count and meta data,
-which you can download [here](https://kth.box.com/s/vshl0q5cpily4iajk853emx7sbnnkh2i). If you are interested, the script we used to
+which you can download [here](https://kth.box.com/s/9l17vxj9y0jk3gi35cbgug78n1ckat2p). If you are interested, the script we used to
 create this `h5ad` file is located in `scripts/sc_make_h5ad.py`. `h5ad` files can
 easily be loaded in `python` using the `anndata` or `scanpy` packages, there's
 also support for these files in `R` for example using the `readH5AD` function
