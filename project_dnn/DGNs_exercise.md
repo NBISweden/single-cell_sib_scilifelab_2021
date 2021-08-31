@@ -17,17 +17,15 @@ editor_options:
 ---
 
 
-```{r setup, include=FALSE, class.source = "rchunk"}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, eval = TRUE)
-options(width = 80)
-```
 
 
 
 
 
 
-```{r libload, eval=FALSE}
+
+
+```r
 suppressPackageStartupMessages({
 system("pipenv --python 3.8")
 venv <- system("pipenv --venv", inter = TRUE)
@@ -44,21 +42,7 @@ library(RColorBrewer)
 ```
 
 
-```{r, include=FALSE}
-#Specific setup for xenon6 execution :
-reticulate::use_virtualenv("/tungstenfs/groups/gbioinfo/sharedSoft/virtualenvs/r-4.1-bioc-3.13-reticulate-keras-2.4.0-tensorflow-2.4.0-gpu/")
-Sys.setenv("CUDA_VISIBLE_DEVICES" = "1" ) # Define visible  GPU devices
-ngpus=length(strsplit(Sys.getenv("CUDA_VISIBLE_DEVICES"),",")[[1]])
-reticulate::py_config()
-library(keras)
-K <- backend() # manual add-on
-library(tensorflow)
-library(Matrix)
-library(SingleCellExperiment)
-library(Rtsne)
-library(rsvd)
-library(RColorBrewer)
-```
+
 
 
 
@@ -79,7 +63,8 @@ Next, we load the preprocessed dataset and have a first look at the
 composition of the dataset:
 
 
-```{r Download}
+
+```r
 ## Download the data and set row names to gene symbols whenever possible
 sce <- readRDS(gzcon(url("https://ppapasaikas.github.io/SC_datasets/Data/SCE_MammaryGland.rds?raw=true")))
 #Subsample cells to speed up processing and, most importantly, later-on model training:
@@ -90,12 +75,21 @@ sce <- readRDS(gzcon(url("https://ppapasaikas.github.io/SC_datasets/Data/SCE_Mam
 table(colData(sce)$study , colData(sce)$cell.class)
 ```
 
+```
+##      
+##       luminal_progenitor basal luminal_mature
+##   spk               1097   475           1043
+##   vis                694  1257           1096
+##   wal                729   780           2117
+```
+
 
 
 
 Let's also take a look at a "standard" projection of the dataset  
 
-```{r,  fig.width = 10, fig.height = 4,  warning=FALSE}
+
+```r
 # We first normalize all cells for library size.
 assays(sce )[["lognorm"]] <- log2(sweep( counts(sce),2,sce$library_size ,FUN="/")*1e4 +1)
 reducedDim(sce, "PCA" )  <- rsvd::rpca(t( assay(sce,"lognorm") ),k=32,retx=TRUE,center=TRUE,scale=FALSE)$x
@@ -104,6 +98,8 @@ reducedDim(sce, "TSNE" ) <- Rtsne( reducedDim(sce,"PCA"), perplexity = 30, initi
 cowplot::plot_grid(scater::plotTSNE(sce, colour_by = "study" ),
                    scater::plotTSNE(sce, colour_by = "cell.class"))
 ```
+
+![](DGNs_exercise_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
 
 
 
@@ -119,7 +115,8 @@ In addition, the input to the model has to be in the form of a 2D array with the
 Of course in this case our 2D array is (also) a matrix. However in the general case where every sample is a feature vector of > *1D*
 the data should be shaped as a multidimensional array with the samples in the 1st dimension.
 
-```{r}
+
+```r
 combined.df.filtered <- as.matrix(assays(sce )[["lognorm"]] )  
 
 ####### Splitting in training and validation data, converting to array
@@ -154,7 +151,8 @@ rm(M)
 
 ![](Figures/VAE_schematic.png){ width=40% }
 
-```{r}
+
+```r
 ##### Sparse variational autoencoder model 
 # Ensure compatibility with both TF2 nd TF1:
 if (tensorflow::tf$executing_eagerly())
@@ -223,14 +221,14 @@ decoder_input <- layer_input(shape = latent_dim)
 h_decoded_2 <- decoder_h(decoder_input)
 x_decoded_mean_2 <- decoder_mean(h_decoded_2)
 generator <- keras_model(decoder_input, x_decoded_mean_2)
-
 ```
 
 
 
 Next we define our loss function as well as any custom accuracy functions we wish to keep track of during training
 
-```{r}
+
+```r
 vae_loss <- function(x, x_decoded_mean){
     reconstruction_loss  <-  loss_mean_squared_error(x, x_decoded_mean)
     kl_loss <- -kl_weight*0.5*K$mean(1 + z_log_var-log_var_prior - K$square(z_mean)/var_prior - K$exp(z_log_var)/var_prior, axis = -1L)  # More general formula
@@ -274,7 +272,8 @@ For more details on the different optimizers option provided by keras you can ch
 For more details on the adam optimizer see:
 ["adam optimization"](https://machinelearningmastery.com/adam-optimization-algorithm-for-deep-learning/)
 
-```{r}
+
+```r
 #compiling the defined model with metric = accuracy and optimiser adam.
 opt <-  optimizer_adam(lr =0.001,amsgrad = TRUE)# 
 vae %>% compile(
@@ -307,7 +306,8 @@ Finally we will illustrate (but not actually make use of because of renku limita
 
 
 
-```{r}
+
+```r
 ##### Learning rate scheduler: 
 burn_in.nepochs <- 80 
 burn_in_lr <- 2e-5  
@@ -327,8 +327,11 @@ lr_sch <- callback_learning_rate_scheduler(lr_schedule)
 plot( 1:750, log10(  sapply (1:750, function(x) lr_schedule(x) ) ) 
           , type="l", col="darkslategray", xlab="epoch", ylab="log10(lr)", lwd=2, main="lr schedule")
 text( c(40,480,680), c(-4.8,-4.2,-5.2),c("burn-in","1st lr drop","2nd lr drop") )
+```
 
+![](DGNs_exercise_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
 
+```r
 ##### Early stopping callback:
 early_stopping <- callback_early_stopping(monitor = "val_loss", min_delta = 0,
                                           patience = 125, verbose = 0, mode = "auto",
@@ -336,7 +339,8 @@ early_stopping <- callback_early_stopping(monitor = "val_loss", min_delta = 0,
 ```
 
 
-```{r  eval=FALSE}
+
+```r
 ##### Tensorboard callback (do not execute):
 indir <- "/Users/papapana/Desktop/XENON/papapana/DEEP_LEARNING/Autoencoders/BatchCor_paper" # When running locally
 log_dir <-  paste0(indir,"/logs/run_exercise_DGNs/")
@@ -351,7 +355,8 @@ tnsrb <- callback_tensorboard( log_dir )
 
 
 
-```{r eval=FALSE}
+
+```r
 nepochs=1000 #
 ######  Fit the model using also our specified callbacks for scheduling and early stopping:
 history <- vae %>% fit(
@@ -370,10 +375,17 @@ history <- vae %>% fit(
 ```
 
 
-```{r}
+
+```r
 history <- readRDS("Data/MG_complete_VAE_history.rds")
 plot(history)
 ```
+
+```
+## `geom_smooth()` using formula 'y ~ x'
+```
+
+![](DGNs_exercise_files/figure-html/unnamed-chunk-10-1.png)<!-- -->
 
 
 
@@ -395,7 +407,8 @@ We now have in our hands a trained VAE for our dataset. What is it good for?
 
 
 
-```{r fig.width=7, fig.height=7}
+
+```r
 ########################################################################################################  
 vae %>% load_model_weights_hdf5("trained_models/MG_complete_VAE_weights.hdf5")
 
@@ -440,8 +453,9 @@ mean.cor = mean(sapply(1:nrow(decoded_data[s,]),function(x) {cor(sc_x[x,],decode
 plot(as.vector((sc_x[s,])), as.vector((decoded_data[s,])),pch=".", cex=2,col="darkorange", #
      xlab="Input LogCounts",ylab="Reconstructed LogCounts",main="per-cell gene gounts")
 text(1,7,paste("r=",round(mean.cor,3),sep=""))
-
 ```
+
+![](DGNs_exercise_files/figure-html/unnamed-chunk-11-1.png)<!-- -->
 
 
 
@@ -449,7 +463,8 @@ text(1,7,paste("r=",round(mean.cor,3),sep=""))
 
 We will now examine the **mean-variance** profile of the decoded output and compare it to the corresponding profile of the input data. 
 
-```{r fig.width=8, fig.height=5}
+
+```r
 ############################### Mean Variance plots:  ############################### 
 pc <- 0.001 #pseudocount
 zeroes <- which(colSums(sc_x.linear) < quantile(colSums(sc_x.linear),0.01) )
@@ -493,8 +508,9 @@ plot(X1_decod,Y1_decod,xlab="log2(mean gene expression)",ylab="log2(coefficent o
 lines(sm_decod,x= xvar,col="darkred",lty=2,lwd=2) # Loess fit
 abline(0,-0.5,col="darkgrey",lwd=2,lty=2) # Slope in m-v trend according to poisson distribution:
 legend("topright",legend = c("poisson","loess.fit"),lty=2,lwd=2,bty="n",col=c("darkgrey","darkred"))
-
 ```
+
+![](DGNs_exercise_files/figure-html/unnamed-chunk-12-1.png)<!-- -->
 
 
 
@@ -506,7 +522,8 @@ effects by decomposing the variance in the latent space:
 
 ![](Figures/LatentArithm_BC.png){ width=50% }
 
-```{r fig.width=10, fig.height=7}
+
+```r
 ########## Latent arithmetic operations to correct for batch :
 # For each batch calculate the mean latent vector. Apply lv arithmetic to move all batches to an arbitrary (e.g most populous) reference batch
 ref_batch <- names(which.max(table(study_annot))) # Set as reference batch the most populous study
@@ -570,6 +587,8 @@ plot.new()
 legend("left",bty ="n", pch=19, col= palette, legend=names(palette) , ncol=2,cex=1 , text.width=0.4)
 ```
 
+![](DGNs_exercise_files/figure-html/unnamed-chunk-13-1.png)<!-- -->
+
 
 
   
@@ -581,7 +600,8 @@ cell type in the target study:
 
 ![](Figures/LatentArithm_OoS.png){ width=50% }
 
-```{r fig.width=9, fig.height=3}
+
+```r
 #We will use a model that was trained on data that never saw wal luminal progenitor cells:
 vae %>% load_model_weights_hdf5("trained_models/MG_leavout_wallp_VAE_weights.hdf5")
 latent_output <- predict(encoder, list(gene_input=sc_x))
@@ -612,3 +632,5 @@ plot( colMeans(sc_x[sce$study=="wal" & sce$cell.class=="luminal_mature",]), pred
 plot( colMeans(sc_x[sce$study=="vis" & sce$cell.class=="luminal_progenitor",]), pred_decoded_lp.wal[1,], 
       pch=19,cex=0.5, col="darkslategrey",xlab="Obs. vis lum. prog", ylab="Pred. wal lum. prog"   )
 ```
+
+![](DGNs_exercise_files/figure-html/unnamed-chunk-14-1.png)<!-- -->
