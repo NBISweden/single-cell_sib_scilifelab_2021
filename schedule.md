@@ -41,7 +41,7 @@ Still subject to minor changes...
 ### Day4 (Thursday):
 * *09h00 – 12h15 : Recap of the previous day - groups project (including a break)
 * 12h15 – 13h30 : Lunch break
-* 13h30 – 14h30 : 1 lecture about visualisation (Dr Charlotte Soneson)
+* 13h30 – 14h30 : Interactive exploratory analysis with [iSEE](https://bioconductor.org/packages/iSEE/) (Dr Charlotte Soneson)
 * *14h30 – 17h00 : Groups project: slides preparation (including a break)
 
 
