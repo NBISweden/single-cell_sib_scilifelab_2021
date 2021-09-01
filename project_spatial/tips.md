@@ -44,3 +44,29 @@ Matplotlib (https://matplotlib.org/) has some conventient functions for plotting
 tmp = pd.crosstab(adata.obs['clusters'],adata.obs['library_id'], normalize='index')
 tmp.plot.bar(stacked=True).legend(loc='upper right')
 ```
+
+### Selection of image region with Napari
+
+Some example code on how to select part of of a section in folder 'notebooks/napari_test.ipynb'
+
+### Reverting back to raw matrix
+
+If you want the full lognormalized (or whatever you stored in adata.raw) matrix again:
+
+`adata = adata.raw.to_adata()`
+
+
+### Convert from dense to sparse and back
+
+Some packages may require the matrices to be in a specific format, and hence will not run if you have a dense/sparse matrix, but it is easy to convert them.
+
+Sparse to dense:
+
+`adata.X.todense()`
+
+Dense to sparse (you can use either
+
+```
+from scipy.sparse import csr_matrix
+adata.X = csr_matrix(adata.X)
+```
