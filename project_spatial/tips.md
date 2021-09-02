@@ -76,3 +76,13 @@ adata.X = csr_matrix(adata.X)
 In squidpy, the `img.crop_corner()` function selects the upper left corner and a with/hight from that position:
 
 <img src="images/squidpy_crop.png" width="500" align="center">
+
+
+### Running tangram, nuclei segmentation and image features:
+
+* Some example code on how to run tangram in 'notebooks/tangram_test.ipynb'
+* Some example code on how to run nuceli segmentation and then tangram, and also calculate image features, in 'notebooks/tangram_test_segmentation.ipynb'
+
+### Selection of image region with Napari
+
+Some example code on how to select part of of a section in folder 'notebooks/napari_test.ipynb'
