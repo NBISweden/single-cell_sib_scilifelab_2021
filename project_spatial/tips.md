@@ -64,9 +64,15 @@ Sparse to dense:
 
 `adata.X.todense()`
 
-Dense to sparse (you can use either
+Dense to sparse (you can use either csr or rsc (column to row or row to column)
 
 ```
 from scipy.sparse import csr_matrix
 adata.X = csr_matrix(adata.X)
 ```
+
+### Crop image
+
+In squidpy, the `img.crop_corner()` function selects the upper left corner and a with/hight from that position:
+
+<img src="images/squidpy_crop.png" width="500" align="center">
