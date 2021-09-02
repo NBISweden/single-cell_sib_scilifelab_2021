@@ -85,7 +85,7 @@ which will give you a new `ImageContainer` object called `crop`. Below we've als
 assembled an image that explains how the selection works and how the different
 parameters (`y`,`x`,`h` and `w`) relates to the original and cropped image. 
 
-![./images/cropping-info.png](cropping-info)
+<img src="images/cropping-info.png"">
 
 
 ### Running tangram, nuclei segmentation and image features:
