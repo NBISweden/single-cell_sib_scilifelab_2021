@@ -64,13 +64,12 @@ Sparse to dense:
 
 `adata.X.todense()`
 
-Dense to sparse (you can use either
+Dense to sparse (you can use either csr or rsc (column to row or row to column)
 
 ```
 from scipy.sparse import csr_matrix
 adata.X = csr_matrix(adata.X)
 ```
-
 ### Cropping data with squidpy
 
 If we have an image contained within an `ImageContainer` object called `img` in
@@ -88,3 +87,12 @@ parameters (`y`,`x`,`h` and `w`) relates to the original and cropped image.
 
 ![./images/cropping-info.png](cropping-info)
 
+
+### Running tangram, nuclei segmentation and image features:
+
+* Some example code on how to run tangram in 'notebooks/tangram_test.ipynb'
+* Some example code on how to run nuceli segmentation and then tangram, and also calculate image features, in 'notebooks/tangram_test_segmentation.ipynb'
+
+### Selection of image region with Napari
+
+Some example code on how to select part of of a section in folder 'notebooks/napari_test.ipynb'

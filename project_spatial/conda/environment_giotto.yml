@@ -1,0 +1,64 @@
+name: R_giotto
+channels:
+ - conda-forge
+ - anaconda
+ - bioconda
+ - defaults
+ - r
+ 
+dependencies:
+ - pip
+ - pandas
+ - networkx
+ - python-igraph
+ - leidenalg
+ - python-louvain
+ - python.app
+ - scikit-learn
+ - r-base=4.0.3
+ - rstudio
+ - r-biocmanager
+ - r-remotes
+ - compilers
+ - r-devtools
+ - r-cairo
+ - bioconductor-complexheatmap
+ - r-magick
+ - r-cowplot
+ - r-dbscan
+ - r-deldir
+ - r-fitdistrplus
+ - r-ggplot2
+ - r-ggraph
+# - r-grdevices
+# - r-rgraphics
+ - r-igraph
+ - r-irlba
+# - bioconductor-lfa # causes version issues!
+ - bioconductor-limma
+ - r-matrix
+ - r-magrittr
+# - r-plotly
+# - r-parallel
+# - bioconductor-qvalue
+ - r-reshape2
+ - r-reticulate
+# - r-rfast # req r<3.7
+ - r-rtsne
+ - r-uwot
+ - r-gmp
+ - r-rnifti
+ - r-mvtnorm
+ - r-pracma
+ - r-misc3d
+ - pip:
+   - smfishHmrf
+
+# library(remotes)
+# # to install the latest stable version (advised)
+# remotes::install_github("RubD/Giotto")
+
+# Installing 14 packages: R.methodsS3, RcppGSL, R.oo, RcppZiggurat, data.table, corpcor, gtools, R.utils, Rfast, qvalue, plotly, lfa, ggdendro, ClusterR
+
+# remotes::install_github("lambdamoses/smfishhmrf-r")
+# 
