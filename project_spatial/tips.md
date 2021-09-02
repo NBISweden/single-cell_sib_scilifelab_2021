@@ -70,3 +70,21 @@ Dense to sparse (you can use either
 from scipy.sparse import csr_matrix
 adata.X = csr_matrix(adata.X)
 ```
+
+### Cropping data with squidpy
+
+If we have an image contained within an `ImageContainer` object called `img` in
+`squidpy`, we can crop this image by using the function `crop_corner` (there are
+other methods as well). You can read the documentation for this function
+[here](https://squidpy.readthedocs.io/en/latest/classes/squidpy.im.ImageContainer.crop_corner.html#squidpy.im.ImageContainer.crop_corner),
+but in short you use the following command to crop your image:
+
+```python
+crop = img.crop_corner(y,x,size = (h,w),library_id = library_id)
+```
+which will give you a new `ImageContainer` object called `crop`. Below we've also
+assembled an image that explains how the selection works and how the different
+parameters (`y`,`x`,`h` and `w`) relates to the original and cropped image. 
+
+![./images/cropping-info.png](cropping-info)
+
