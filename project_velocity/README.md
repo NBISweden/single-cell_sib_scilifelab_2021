@@ -24,6 +24,7 @@ The choice of your embedding matters - its relevance and impact on interpretatio
 
 <img border="0" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/1200px-Jupyter_logo.svg.png" width="30" height="30" style="vertical-align:middle;"> [Jupyter Notebook with step-by-step analysis](RNA_velocity_group1.ipynb)  
 
+<br/>
 
 **RNA Velocity Topic 2:**
 
