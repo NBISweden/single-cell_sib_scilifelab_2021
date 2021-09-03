@@ -18,22 +18,22 @@ and systematically identify genes that giving rise to these projection, in order
 
 The choice of your embedding matters - its relevance and impact on interpretation of RNA velocity estimates. Final reports are available here:
 
-<img border="0" src="https://www.svgrepo.com/show/165459/business-presentation.svg" width="20" height="20" style="vertical-align:middle;"> [SLIDES with analysis results](RNA_Velocity_group1.pdf)  
+<img border="0" src="https://www.svgrepo.com/show/165459/business-presentation.svg" width="30" height="30" style="vertical-align:middle;"> [SLIDES with analysis results](RNA_Velocity_group1.pdf)  
 
-<img border="0" src="https://static.thenounproject.com/png/67360-200.png" width="20" height="20" style="vertical-align:middle;"> [HTML Project Report with step-by-step analysis](RNA_velocity_group1.html)  
+<img border="0" src="https://static.thenounproject.com/png/67360-200.png" width="30" height="30" style="vertical-align:middle;"> [HTML Project Report with step-by-step analysis](RNA_velocity_group1.html)  
 
-<img border="0" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/1200px-Jupyter_logo.svg.png" width="20" height="20" style="vertical-align:middle;"> [Jupyter Notebook with step-by-step analysis](RNA_velocity_group1.ipynb)  
+<img border="0" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/1200px-Jupyter_logo.svg.png" width="30" height="30" style="vertical-align:middle;"> [Jupyter Notebook with step-by-step analysis](RNA_velocity_group1.ipynb)  
 
 
 **RNA Velocity Topic 2:**
 
 Identifying genes that give rise to vector field representations, for better interpretation of RNA velocity results. Final reports are available here:
 
-<img border="0" src="https://www.svgrepo.com/show/165459/business-presentation.svg" width="20" height="20" style="vertical-align:middle;"> [SLIDES with analysis results](RNA_Velocity_group2.pdf)  
+<img border="0" src="https://www.svgrepo.com/show/165459/business-presentation.svg" width="30" height="30" style="vertical-align:middle;"> [SLIDES with analysis results](RNA_Velocity_group2.pdf)  
 
-<img border="0" src="https://static.thenounproject.com/png/67360-200.png" width="20" height="20" style="vertical-align:middle;"> [HTML Project Report with step-by-step analysis](RNA_velocity_group1.html)  
+<img border="0" src="https://static.thenounproject.com/png/67360-200.png" width="30" height="30" style="vertical-align:middle;"> [HTML Project Report with step-by-step analysis](RNA_velocity_group1.html)  
 
-<img border="0" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/1200px-Jupyter_logo.svg.png" width="20" height="20" style="vertical-align:middle;"> [Jupyter Notebook with step-by-step analysis](RNA_velocity_group2.ipynb)  
+<img border="0" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/1200px-Jupyter_logo.svg.png" width="30" height="30" style="vertical-align:middle;"> [Jupyter Notebook with step-by-step analysis](RNA_velocity_group2.ipynb)  
 
 <br/>
 
