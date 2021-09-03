@@ -120,7 +120,13 @@ The provided cells are also annotated among others in terms of **animal sex** (a
 
 #### 2.1 
 The participants will be asked to build one single **VAE model** for the entire dataset.
-First remove all *female bladder cells from the facs data* as well as all *mammary-gland data also from the facs data*. These will be used as a holdout test-set for out-of-sample inference using your model later on. 
+First:
+
+Group 1 remove all *female bladder cells from the facs data* 
+
+Group 2 remove all *mammary-gland data also from the facs data*. 
+
+These will be used as a holdout test-set for out-of-sample inference using your model later on. 
 Finally randomly split 80/20 your remaining data in training  (80%) and validation sets (20%).
 
 

@@ -24,24 +24,17 @@ options(width = 80)
 
 
 
-```{r libload}
 
+
+
+```{r libload, eval=FALSE}
 suppressPackageStartupMessages({
-library(reticulate)
-## check if Python is available and has already been initialized
-#reticulate::py_available()
-## dicsover Python that provides "keras" 
-#reticulate::py_discover_config(required_module = "keras")
-
-## For setup on a renku environment:  
-reticulate::use_virtualenv("/opt/conda")
-
-
-reticulate::py_config()
-library(keras)
-K <- backend() # manual add-on
+system("pipenv --python 3.8")
+venv <- system("pipenv --venv", inter = TRUE)
+reticulate::use_virtualenv(venv, required = TRUE)
 library(tensorflow)
-tf$version$VERSION
+install_tensorflow(version= '2.2.0-gpu')
+library(keras)
 library(Matrix)
 library(SingleCellExperiment)
 library(Rtsne)
@@ -49,6 +42,25 @@ library(rsvd)
 library(RColorBrewer)
 })
 ```
+
+
+```{r, include=FALSE}
+#Specific setup for xenon6 execution :
+reticulate::use_virtualenv("/tungstenfs/groups/gbioinfo/sharedSoft/virtualenvs/r-4.1-bioc-3.13-reticulate-keras-2.4.0-tensorflow-2.4.0-gpu/")
+Sys.setenv("CUDA_VISIBLE_DEVICES" = "1" ) # Define visible  GPU devices
+ngpus=length(strsplit(Sys.getenv("CUDA_VISIBLE_DEVICES"),",")[[1]])
+reticulate::py_config()
+library(keras)
+K <- backend() # manual add-on
+library(tensorflow)
+library(Matrix)
+library(SingleCellExperiment)
+library(Rtsne)
+library(rsvd)
+library(RColorBrewer)
+```
+
+
 
 
 
@@ -61,7 +73,7 @@ epithelial cells, sequenced using 10x Genomics technology, which has already
 been pre-filtered to include only cells that are assigned unambiguously
 to one of three major  cell types:
 luminal progenitors, luminal mature and basal.
-
+  
 Features have also been preselected to include only those genes that are present and variable in all three datasets.
 Next, we load the preprocessed dataset and have a first look at the 
 composition of the dataset:
@@ -69,8 +81,7 @@ composition of the dataset:
 
 ```{r Download}
 ## Download the data and set row names to gene symbols whenever possible
-#sce <- readRDS(gzcon(url("https://github.com/fmicompbio/adv_scrnaseq_2020/blob/master/DGNs/data/SCE_MammaryGland.rds?raw=true")))
-sce <- readRDS("/work/adv_scrnaseq_2020/data/dgn/SCE_MammaryGland.rds")
+sce <- readRDS(gzcon(url("https://ppapasaikas.github.io/SC_datasets/Data/SCE_MammaryGland.rds?raw=true")))
 #Subsample cells to speed up processing and, most importantly, later-on model training:
 #set.seed(42)
 #n=4000
@@ -102,8 +113,9 @@ cowplot::plot_grid(scater::plotTSNE(sce, colour_by = "study" ),
 
 
 We will split the data 80-20 to a training and validation set.
-In addition, the input to the model has to be in the form of a 2D array with the samples in the rows
-and features in the columns.
+
+In addition, the input to the model has to be in the form of a 2D array with the samples in the rowsand features in the columns.
+
 Of course in this case our 2D array is (also) a matrix. However in the general case where every sample is a feature vector of > *1D*
 the data should be shaped as a multidimensional array with the samples in the 1st dimension.
 
@@ -140,7 +152,7 @@ rm(M)
 
 # Define the  variational autoencoder model
 
-![](/work/adv_scrnaseq_2020/adv_scrnaseq_2020/DGNs/figures/VAE_schematic.png){ width=40% }
+![](Figures/VAE_schematic.png){ width=40% }
 
 ```{r}
 ##### Sparse variational autoencoder model 
@@ -311,7 +323,7 @@ batch_size <- 512
 
 lr_sch <- callback_learning_rate_scheduler(lr_schedule)
 
-# Visualize the leanign rate schedule:
+# Visualize the learnign rate schedule:
 plot( 1:750, log10(  sapply (1:750, function(x) lr_schedule(x) ) ) 
           , type="l", col="darkslategray", xlab="epoch", ylab="log10(lr)", lwd=2, main="lr schedule")
 text( c(40,480,680), c(-4.8,-4.2,-5.2),c("burn-in","1st lr drop","2nd lr drop") )
@@ -352,15 +364,15 @@ history <- vae %>% fit(
     callbacks = list(early_stopping, lr_sch )
     #callbacks = list(tnsrb, early_stopping, lr_sch )
 )
-#saveRDS(history, file="DGNs/data/MG_complete_VAE_history.rds")
-#filepath <- "/tungstenfs/groups/gbioinfo/papapana/DEEP_LEARNING/Autoencoders/BatchCor_paper/Trained_Models/MG_complete_VAE_weights.hdf5"
+#saveRDS(history, file="Data/MG_complete_VAE_history.rds")
+#filepath <- "Trained_Models/MG_complete_VAE_weights.hdf5"
 #save_model_weights_hdf5(vae, filepath)  
 ```
 
-```{r}
-history <- readRDS("/work/adv_scrnaseq_2020/data/dgn/MG_complete_VAE_history.rds")
-plot(history)
 
+```{r}
+history <- readRDS("Data/MG_complete_VAE_history.rds")
+plot(history)
 ```
 
 
@@ -385,9 +397,9 @@ We now have in our hands a trained VAE for our dataset. What is it good for?
 
 ```{r fig.width=7, fig.height=7}
 ########################################################################################################  
-vae %>% load_model_weights_hdf5("/work/adv_scrnaseq_2020/data/dgn/MG_complete_VAE_weights.hdf5")
+vae %>% load_model_weights_hdf5("trained_models/MG_complete_VAE_weights.hdf5")
 
-palettes <- readRDS("/work/adv_scrnaseq_2020/data/dgn/distinct_palettes.rds")
+palettes <- readRDS("Data/distinct_palettes.rds")
 
 ##### Run on the combined select dataset (train + validation):
 study_annot <- sce$study
@@ -492,7 +504,7 @@ legend("topright",legend = c("poisson","loess.fit"),lty=2,lwd=2,bty="n",col=c("d
 Here we will show a first example of using our learned latent space for inference. Specifically we will correct for batch-specific
 effects by decomposing the variance in the latent space:
 
-![](/work/adv_scrnaseq_2020/adv_scrnaseq_2020/DGNs/figures/LatentArithm_BC.png){ width=50% }
+![](Figures/LatentArithm_BC.png){ width=50% }
 
 ```{r fig.width=10, fig.height=7}
 ########## Latent arithmetic operations to correct for batch :
@@ -567,11 +579,11 @@ Now we implement a second example of latent arithmetic-based inference. In this 
 in one of the three studies (wal). Following the same rational of decomposing variance sources in latent space we will then predict the profile of the missing
 cell type in the target study:
 
-![](/work/adv_scrnaseq_2020/adv_scrnaseq_2020/DGNs/figures/LatentArithm_OoS.png){ width=50% }
+![](Figures/LatentArithm_OoS.png){ width=50% }
 
 ```{r fig.width=9, fig.height=3}
 #We will use a model that was trained on data that never saw wal luminal progenitor cells:
-vae %>% load_model_weights_hdf5("/work/adv_scrnaseq_2020/data/dgn/MG_leavout_wallp_VAE_weights.hdf5")
+vae %>% load_model_weights_hdf5("trained_models/MG_leavout_wallp_VAE_weights.hdf5")
 latent_output <- predict(encoder, list(gene_input=sc_x))
 
 
