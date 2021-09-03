@@ -108,7 +108,52 @@ After this, you can install additional python packages in this virtual environme
 
 ### Jupyter notebook
 
-With the jupyter notebook interface you can do most of the python-based analyses (e.g. based on python notebook (`.ipynb`) files). The software is installed in a `conda` environment. The environment for the general exercises is called `scRNASeq2021`. You can use this environment in a python notebook by selecting the right kernel. You can add installations to the environment by using the terminal (e.g. with `conda install mypackage`). You can also create new environments.   
+With the jupyter notebook interface you can do most of the python-based analyses (e.g. based on python notebook (`.ipynb`) files). The software is installed in a `conda` environment. The environment for the general exercises is called `scRNASeq2021`. You can use this environment in a python notebook by selecting the right kernel. You can add installations to the environment by using the terminal (e.g. with `conda install mypackage`). You can also create new environments.  
+
+### Download data using S3
+
+There are two ways to download data from the backup at s3:
+
+- Using `aws-cli` 
+- Using `wget` or `curl`
+
+#### Download with AWS command line interface
+
+Install aws-cli, e.g. with conda:
+
+```sh
+conda install -c conda-forge awscli
+```
+
+To use the AWS command line interface you will need an AWS account and set up `awscli`. Follow instructions [here](https://docs.aws.amazon.com/cli/latest/userguide/cli-services-s3-commands.html). 
+
+To download your home directory use the following command:
+
+```sh
+aws s3 cp s3://single-cell-summerschool/general/users/[USERNAME]/ ./homedir --recursive
+```
+
+Replace `[USERNAME]` with your username (e.g. `gvangeest`). You can find back your username in the [google spreadsheat](https://docs.google.com/spreadsheets/d/1bR4dFhC7lhCiNK291XTy5Ix7fe5dThUXwLoBdyIjD8I/edit#gid=1716544156). 
+
+**Note**: Participants of the deep learning project should replace `general` in the path with `gpu2`. 
+
+#### Download with `wget` or `curl`
+
+You can download specific files without `aws-cli`. To do this, use the following command:
+
+```sh
+wget https://single-cell-summerschool.s3.eu-central-1.amazonaws.com/general/users/[USERNAME]/[FILENAME]
+```
+
+or `curl`:
+
+```sh
+curl -O https://single-cell-summerschool.s3.eu-central-1.amazonaws.com/general/users/[USERNAME]/[FILENAME]
+```
+
+Replace `[FILENAME]` with the exact filename you want to download, and replace `[USERNAME]` with your username (e.g. `gvangeest`). You can find back your username in the [google spreadsheat](https://docs.google.com/spreadsheets/d/1bR4dFhC7lhCiNK291XTy5Ix7fe5dThUXwLoBdyIjD8I/edit#gid=1716544156). 
+
+
 
 ***
 
