@@ -32,7 +32,7 @@ Identifying genes that give rise to vector field representations, for better int
 
 <img border="0" src="https://www.svgrepo.com/show/165459/business-presentation.svg" width="30" height="30" style="vertical-align:middle;"> [SLIDES with analysis results](RNA_Velocity_group2.pdf)  
 
-<img border="0" src="https://static.thenounproject.com/png/67360-200.png" width="30" height="30" style="vertical-align:middle;"> [HTML Project Report with step-by-step analysis](RNA_velocity_group1.html)  
+<img border="0" src="https://static.thenounproject.com/png/67360-200.png" width="30" height="30" style="vertical-align:middle;"> [HTML Project Report with step-by-step analysis](RNA_velocity_group2.html)  
 
 <img border="0" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/1200px-Jupyter_logo.svg.png" width="30" height="30" style="vertical-align:middle;"> [Jupyter Notebook with step-by-step analysis](RNA_velocity_group2.ipynb)  
 
