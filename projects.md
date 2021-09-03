@@ -12,7 +12,7 @@
 
 Since each of the 4 group themes may have completely different softwares, please follow in instructions specific to each one.
 
-<div style="width:100%;height:150px;text-align: center">
+<div style="width:100%; height:150px; text-align: center">
 
   <a href="/single-cell_sib_scilifelab_2021/project_spatial/README.html">
   <div class="zoom" style="width:150px;height:100px;padding:5px 5px;font-size:12pt;font-family:Helvetica;float:left;text-align:center;">

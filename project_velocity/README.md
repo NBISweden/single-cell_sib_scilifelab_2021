@@ -8,23 +8,40 @@
 
 
 ### Background
-The combination of velocities across genes is used to show the direction of movement of an individual cell in a dimensionality-reduced embedding. Incorrect visual directions can potentially arise from biases in the way velocities are projected. Simultaneously, the interpretation of the projected velocities is hampered by the difficulty in identifying individual gene dynamics that give rise to the projections. For instance, projections can be distorted due to multiple dynamic processes that occur simultaneously in a specific regime, such as cell cycle and differentiation. Here,
-we will analyse the impact of embedding choices on the vector field representation in the lower-dimensional space (Topic 1),
+
+The combination of velocities across genes is used to show the direction of movement of an individual cell in a dimensionality-reduced embedding. Incorrect visual directions can potentially arise from biases in the way velocities are projected. Simultaneously, the interpretation of the projected velocities is hampered by the difficulty in identifying individual gene dynamics that give rise to the projections. For instance, projections can be distorted due to multiple dynamic processes that occur simultaneously in a specific regime, such as cell cycle and differentiation. Here, we will analyse the impact of embedding choices on the vector field representation in the lower-dimensional space (Topic 1),
 and systematically identify genes that giving rise to these projection, in order to address one of the major challenges to interpreting RNA velocity results (Topic 2).
 
-- SIB Topic 1: The choice of your embedding matters - its relevance and impact on interpretation of RNA velocity estimates. Final reports are available here:
+<br/>
 
-  - [SLIDES with analysis results](/project_velocity/RNA_Velocity_group1.pdf)
-  - [HTML Project Report with step-by-step analysis](/project_velocity/RNA_velocity_group1.html)
-  - [Jupyter Notebook with step-by-step analysis](/project_velocity/RNA_velocity_group1.ipynb)
+**RNA Velocity Topic 1:**
+
+The choice of your embedding matters - its relevance and impact on interpretation of RNA velocity estimates. Final reports are available here:
+
+<img border="0" src="https://www.svgrepo.com/show/165459/business-presentation.svg" width="20" height="20" style="vertical-align:middle;">
+[SLIDES with analysis results](RNA_Velocity_group1.pdf)
+
+<img border="0" src="https://static.thenounproject.com/png/67360-200.png" width="20" height="20" style="vertical-align:middle;">
+[HTML Project Report with step-by-step analysis](RNA_velocity_group1.html)
+
+<img border="0" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/1200px-Jupyter_logo.svg.png" width="20" height="20" style="vertical-align:middle;">
+[Jupyter Notebook with step-by-step analysis](RNA_velocity_group1.ipynb)
 
 
-- SIB Topic 2: Identifying genes that give rise to vector field representations, for better interpretation of RNA velocity results. Final reports are available here:
+**RNA Velocity Topic 2:**
 
-  - [SLIDES with analysis results](/project_velocity/RNA_Velocity_group2.pdf)
-  - [HTML Project Report with step-by-step analysis](/project_velocity/RNA_velocity_group1.html)
-  - [Jupyter Notebook with step-by-step analysis](/project_velocity/RNA_velocity_group2.ipynb)
+Identifying genes that give rise to vector field representations, for better interpretation of RNA velocity results. Final reports are available here:
 
+<img border="0" src="https://www.svgrepo.com/show/165459/business-presentation.svg" width="20" height="20" style="vertical-align:middle;">
+[SLIDES with analysis results](RNA_Velocity_group2.pdf)
+
+<img border="0" src="https://static.thenounproject.com/png/67360-200.png" width="20" height="20" style="vertical-align:middle;">
+[HTML Project Report with step-by-step analysis](RNA_velocity_group1.html)
+
+<img border="0" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/1200px-Jupyter_logo.svg.png" width="20" height="20" style="vertical-align:middle;">
+[Jupyter Notebook with step-by-step analysis](RNA_velocity_group2.ipynb)
+
+<br/>
 
 ### Preparation
 
@@ -138,7 +155,7 @@ Coenen and Pearce (2021), Understanding UMAP, [GitHub](https://pair-code.github.
 
 8.1.4. Using the simulated cellular transitions, can you show which embedding specification represent the high-dimensional vector field best?
 
-8.1.5. Can you even systematically quantify, how well the vector field is represented in the embedding? 
+8.1.5. Can you even systematically quantify, how well the vector field is represented in the embedding?
 Possible metrics could, e.g., be correlation of embedded velocities with pseudo time / latent time, 'compactness' of transitions, correlation of transitions in the embedding weighted by their probabilities.
 
 <br/>
@@ -157,29 +174,29 @@ Possible metrics could, e.g., be correlation of embedded velocities with pseudo 
 
 8.1.6. There are different ways of computing ‘relevant’ genes in scvelo. Show, which of them best represents the entire vector field.
 
-8.1.7. Which genes are supporting / contradicting the embedded trajectories? How does the projection differ, as you subset to these genes or exclude these genes? 
+8.1.7. Which genes are supporting / contradicting the embedded trajectories? How does the projection differ, as you subset to these genes or exclude these genes?
 
 8.1.8. Find more ways of identifying important genes, e.g., using PCA on the velocity vector field.
 
 <br/>
 
-### Bonus Tasks - Topic 1: 
+### Bonus Tasks - Topic 1:
 
 9.1.1. Can you find other ways to projecting the data (e.g., parametric UMAP)?
 
-9.1.2. Metrics: correlation with pseudo time / latent time, compactness of transitions, weighted correlation of trasition probabilities in embedding. 
+9.1.2. Metrics: correlation with pseudo time / latent time, compactness of transitions, weighted correlation of trasition probabilities in embedding.
 
-9.1.3. How ‘far’ are the transitions reaching, how gene-specific / cell-specific, how does that correlate with velocity? 
+9.1.3. How ‘far’ are the transitions reaching, how gene-specific / cell-specific, how does that correlate with velocity?
 
 9.1.4. Where does the displacement ‘land’ (by its closest sampled neighbors or parametric projection), and how does that vary with delta t.
 
 <br/>
 
-### Bonus Tasks - Topic 2: 
+### Bonus Tasks - Topic 2:
 
-9.1.1. How ‘far’ are the transitions reaching, how gene-specific / cell-specific, how does that correlate with velocity? 
+9.1.1. How ‘far’ are the transitions reaching, how gene-specific / cell-specific, how does that correlate with velocity?
 
-9.1.2. Can you predict the embedded arrows from high-dim velocities (e.g., using random forest or logistic regression) in order obtain weights as a means of interpreting gene's weights as their impact on the projection? 
+9.1.2. Can you predict the embedded arrows from high-dim velocities (e.g., using random forest or logistic regression) in order obtain weights as a means of interpreting gene's weights as their impact on the projection?
 
 9.1.3. Can you think of ways to disentangle or decompose different processes that simultaneously occur (e.g., cell cycle vs. differentiation)?
 
