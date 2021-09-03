@@ -6,15 +6,27 @@
 - __*Volker Bergen*__, Institute of Computational Biology, Munich, 🇩🇪 Germany
 - __*Paulo Czarnewski*__, National Bioinformatics Infrastructure (NBIS), 🇸🇪 Sweden
 
-<br/>
 
 ### Background
 The combination of velocities across genes is used to show the direction of movement of an individual cell in a dimensionality-reduced embedding. Incorrect visual directions can potentially arise from biases in the way velocities are projected. Simultaneously, the interpretation of the projected velocities is hampered by the difficulty in identifying individual gene dynamics that give rise to the projections. For instance, projections can be distorted due to multiple dynamic processes that occur simultaneously in a specific regime, such as cell cycle and differentiation. Here,
 we will analyse the impact of embedding choices on the vector field representation in the lower-dimensional space (Topic 1),
 and systematically identify genes that giving rise to these projection, in order to address one of the major challenges to interpreting RNA velocity results (Topic 2).
 
-- SIB Topic 1: The choice of your embedding matters - its relevance and impact on interpretation of RNA velocity estimates.
-- SIB Topic 2: Identifying genes that give rise to vector field representations, for better interpretation of RNA velocity results.
+- SIB Topic 1: The choice of your embedding matters - its relevance and impact on interpretation of RNA velocity estimates. Final reports are available here:
+
+  - [SLIDES with analysis results](/project_velocity/RNA_Velocity_group1.pdf)
+  - [HTML Project Report with step-by-step analysis](/project_velocity/RNA_velocity_group1.html)
+  - [Jupyter Notebook with step-by-step analysis](/project_velocity/RNA_velocity_group1.ipynb)
+
+
+- SIB Topic 2: Identifying genes that give rise to vector field representations, for better interpretation of RNA velocity results. Final reports are available here:
+
+  - [SLIDES with analysis results](/project_velocity/RNA_Velocity_group2.pdf)
+  - [HTML Project Report with step-by-step analysis](/project_velocity/RNA_velocity_group1.html)
+  - [Jupyter Notebook with step-by-step analysis](/project_velocity/RNA_velocity_group2.ipynb)
+
+
+### Preparation
 
 - Follow the instructions here (https://scvelo.org/installation) to install `scanpy` and `scvelo`.
 - Run the tutorials at https://scvelo.org and make yourself comfortable with the main steps.
