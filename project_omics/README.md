@@ -8,6 +8,24 @@
 
 <br/>
 
+### Background
+
+Corticogenesis is the dynamic process that results in the formation of the cerebral cortex, and is characterized by the generation of excitatory glutamatergic neurons from cortical progenitors, and the differentiation of astrocytes and oligodendrocytes. Dynamic changes in the activity of cis-regulatory DNA elements underlie the complex phenotypic transformations that occur during development.
+
+Here we will be analyzing Human fetal brain cortex data from [Trevino et al. 2021](https://www.sciencedirect.com/science/article/abs/pii/S0092867421009429) ([source](https://github.com/GreenleafLab/brainchromatin)) ([OA preprint](https://www.biorxiv.org/content/10.1101/2020.12.29.424636v2.full)) to study the interplay between chromatin accessibility and gene expression in early corticogenesis.
+
+The main goal will be to identify non-coding genomic regions where chromatin accessibility is associated with expression of genes involved in excitatory neuron development.
+
+* Group 1 will address the question with diagonal integration of the unmatched assay data (scRNA-seq data and scATAC-seq data from different cells)
+* Group 2 will address the question with vertical integration of the multiome data (scRNA-seq and scATAC-seq for the same cells)
+
+### Multiomics topic 1 - diagonal integration
+<img border="0" src="https://www.svgrepo.com/show/165459/business-presentation.svg" width="30" height="30" style="vertical-align:middle;"> [SLIDES with analysis results](Multiomics_group1.pdf)
+
+
+### Multiomics topic 2 - vertical integration
+<img border="0" src="https://www.svgrepo.com/show/165459/business-presentation.svg" width="30" height="30" style="vertical-align:middle;"> [SLIDES with analysis results](Multiomics_group2.pdf)
+
 ### Pre-course
 
 #### Software and data set-up 
